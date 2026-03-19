@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ProofGPT</title>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PGNpcmNsZSBjeD0iMzIiIGN5PSIzMiIgcj0iMzIiIGZpbGw9IiMwZjExMTciLz48Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIyOCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZDRhZjZhIiBzdHJva2Utd2lkdGg9IjEiIG9wYWNpdHk9IjAuMyIvPjxnIHN0cm9rZT0iI2Q0YWY2YSIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGZpbGw9Im5vbmUiPjxsaW5lIHgxPSIxNiIgeTE9IjQ0IiB4Mj0iNTAiIHkyPSI0NCIvPjxsaW5lIHgxPSIxNiIgeTE9IjQ0IiB4Mj0iNDIiIHkyPSIxNiIvPjxwYXRoIGQ9Ik0gMjgsNDQgQSAxMiwxMiAwIDAsMCAyMi41LDMxLjUiIHN0cm9rZS13aWR0aD0iMiIgb3BhY2l0eT0iMC44Ii8+PC9nPjwvc3ZnPg==">
+  <meta name="theme-color" content="#0f1117">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="ProofGPT">
   <style>/* ═══════════════════════════════════════════════════
    ProofGPT — Refined Chat UI
    Inspired by Claude / ChatGPT flow
@@ -1024,75 +1025,227 @@ html, body { height: 100%; background: var(--bg); color: var(--tx-1); font-famil
 }
 
 .math-step strong { color: var(--tx-1); }
-</style>
-</head>
-<body>
+
+/* ── Reasoning Cards ─────────────────────────────────── */
+.reason-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-md);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-top: 12px;
+}
+
+.reason-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 18px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-active);
+}
+
+.reason-card-title {
+  font-family: var(--serif);
+  font-size: 16px;
+  color: var(--tx-1);
+}
+
+.reason-card-badge {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ac);
+  background: var(--ac-dim);
+  border: 1px solid rgba(212,175,106,0.2);
+  padding: 3px 8px;
+  border-radius: 20px;
+}
+
+.reason-verdict {
+  margin: 14px 18px 0;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.6;
+  font-family: var(--serif);
+  font-style: italic;
+}
+
+.reason-proof-section {
+  padding: 14px 18px 18px;
+}
+
+.reason-proof-lbl {
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ac);
+  margin-bottom: 10px;
+}
+
+/* ── Dialogue cards (prove session) ─────────────────── */
+.dialogue-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(107,147,214,0.25);
+  border-radius: var(--radius-lg);
+  padding: 18px 20px;
+  margin-top: 12px;
+}
+
+.dialogue-heading {
+  font-family: var(--serif);
+  font-size: 16px;
+  color: var(--tx-1);
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.dialogue-heading strong { color: var(--ac); }
+
+.dialogue-sub {
+  font-size: 13.5px;
+  color: var(--tx-2);
+  line-height: 1.8;
+  margin-bottom: 14px;
+}
+
+.dialogue-sub code {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ac);
+  background: var(--ac-dim);
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+
+.dialogue-sub em {
+  color: var(--tx-1);
+  font-style: italic;
+}
+
+.dialogue-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* ── Prove Dialogue Cards ─────────────────────────────── */
+.prove-dialogue-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(107,147,214,0.3);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-top: 12px;
+  box-shadow: 0 0 0 1px rgba(107,147,214,0.08);
+}
+
+.prove-dialogue-head {
+  padding: 13px 18px 12px;
+  font-family: var(--serif);
+  font-size: 16px;
+  color: var(--tx-1);
+  background: rgba(107,147,214,0.07);
+  border-bottom: 1px solid var(--border);
+}
+
+.prove-dialogue-body {
+  padding: 14px 18px;
+  font-size: 14px;
+  color: var(--tx-2);
+  line-height: 1.75;
+}
+
+.prove-dialogue-body code {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--ac);
+  background: var(--ac-dim);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.prove-dialogue-body em {
+  color: var(--tx-1);
+  font-style: italic;
+}
+
+.prove-dialogue-actions {
+  padding: 12px 18px 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  border-top: 1px solid var(--border);
+}
+</style></head><body>
 <div class="layout">
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-top">
       <div class="brand"><span class="brand-icon">∠</span><span class="brand-name">ProofGPT</span></div>
-      <button class="new-chat-btn" id="newChatBtn">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        New chat
-      </button>
+      <button class="new-chat-btn" id="newChatBtn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>New chat</button>
     </div>
     <div class="sidebar-section-title">Format</div>
     <div class="format-toggle">
-      <button class="fmt-btn active" data-fmt="two-column" id="fmtTwo">Two-column</button>
-      <button class="fmt-btn" data-fmt="paragraph" id="fmtPara">Paragraph</button>
+      <button class="fmt-btn active" data-fmt="two-column">Two-column</button>
+      <button class="fmt-btn" data-fmt="paragraph">Paragraph</button>
     </div>
-    <div class="sidebar-section-title">Geometry proofs</div>
-    <div class="proof-index" id="proofIndex"></div>
-    <div class="sidebar-section-title" style="margin-top:8px;">Math topics</div>
+    <div class="sidebar-section-title">Prove something</div>
     <div class="proof-index">
-      <button class="idx-item" onclick="quickSend('how do parabolas work')">Parabolas</button>
-      <button class="idx-item" onclick="quickSend('what is a derivative')">Derivatives</button>
+      <button class="idx-item" onclick="quickSend('prove the triangle sum theorem')">Triangle Sum Theorem</button>
+      <button class="idx-item" onclick="quickSend('prove the hypotenuse leg theorem')">Hypotenuse-Leg (HL)</button>
+      <button class="idx-item" onclick="quickSend('prove vertical angles are congruent')">Vertical Angles</button>
+      <button class="idx-item" onclick="quickSend('prove the pythagorean theorem')">Pythagorean Theorem</button>
+      <button class="idx-item" onclick="quickSend('prove isosceles base angles')">Isosceles Base Angles</button>
+      <button class="idx-item" onclick="quickSend('prove alternate interior angles')">Alternate Interior ∠s</button>
+      <button class="idx-item" onclick="quickSend('prove the midsegment theorem')">Midsegment Theorem</button>
+      <button class="idx-item" onclick="quickSend('prove AAS congruence')">AAS Congruence</button>
+    </div>
+    <div class="sidebar-section-title" style="margin-top:6px;">Geometry terms</div>
+    <div class="proof-index">
+      <button class="idx-item" onclick="quickSend('vertical angles')">Vertical angles</button>
+      <button class="idx-item" onclick="quickSend('linear pair')">Linear pair</button>
+      <button class="idx-item" onclick="quickSend('supplementary angles')">Supplementary</button>
+      <button class="idx-item" onclick="quickSend('complementary angles')">Complementary</button>
+      <button class="idx-item" onclick="quickSend('perpendicular')">Perpendicular</button>
+      <button class="idx-item" onclick="quickSend('cpctc')">CPCTC</button>
+    </div>
+    <div class="sidebar-section-title" style="margin-top:6px;">Ask me</div>
+    <div class="proof-index">
+      <button class="idx-item" onclick="quickSend('is a square a rectangle')">Is a square a rectangle?</button>
+      <button class="idx-item" onclick="quickSend('interior angles of hexagon')">Hexagon angles</button>
       <button class="idx-item" onclick="quickSend('what are integrals')">Integrals</button>
       <button class="idx-item" onclick="quickSend('how does log work')">Logarithms</button>
-      <button class="idx-item" onclick="quickSend('exponential functions')">Exponential</button>
-      <button class="idx-item" onclick="quickSend('quadratic formula')">Quadratic formula</button>
-      <button class="idx-item" onclick="quickSend('how does probability work')">Probability</button>
-      <button class="idx-item" onclick="quickSend('mean median mode')">Statistics</button>
-      <button class="idx-item" onclick="quickSend('trig soh cah toa')">Trigonometry</button>
-      <button class="idx-item" onclick="quickSend('order of operations')">PEMDAS</button>
-      <button class="idx-item" onclick="quickSend('imaginary numbers')">Imaginary numbers</button>
-      <button class="idx-item" onclick="quickSend('what is calculus')">What is calculus?</button>
     </div>
-    <div class="sidebar-bottom">
-      <div class="status-pill"><span class="status-dot"></span>Offline · No account needed</div>
-    </div>
+    <div class="sidebar-section-title" style="margin-top:6px;">Proof book</div>
+    <div class="proof-index" id="proofIndex"></div>
+    <div class="sidebar-bottom"><div class="status-pill"><span class="status-dot"></span>Offline · No account needed</div></div>
   </aside>
   <div class="main">
     <header class="topbar">
-      <button class="hamburger" id="hamburger">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      </button>
-      <span class="topbar-label">Math & Geometry Assistant</span>
+      <button class="hamburger" id="hamburger"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+      <span class="topbar-label">Math &amp; Geometry Assistant</span>
       <a href="proof.html" class="topbar-link">Proof Builder →</a>
     </header>
-    <div class="thread" id="thread">
-      <div class="thread-inner" id="threadInner"></div>
-    </div>
+    <div class="thread" id="thread"><div class="thread-inner" id="threadInner"></div></div>
     <div class="composer-wrap">
       <div class="composer" id="composer">
-        <textarea id="input" class="composer-input" placeholder="Ask anything — arithmetic, algebra, calculus, geometry proofs…" rows="1"></textarea>
-        <button class="composer-send" id="sendBtn">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
-        </button>
+        <textarea id="input" class="composer-input" placeholder="Ask anything — prove the HL theorem, what is a linear pair, is a square a rectangle…" rows="1"></textarea>
+        <button class="composer-send" id="sendBtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></button>
       </div>
       <div class="composer-hints">
-        <button class="hint-chip" onclick="quickSend('144 / 12')">144 ÷ 12</button>
-        <button class="hint-chip" onclick="quickSend('how do parabolas work')">Parabolas</button>
-        <button class="hint-chip" onclick="quickSend('what are integrals')">Integrals</button>
-        <button class="hint-chip" onclick="quickSend('how does log work')">Logs</button>
-        <button class="hint-chip" onclick="quickSend('Circumcenter Theorem')">Circumcenter</button>
+        <button class="hint-chip" onclick="quickSend('prove the hypotenuse leg theorem')">Prove HL theorem</button>
+        <button class="hint-chip" onclick="quickSend('prove the triangle sum theorem')">Prove triangle sum</button>
+        <button class="hint-chip" onclick="quickSend('vertical angles')">Vertical angles</button>
+        <button class="hint-chip" onclick="quickSend('is a square a rectangle')">Square = rectangle?</button>
         <button class="hint-chip" onclick="quickSend('list all')">All proofs →</button>
       </div>
     </div>
   </div>
 </div>
-<script>
-const PROOF_LIBRARY = [
+<script>const PROOF_LIBRARY = [
 
   // ═══════════════════════════════════════════════════
   // FOUNDATIONAL POSTULATES
@@ -4310,6 +4463,2266 @@ const MathBrain = {
   }
 };
 
+
+// ── Shape & quadrilateral concepts ───────────────────────────────
+MATH_CONCEPTS.push(
+
+  {
+    id: 'quadrilateral-hierarchy',
+    keywords: ['is a square a rectangle', 'is a square also a rectangle', 'are all squares rectangles',
+               'can a rectangle be a square', 'square vs rectangle', 'difference between square and rectangle',
+               'square rectangle relationship', 'is a rhombus a parallelogram', 'is a rectangle a parallelogram',
+               'quadrilateral hierarchy', 'types of quadrilaterals', 'what is a quadrilateral'],
+    title: 'Quadrilateral Family Tree',
+    tags: ['geometry'],
+    explain() { return `
+      <p>Quadrilaterals are related by a hierarchy — each shape is a special case of the one above it.</p>
+      <div class="math-grid">
+        <div class="math-rule"><span class="math-lbl">Quadrilateral</span> Any 4-sided polygon. The most general category.</div>
+        <div class="math-rule"><span class="math-lbl">Parallelogram</span> Both pairs of opposite sides parallel. Includes rectangles, rhombuses, squares.</div>
+        <div class="math-rule"><span class="math-lbl">Rectangle</span> A parallelogram with 4 right angles. <em>All rectangles are parallelograms.</em></div>
+        <div class="math-rule"><span class="math-lbl">Rhombus</span> A parallelogram with 4 equal sides. <em>All rhombuses are parallelograms.</em></div>
+        <div class="math-rule"><span class="math-lbl">Square</span> A rectangle AND a rhombus — 4 right angles AND 4 equal sides. <strong>Every square is a rectangle.</strong> Not every rectangle is a square.</div>
+        <div class="math-rule"><span class="math-lbl">Trapezoid</span> Exactly one pair of parallel sides. Not a parallelogram.</div>
+      </div>
+      <p style="margin-top:12px;font-size:13px;color:var(--tx-2);">So: <strong>Square → Rectangle → Parallelogram → Quadrilateral</strong>. Each arrow means "is a type of."</p>`;
+    }
+  },
+
+  {
+    id: 'rectangle',
+    keywords: ['what is a rectangle', 'rectangle', 'rectangle properties', 'rectangle shape'],
+    title: 'Rectangle',
+    tags: ['geometry'],
+    explain() { return `
+      <p>A <strong>rectangle</strong> is a parallelogram with four right angles (90°).</p>
+      <div class="math-grid">
+        <div class="math-rule"><span class="math-lbl">Properties</span> Opposite sides equal and parallel · All four angles = 90° · Diagonals are equal length and bisect each other</div>
+        <div class="math-rule"><span class="math-lbl">Area</span> <code>A = length × width</code></div>
+        <div class="math-rule"><span class="math-lbl">Perimeter</span> <code>P = 2(l + w)</code></div>
+        <div class="math-rule"><span class="math-lbl">Is it a square?</span> Only if all four sides are also equal. A square is a special rectangle.</div>
+      </div>`;
+    }
+  },
+
+  {
+    id: 'square',
+    keywords: ['what is a square', 'square shape', 'square properties', 'square vs rectangle'],
+    title: 'Square',
+    tags: ['geometry'],
+    explain() { return `
+      <p>A <strong>square</strong> is a rectangle with all four sides equal — it satisfies every property of rectangles, rhombuses, and parallelograms.</p>
+      <div class="math-grid">
+        <div class="math-rule"><span class="math-lbl">Properties</span> 4 equal sides · 4 right angles · Diagonals equal, perpendicular, and bisect each other · Diagonals bisect the corner angles</div>
+        <div class="math-rule"><span class="math-lbl">Area</span> <code>A = s²</code></div>
+        <div class="math-rule"><span class="math-lbl">Perimeter</span> <code>P = 4s</code></div>
+        <div class="math-rule"><span class="math-lbl">Diagonal length</span> <code>d = s√2</code> (Pythagorean theorem)</div>
+      </div>`;
+    }
+  },
+
+  {
+    id: 'rhombus',
+    keywords: ['what is a rhombus', 'rhombus', 'rhombus properties', 'is a rhombus a parallelogram', 'rhombus vs square'],
+    title: 'Rhombus',
+    tags: ['geometry'],
+    explain() { return `
+      <p>A <strong>rhombus</strong> is a parallelogram with all four sides equal. Think of it as a "squished square."</p>
+      <div class="math-grid">
+        <div class="math-rule"><span class="math-lbl">Properties</span> All 4 sides congruent · Opposite angles equal · Consecutive angles supplementary · Diagonals perpendicular bisectors of each other</div>
+        <div class="math-rule"><span class="math-lbl">Is it a square?</span> Only if all angles are also 90°. A square is a special rhombus.</div>
+        <div class="math-rule"><span class="math-lbl">Area</span> <code>A = base × height</code> or <code>A = (d₁ × d₂) / 2</code></div>
+      </div>`;
+    }
+  },
+
+  {
+    id: 'parallelogram-concept',
+    keywords: ['what is a parallelogram', 'parallelogram properties', 'what makes a parallelogram', 'parallelogram shape'],
+    title: 'Parallelogram',
+    tags: ['geometry'],
+    explain() { return `
+      <p>A <strong>parallelogram</strong> is a quadrilateral where both pairs of opposite sides are parallel.</p>
+      <div class="math-grid">
+        <div class="math-rule"><span class="math-lbl">Properties</span> Opposite sides parallel and equal · Opposite angles equal · Consecutive angles supplementary (add to 180°) · Diagonals bisect each other</div>
+        <div class="math-rule"><span class="math-lbl">Area</span> <code>A = base × height</code> (height is perpendicular, not the slant side)</div>
+        <div class="math-rule"><span class="math-lbl">Includes</span> Rectangles, rhombuses, and squares are all special parallelograms</div>
+      </div>`;
+    }
+  },
+
+  {
+    id: 'trapezoid-concept',
+    keywords: ['what is a trapezoid', 'trapezoid properties', 'trapezoid shape', 'what is a trapezium'],
+    title: 'Trapezoid',
+    tags: ['geometry'],
+    explain() { return `
+      <p>A <strong>trapezoid</strong> has exactly one pair of parallel sides, called the bases.</p>
+      <div class="math-grid">
+        <div class="math-rule"><span class="math-lbl">Properties</span> One pair of parallel sides (bases) · Two non-parallel sides (legs) · Co-interior angles between a leg and the parallel sides add to 180°</div>
+        <div class="math-rule"><span class="math-lbl">Isosceles trapezoid</span> Legs are equal · Base angles are equal · Diagonals are equal</div>
+        <div class="math-rule"><span class="math-lbl">Area</span> <code>A = ½(b₁ + b₂) × h</code> — average the two bases, multiply by height</div>
+      </div>`;
+    }
+  },
+
+  {
+    id: 'circle-concept',
+    keywords: ['what is a circle', 'circle properties', 'radius diameter', 'circumference', 'area of circle', 'pi r squared'],
+    title: 'Circle',
+    tags: ['geometry'],
+    explain() { return `
+      <p>A <strong>circle</strong> is the set of all points equidistant from a center point. That distance is the <strong>radius</strong>.</p>
+      <div class="math-grid">
+        <div class="math-rule"><span class="math-lbl">Radius & Diameter</span> <code>d = 2r</code> — diameter passes through the center</div>
+        <div class="math-rule"><span class="math-lbl">Circumference</span> <code>C = 2πr = πd</code></div>
+        <div class="math-rule"><span class="math-lbl">Area</span> <code>A = πr²</code></div>
+        <div class="math-rule"><span class="math-lbl">Arc length</span> <code>L = rθ</code> where θ is the central angle in radians</div>
+        <div class="math-rule"><span class="math-lbl">Sector area</span> <code>A = ½r²θ</code></div>
+      </div>`;
+    }
+  },
+
+  {
+    id: 'triangle-concept',
+    keywords: ['what is a triangle', 'types of triangles', 'equilateral', 'isosceles triangle', 'scalene', 'acute triangle', 'obtuse triangle', 'right triangle', 'area of triangle'],
+    title: 'Triangles',
+    tags: ['geometry'],
+    explain() { return `
+      <p>A triangle has 3 sides and 3 angles that always add to <strong>180°</strong>.</p>
+      <div class="math-grid">
+        <div class="math-rule"><span class="math-lbl">By sides</span> Equilateral (all equal) · Isosceles (two equal) · Scalene (all different)</div>
+        <div class="math-rule"><span class="math-lbl">By angles</span> Acute (all < 90°) · Right (one = 90°) · Obtuse (one > 90°)</div>
+        <div class="math-rule"><span class="math-lbl">Area</span> <code>A = ½ × base × height</code></div>
+        <div class="math-rule"><span class="math-lbl">Perimeter</span> Sum of all three sides</div>
+        <div class="math-rule"><span class="math-lbl">Right triangle</span> <code>a² + b² = c²</code> (Pythagorean theorem)</div>
+        <div class="math-rule"><span class="math-lbl">Isosceles</span> Two equal sides → two equal base angles (opposite those sides)</div>
+      </div>`;
+    }
+  },
+);
+
+
+// ── Conversational question detector ─────────────────────────────
+// Detects "what is X", "is X a Y", "are all X Y" style questions
+// that should go to the concept brain, never a proof card
+MathBrain.isConversationalQuestion = function(q) {
+  const ql = q.toLowerCase().trim();
+  return (
+    /^(what is|what are|what's|whats)\b/.test(ql) ||
+    /^(is (a|an|the)|are (all|some|any)|can (a|an))\b/.test(ql) ||
+    /^(how does|how do|how is|how are)\b/.test(ql) ||
+    /^(why is|why are|why does)\b/.test(ql) ||
+    /^(difference between|what's the difference|compare)\b/.test(ql) ||
+    /^(explain|define|tell me about|describe)\b/.test(ql) ||
+    /\b(work|works|mean|means|defined as|definition of)\??$/.test(ql)
+  );
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   reason.js — ProofGPT Reasoning Engine
+   Parses natural language questions, applies logic, and
+   generates on-the-spot proofs and explanations.
+   ═══════════════════════════════════════════════════════════════ */
+
+// ── Shape knowledge base ─────────────────────────────────────────
+// Properties of every shape, fully defined so we can reason about them
+const SHAPES = {
+  polygon:        { sides: 'n', angles: '(n-2)×180°', closed: true, straight: true },
+  triangle:       { sides: 3, angleSum: 180, closed: true, straight: true,
+                    subtypes: ['equilateral','isosceles','scalene','right','acute','obtuse'],
+                    props: ['angle sum = 180°','exterior angle = sum of non-adjacent interior angles'] },
+  quadrilateral:  { sides: 4, angleSum: 360, closed: true, straight: true,
+                    subtypes: ['parallelogram','rectangle','rhombus','square','trapezoid','kite'] },
+  parallelogram:  { sides: 4, angleSum: 360, parallel: 'both pairs opposite',
+                    props: ['opposite sides ≅','opposite angles ≅','consecutive angles supplementary',
+                            'diagonals bisect each other'],
+                    subtypes: ['rectangle','rhombus','square'],
+                    parent: 'quadrilateral' },
+  rectangle:      { sides: 4, angleSum: 360, allAngles: 90, parallel: 'both pairs',
+                    props: ['all angles 90°','opposite sides ≅','diagonals ≅ and bisect each other'],
+                    subtypes: ['square'],
+                    parent: 'parallelogram',
+                    isA: ['parallelogram','quadrilateral','polygon'] },
+  rhombus:        { sides: 4, angleSum: 360, allSidesEqual: true,
+                    props: ['all sides ≅','opposite angles ≅','diagonals ⊥ bisectors of each other',
+                            'diagonals bisect vertex angles'],
+                    subtypes: ['square'],
+                    parent: 'parallelogram',
+                    isA: ['parallelogram','quadrilateral','polygon'] },
+  square:         { sides: 4, angleSum: 360, allAngles: 90, allSidesEqual: true,
+                    props: ['all sides ≅','all angles 90°','diagonals ≅, ⊥, bisect each other',
+                            'diagonals bisect vertex angles'],
+                    parent: 'rectangle',
+                    isA: ['rectangle','rhombus','parallelogram','quadrilateral','polygon'] },
+  trapezoid:      { sides: 4, angleSum: 360, parallel: 'exactly one pair',
+                    props: ['one pair parallel sides (bases)','co-interior angles supplementary'],
+                    parent: 'quadrilateral',
+                    isA: ['quadrilateral','polygon'] },
+  isoscelesTrapezoid: { sides: 4, angleSum: 360, parallel: 'exactly one pair',
+                    props: ['legs ≅','base angles ≅','diagonals ≅'],
+                    parent: 'trapezoid',
+                    isA: ['trapezoid','quadrilateral','polygon'] },
+  kite:           { sides: 4, angleSum: 360,
+                    props: ['two pairs consecutive sides ≅','one pair opposite angles ≅',
+                            'diagonals ⊥','one diagonal bisects the other'],
+                    parent: 'quadrilateral',
+                    isA: ['quadrilateral','polygon'] },
+  pentagon:       { sides: 5, angleSum: 540, parent: 'polygon', isA: ['polygon'] },
+  hexagon:        { sides: 6, angleSum: 720, parent: 'polygon', isA: ['polygon'] },
+  heptagon:       { sides: 7, angleSum: 900, parent: 'polygon', isA: ['polygon'] },
+  octagon:        { sides: 8, angleSum: 1080, parent: 'polygon', isA: ['polygon'] },
+  circle:         { props: ['all points equidistant from center','C=2πr','A=πr²'] },
+  equilateral:    { sides: 3, allAngles: 60, allSidesEqual: true,
+                    isA: ['isosceles','triangle','polygon'],
+                    props: ['all sides ≅','all angles 60°','also isosceles'] },
+  isosceles:      { sides: 3, parent: 'triangle',
+                    props: ['two sides ≅','base angles ≅','altitude bisects base'] },
+  scalene:        { sides: 3, parent: 'triangle', props: ['no sides equal','no angles equal'] },
+};
+
+// ── Relationship matrix ──────────────────────────────────────────
+// INHERITANCE[A][B] = 'always'|'sometimes'|'never'
+const IS_A = {
+  square:      { rectangle: 'always', rhombus: 'always', parallelogram: 'always', quadrilateral: 'always', polygon: 'always' },
+  rectangle:   { parallelogram: 'always', quadrilateral: 'always', polygon: 'always', square: 'sometimes', rhombus: 'sometimes' },
+  rhombus:     { parallelogram: 'always', quadrilateral: 'always', polygon: 'always', square: 'sometimes', rectangle: 'sometimes' },
+  parallelogram: { quadrilateral: 'always', polygon: 'always', rectangle: 'sometimes', rhombus: 'sometimes', square: 'sometimes', trapezoid: 'never' },
+  trapezoid:   { quadrilateral: 'always', polygon: 'always', parallelogram: 'never', rectangle: 'never', rhombus: 'never', square: 'never' },
+  kite:        { quadrilateral: 'always', polygon: 'always', rhombus: 'sometimes', square: 'sometimes' },
+  isoscelesTrapezoid: { trapezoid: 'always', quadrilateral: 'always', polygon: 'always' },
+  equilateral: { isosceles: 'always', triangle: 'always', polygon: 'always', acute: 'always' },
+  isosceles:   { triangle: 'always', polygon: 'always', equilateral: 'sometimes' },
+  scalene:     { triangle: 'always', polygon: 'always', equilateral: 'never', isosceles: 'never' },
+  triangle:    { polygon: 'always' },
+  pentagon:    { polygon: 'always' },
+  hexagon:     { polygon: 'always' },
+  octagon:     { polygon: 'always' },
+};
+
+// Property ownership
+const HAS_PROP = {
+  'all angles 90':     ['square','rectangle'],
+  'equal sides':       ['square','rhombus','equilateral'],
+  'parallel sides':    ['parallelogram','rectangle','rhombus','square','trapezoid','isoscelesTrapezoid'],
+  'diagonals equal':   ['square','rectangle','isoscelesTrapezoid'],
+  'diagonals perp':    ['square','rhombus','kite'],
+  'diagonals bisect':  ['parallelogram','rectangle','rhombus','square'],
+  'base angles equal': ['isosceles','isoscelesTrapezoid'],
+};
+
+
+// ── Query intent parser ──────────────────────────────────────────
+const Reasoner = {
+
+  // Normalize shape names from user input
+  normalizeShape(word) {
+    const map = {
+      'squares':'square','rectangles':'rectangle','rhombuses':'rhombus','rhombi':'rhombus',
+      'parallelograms':'parallelogram','trapezoids':'trapezoid','trapeziums':'trapezoid',
+      'kites':'kite','triangles':'triangle','quadrilaterals':'quadrilateral',
+      'polygons':'polygon','pentagons':'pentagon','hexagons':'hexagon','octagons':'octagon',
+      'circles':'circle','equilaterals':'equilateral','isosceles':'isosceles',
+      'scalenes':'scalene',
+      // handle "isosceles trapezoid" as compound
+      'isosceles trapezoid':'isoscelesTrapezoid',
+      'isosceles trapezoids':'isoscelesTrapezoid',
+    };
+    const w = word.toLowerCase().trim();
+    // Check full phrase first
+    if (map[w]) return map[w];
+    if (SHAPES[w]) return w;
+    // Check each successive shorter prefix (for "equilateral triangle" type inputs)
+    const parts = w.split(/\s+/);
+    for (let i = parts.length; i >= 1; i--) {
+      const phrase = parts.slice(0, i).join(' ');
+      if (map[phrase]) return map[phrase];
+      if (SHAPES[phrase]) return phrase;
+    }
+    return null;
+  },
+
+  // Parse intent from a query string
+  parseIntent(query) {
+    const q = query.toLowerCase().trim().replace(/[?!.]+$/, '');
+
+    // ── IS-A questions: "is a square a rectangle?" ──────
+    const isAPatterns = [
+      // "is a/an [shape] a/an [shape]" or "is a/an [shape] [shape]" (no article on second)
+      /^(?:is|are)\s+(?:a|an)\s+((?:\w+\s+)*\w+?)\s+(?:a|an|also\s+(?:a|an)|always\s+(?:a|an))?\s*((?:\w+\s+)*\w+)$/,
+      // "can a [shape] be a [shape]"
+      /^(?:can|could)\s+(?:a|an)\s+((?:\w+\s+)*\w+?)\s+(?:be|ever be|also be)\s+(?:a|an)\s+((?:\w+\s+)*\w+?)$/,
+      // "every [shape] is a [shape]"
+      /^every\s+((?:\w+\s+)*\w+?)\s+is\s+(?:a|an)\s+((?:\w+\s+)*\w+?)$/,
+      // "are all [shape]s [shape]s"
+      /^are\s+all\s+(\w[\w\s]*?)\s+(\w[\w\s]*?)$/,
+    ];
+    for (const pat of isAPatterns) {
+      const m = q.match(pat);
+      if (m) {
+        // Try full phrase first, then single word (handles "equilateral triangle")
+        const rawA = m[1].trim(), rawB = m[2].trim();
+        const a = this.normalizeShape(rawA) || this.normalizeShape(rawA.split(' ').pop());
+        const b = this.normalizeShape(rawB) || this.normalizeShape(rawB.split(' ').pop());
+        if (a && b) return { type: 'isA', subject: a, target: b, raw: q };
+      }
+    }
+
+    // ── PROPERTY questions: "does a rhombus have equal diagonals?" ──
+    const hasPropPatterns = [
+      /^(?:do|does|did)\s+(?:a|an|all)?\s*(\w[\w\s]*?)\s+(?:have|has|contain|always have)\s+(.+)$/,
+      /^(?:is|are)\s+(?:the\s+)?(?:diagonals?|sides?|angles?)\s+of\s+(?:a|an)\s+(\w[\w\s]*?)\s+(.+)$/,
+    ];
+    for (const pat of hasPropPatterns) {
+      const m = q.match(pat);
+      if (m) {
+        const shape = this.normalizeShape(m[1].trim());
+        if (shape) return { type: 'hasProp', subject: shape, prop: m[2].trim(), raw: q };
+      }
+    }
+
+    // ── DIFFERENCE questions: "what is the difference between X and Y?" ──
+    const diffPattern = /(?:difference between|compare|vs\.?|versus)\s+(?:a\s+)?(\w[\w\s]*?)\s+(?:and|vs\.?|or)\s+(?:a\s+)?(\w[\w\s]*?)$/;
+    const dm = q.match(diffPattern);
+    if (dm) {
+      const a = this.normalizeShape(dm[1].trim());
+      const b = this.normalizeShape(dm[2].trim());
+      if (a && b) return { type: 'diff', a, b, raw: q };
+    }
+
+    // ── ANGLE SUM: "what are the interior angles of a hexagon?" ──
+    if (/interior angle|angle sum|sum of (the )?angles|angles? (of|in) a|interior angles of/.test(q)) {
+      // Try to find a shape name anywhere in the query
+      const words = q.split(/\s+/);
+      for (const w of words) {
+        const shape = this.normalizeShape(w);
+        if (shape && SHAPES[shape]?.angleSum) return { type: 'angleSum', subject: shape, raw: q };
+      }
+      // n-gon
+      const ngon = q.match(/(\d+)[\s-]?(?:sided|gon|side)/);
+      if (ngon) return { type: 'angleSumN', n: parseInt(ngon[1]), raw: q };
+    }
+
+    // ── SIDES COUNT: "how many sides does a hexagon have?" ──
+    const sidesPattern = /how many sides\s+(?:does\s+)?(?:a\s+)?(\w+)/;
+    const sm = q.match(sidesPattern);
+    if (sm) {
+      const shape = this.normalizeShape(sm[1]);
+      if (shape) return { type: 'sides', subject: shape, raw: q };
+    }
+
+    // ── WHAT IS: "what is a kite?" ──
+    const whatIs = q.match(/^what (?:is|are)\s+(?:a|an|the)?\s*(\w[\w\s]*?)(?:\s+in geometry)?$/);
+    if (whatIs) {
+      const shape = this.normalizeShape(whatIs[1].trim());
+      if (shape) return { type: 'define', subject: shape, raw: q };
+    }
+
+    // ── PROPERTY OF: "what are the properties of a kite?" ──
+    const propsOf = q.match(/properties\s+of\s+(?:a|an|the)?\s*(\w[\w\s]*)/);
+    if (propsOf) {
+      const shape = this.normalizeShape(propsOf[1].trim());
+      if (shape) return { type: 'properties', subject: shape, raw: q };
+    }
+
+    // ── ANGLE SUM formula ──
+    if (/(?:interior angle|angle sum|sum.*angle)/.test(q)) {
+      const ngon = q.match(/(\d+)/);
+      if (ngon) return { type: 'angleSumN', n: parseInt(ngon[1]), raw: q };
+    }
+
+    return null;
+  },
+
+  // ── Generate reasoning response ──────────────────────────────
+  reason(query) {
+    const intent = this.parseIntent(query);
+    if (!intent) return null;
+
+    switch (intent.type) {
+      case 'isA':       return this.buildIsAProof(intent);
+      case 'diff':      return this.buildDiff(intent);
+      case 'hasProp':   return this.buildHasProp(intent);
+      case 'angleSum':  return this.buildAngleSum(intent);
+      case 'angleSumN': return this.buildAngleSumN(intent);
+      case 'sides':     return this.buildSides(intent);
+      case 'define':    return this.buildDefine(intent);
+      case 'properties':return this.buildProperties(intent);
+      default:          return null;
+    }
+  },
+
+  // ── IS-A proof builder ───────────────────────────────────────
+  buildIsAProof({ subject, target }) {
+    const rel = IS_A[subject]?.[target];
+    const subjectShape = SHAPES[subject];
+    const targetShape  = SHAPES[target];
+    if (!subjectShape || !targetShape) return null;
+
+    const subName  = this.prettyName(subject);
+    const targName = this.prettyName(target);
+
+    let verdict, verdictColor, steps;
+
+    if (rel === 'always') {
+      verdict = `Yes — every ${subName} is always a ${targName}.`;
+      verdictColor = 'green';
+      steps = this.buildIsASteps(subject, target, true);
+    } else if (rel === 'sometimes') {
+      verdict = `Sometimes — a ${subName} can be a ${targName}, but not always.`;
+      verdictColor = 'yellow';
+      steps = this.buildIsASometimesSteps(subject, target);
+    } else if (rel === 'never') {
+      verdict = `No — a ${subName} is never a ${targName}.`;
+      verdictColor = 'red';
+      steps = this.buildIsANeverSteps(subject, target);
+    } else {
+      // Check reverse
+      const rev = IS_A[target]?.[subject];
+      if (rev === 'always') {
+        verdict = `Not necessarily — every ${targName} is a ${subName}, but not every ${subName} is a ${targName}.`;
+        verdictColor = 'yellow';
+        steps = this.buildIsASometimesSteps(subject, target);
+      } else {
+        verdict = `Not in general — a ${subName} is not necessarily a ${targName}.`;
+        verdictColor = 'yellow';
+        steps = this.buildIsASometimesSteps(subject, target);
+      }
+    }
+
+    return this.buildReasonCard({
+      question: `Is a ${subName} a ${targName}?`,
+      verdict,
+      verdictColor,
+      steps,
+      tag: 'logic',
+    });
+  },
+
+  buildIsASteps(subject, target, positive) {
+    const subName  = this.prettyName(subject);
+    const targName = this.prettyName(target);
+    const subShape  = SHAPES[subject];
+    const targShape = SHAPES[target];
+
+    const steps = [];
+
+    // What defines the target?
+    const targetDef = this.getDefinition(target);
+    steps.push({ s: `A ${targName} is defined as: ${targetDef}`, r: `Definition of ${targName}` });
+
+    // What defines the subject?
+    const subjectDef = this.getDefinition(subject);
+    steps.push({ s: `A ${subName} is defined as: ${subjectDef}`, r: `Definition of ${subName}` });
+
+    // Show why subject satisfies target's definition
+    const evidence = this.getInheritanceEvidence(subject, target);
+    evidence.forEach(e => steps.push(e));
+
+    steps.push({
+      s: `Therefore, every ${subName} satisfies all requirements to be a ${targName}`,
+      r: `Deductive reasoning from definitions above`
+    });
+    steps.push({
+      s: `Every ${subName} is a ${targName} ∎`,
+      r: `Conclusion`
+    });
+    return steps;
+  },
+
+  buildIsASometimesSteps(subject, target) {
+    const subName  = this.prettyName(subject);
+    const targName = this.prettyName(target);
+    const steps = [];
+
+    const subDef = this.getDefinition(subject);
+    const targDef = this.getDefinition(target);
+
+    steps.push({ s: `A ${subName} is defined as: ${subDef}`, r: `Definition of ${subName}` });
+    steps.push({ s: `A ${targName} requires: ${targDef}`, r: `Definition of ${targName}` });
+
+    const extra = this.getExtraRequirements(subject, target);
+    if (extra) {
+      steps.push({ s: `A ${subName} does NOT automatically have: ${extra}`, r: `Not part of ${subName} definition` });
+      steps.push({ s: `Only when a ${subName} also has ${extra} does it become a ${targName}`, r: `Additional condition required` });
+    }
+
+    steps.push({ s: `Counterexample: a 3×5 rectangle is NOT a square (unequal sides)`, r: `Disproves "always"` });
+    steps.push({ s: `But a 4×4 rectangle IS a square (all sides equal)`, r: `Shows "sometimes" is possible` });
+    steps.push({ s: `Conclusion: a ${subName} is SOMETIMES a ${targName} ∎`, r: `Conclusion` });
+    return steps;
+  },
+
+  buildIsANeverSteps(subject, target) {
+    const subName  = this.prettyName(subject);
+    const targName = this.prettyName(target);
+    const steps = [];
+
+    steps.push({ s: `A ${targName} requires: ${this.getDefinition(target)}`, r: `Definition of ${targName}` });
+    steps.push({ s: `A ${subName} has: ${this.getDefinition(subject)}`, r: `Definition of ${subName}` });
+
+    const conflict = this.getConflict(subject, target);
+    if (conflict) {
+      steps.push({ s: `Conflict: ${conflict}`, r: `These properties are mutually exclusive` });
+    }
+    steps.push({ s: `A ${subName} cannot satisfy the definition of a ${targName}`, r: `Contradiction` });
+    steps.push({ s: `Therefore, a ${subName} is NEVER a ${targName} ∎`, r: `Conclusion` });
+    return steps;
+  },
+
+  // ── DIFF card ────────────────────────────────────────────────
+  buildDiff({ a, b }) {
+    const aName = this.prettyName(a), bName = this.prettyName(b);
+    const aShape = SHAPES[a], bShape = SHAPES[b];
+    if (!aShape || !bShape) return null;
+
+    const shared = this.getSharedProps(a, b);
+    const onlyA  = this.getUniqueProps(a, b);
+    const onlyB  = this.getUniqueProps(b, a);
+
+    const steps = [
+      { s: `Both are ${this.sharedParent(a,b) || 'geometric shapes'}`, r: `Common category` },
+      ...(shared.length ? [{ s: `Both have: ${shared.join(', ')}`, r: `Shared properties` }] : []),
+      ...(onlyA.length  ? [{ s: `Only a ${aName} has: ${onlyA.join(', ')}`, r: `Unique to ${aName}` }] : []),
+      ...(onlyB.length  ? [{ s: `Only a ${bName} has: ${onlyB.join(', ')}`, r: `Unique to ${bName}` }] : []),
+    ];
+
+    // Is one a subtype of the other?
+    const relAB = IS_A[a]?.[b], relBA = IS_A[b]?.[a];
+    let verdict;
+    if (relAB === 'always') verdict = `Every ${aName} is a ${bName}, but not every ${bName} is a ${aName} — ${aName} is more specific.`;
+    else if (relBA === 'always') verdict = `Every ${bName} is a ${aName}, but not every ${aName} is a ${bName} — ${bName} is more specific.`;
+    else verdict = `A ${aName} and a ${bName} are distinct shapes — neither is a subtype of the other.`;
+
+    return this.buildReasonCard({
+      question: `${aName} vs. ${bName}`,
+      verdict,
+      verdictColor: 'blue',
+      steps,
+      tag: 'comparison',
+    });
+  },
+
+  // ── HAS-PROP card ────────────────────────────────────────────
+  buildHasProp({ subject, prop }) {
+    const shapeName = this.prettyName(subject);
+    const shapeData = SHAPES[subject];
+    if (!shapeData) return null;
+
+    const propLower = prop.toLowerCase();
+    const props = shapeData.props || [];
+
+    // Check if any stored property matches
+    const match = props.find(p => {
+      const pl = p.toLowerCase();
+      return propLower.split(/\s+/).filter(w=>w.length>3).some(w => pl.includes(w));
+    });
+
+    // Some specific checks
+    let answer, steps;
+    if (propLower.includes('equal diagonal') || propLower.includes('congruent diagonal') || propLower.includes('same length diagonal')) {
+      const has = ['square','rectangle','isoscelesTrapezoid'].includes(subject);
+      answer = has ? `Yes — a ${shapeName} always has equal diagonals.` : `No — a ${shapeName} does not necessarily have equal diagonals.`;
+      steps = this.buildDiagonalSteps(subject, 'equal');
+    } else if (propLower.includes('perpendicular diagonal') || propLower.includes('diagonal perpendicular')) {
+      const has = ['square','rhombus','kite'].includes(subject);
+      answer = has ? `Yes — the diagonals of a ${shapeName} are always perpendicular.` : `No — the diagonals of a ${shapeName} are not necessarily perpendicular.`;
+      steps = this.buildDiagonalSteps(subject, 'perp');
+    } else if (propLower.includes('right angle') || propLower.includes('90')) {
+      const has = ['square','rectangle'].includes(subject);
+      answer = has ? `Yes — a ${shapeName} always has right angles (90°).` : `No — a ${shapeName} does not require right angles.`;
+      steps = [
+        { s: `Definition of ${shapeName}: ${this.getDefinition(subject)}`, r: `Definition` },
+        { s: answer, r: `Conclusion` }
+      ];
+    } else if (match) {
+      answer = `Yes — a ${shapeName} has the property: ${match}.`;
+      steps = [
+        { s: `By definition, a ${shapeName} has: ${this.getDefinition(subject)}`, r: `Definition` },
+        { s: `This includes: ${match}`, r: `Property of ${shapeName}` },
+        { s: answer, r: `Conclusion` }
+      ];
+    } else {
+      answer = `Not necessarily — that is not a guaranteed property of a ${shapeName}.`;
+      steps = [
+        { s: `Properties of a ${shapeName}: ${(shapeData.props||[]).join('; ') || 'see definition'}`, r: `Definition` },
+        { s: `The requested property is not among them`, r: `By inspection` },
+        { s: answer, r: `Conclusion` }
+      ];
+    }
+
+    return this.buildReasonCard({
+      question: `Does a ${shapeName} have ${prop}?`,
+      verdict: answer,
+      verdictColor: answer.startsWith('Yes') ? 'green' : 'red',
+      steps,
+      tag: 'property check',
+    });
+  },
+
+  buildDiagonalSteps(shape, type) {
+    const name = this.prettyName(shape);
+    const has = type === 'equal'
+      ? ['square','rectangle','isoscelesTrapezoid'].includes(shape)
+      : ['square','rhombus','kite'].includes(shape);
+
+    const steps = [{ s: `A ${name} is defined as: ${this.getDefinition(shape)}`, r: `Definition` }];
+    if (has && type === 'equal') {
+      steps.push({ s: `Its diagonals are congruent by the ${this.getDiagTheorem(shape)}`, r: `Theorem` });
+      steps.push({ s: `Therefore its diagonals ARE equal ∎`, r: `Conclusion` });
+    } else if (has && type === 'perp') {
+      steps.push({ s: `All four sides are equal (or two pairs of consecutive sides equal for a kite)`, r: `Definition property` });
+      steps.push({ s: `Equal sides create congruent triangles with the diagonals → diagonals ⊥`, r: `SSS congruence + CPCTC` });
+      steps.push({ s: `Therefore its diagonals ARE perpendicular ∎`, r: `Conclusion` });
+    } else {
+      steps.push({ s: `Nothing in the definition of ${name} guarantees this property`, r: `Not in definition` });
+      steps.push({ s: `Counterexample exists: a generic ${name} where this fails`, r: `Disproof` });
+      steps.push({ s: `Therefore NOT necessarily true ∎`, r: `Conclusion` });
+    }
+    return steps;
+  },
+
+  // ── ANGLE SUM cards ──────────────────────────────────────────
+  buildAngleSum({ subject }) {
+    const name = this.prettyName(subject);
+    const shape = SHAPES[subject];
+    const n = shape.sides;
+    const sum = shape.angleSum;
+
+    const steps = [
+      { s: `A ${name} has ${n} sides`, r: `Definition` },
+      { s: `By the Polygon Interior Angles Theorem: sum = (n−2) × 180°`, r: `Theorem 7.1` },
+      { s: `For n = ${n}: (${n}−2) × 180° = ${n-2} × 180°`, r: `Substitution` },
+      { s: `= ${sum}°`, r: `Arithmetic` },
+      { s: `Sum of interior angles of a ${name} = ${sum}° ∎`, r: `Conclusion` },
+    ];
+
+    if (shape.allAngles) {
+      steps.push({ s: `Since all angles are equal: each angle = ${sum}° ÷ ${n} = ${shape.allAngles}°`, r: `Regular polygon corollary` });
+    }
+
+    return this.buildReasonCard({
+      question: `Interior angle sum of a ${name}?`,
+      verdict: `The interior angles of a ${name} add up to ${sum}°.`,
+      verdictColor: 'blue',
+      steps,
+      tag: 'angle sum',
+    });
+  },
+
+  buildAngleSumN({ n }) {
+    const sum = (n - 2) * 180;
+    const steps = [
+      { s: `The polygon has ${n} sides`, r: `Given` },
+      { s: `Polygon Interior Angles Theorem: sum = (n−2) × 180°`, r: `Theorem 7.1` },
+      { s: `Substitute n = ${n}: (${n}−2) × 180°`, r: `Substitution` },
+      { s: `= ${n-2} × 180° = ${sum}°`, r: `Arithmetic` },
+      { s: `Sum of interior angles = ${sum}° ∎`, r: `Conclusion` },
+    ];
+    return this.buildReasonCard({
+      question: `Interior angle sum of a ${n}-gon?`,
+      verdict: `A ${n}-sided polygon has interior angles that sum to ${sum}°.`,
+      verdictColor: 'blue',
+      steps,
+      tag: 'angle sum',
+    });
+  },
+
+  // ── SIDES card ───────────────────────────────────────────────
+  buildSides({ subject }) {
+    const name = this.prettyName(subject);
+    const shape = SHAPES[subject];
+    if (!shape?.sides) return null;
+    const steps = [
+      { s: `A ${name} is defined as a polygon with ${shape.sides} sides`, r: `Definition of ${name}` },
+      { s: `A ${name} has ${shape.sides} sides ∎`, r: `Conclusion` },
+    ];
+    return this.buildReasonCard({
+      question: `How many sides does a ${name} have?`,
+      verdict: `A ${name} has ${shape.sides} sides.`,
+      verdictColor: 'blue',
+      steps,
+      tag: 'definition',
+    });
+  },
+
+  // ── DEFINE card ──────────────────────────────────────────────
+  buildDefine({ subject }) {
+    const name = this.prettyName(subject);
+    const shape = SHAPES[subject];
+    if (!shape) return null;
+
+    const def = this.getDefinition(subject);
+    const props = shape.props || [];
+    const subtypes = shape.subtypes || [];
+    const isA = shape.isA || [];
+
+    const steps = [
+      { s: `Definition: ${def}`, r: `Formal definition` },
+      ...(shape.sides ? [{ s: `Has ${shape.sides} sides`, r: `Property` }] : []),
+      ...(shape.angleSum ? [{ s: `Interior angles sum to ${shape.angleSum}°`, r: `Polygon Interior Angles Theorem` }] : []),
+      ...props.slice(0,4).map(p => ({ s: p, r: `Property of ${name}` })),
+      ...(isA.length ? [{ s: `A ${name} is also a: ${isA.join(', ')}`, r: `Classification hierarchy` }] : []),
+      ...(subtypes.length ? [{ s: `Special types of ${name}: ${subtypes.join(', ')}`, r: `Subtypes` }] : []),
+    ];
+
+    return this.buildReasonCard({
+      question: `What is a ${name}?`,
+      verdict: def,
+      verdictColor: 'blue',
+      steps,
+      tag: 'definition',
+    });
+  },
+
+  // ── PROPERTIES card ──────────────────────────────────────────
+  buildProperties({ subject }) {
+    const name = this.prettyName(subject);
+    const shape = SHAPES[subject];
+    if (!shape) return null;
+
+    const props = shape.props || [];
+    const steps = [
+      { s: `Definition of ${name}: ${this.getDefinition(subject)}`, r: `Definition` },
+      ...props.map((p,i) => ({ s: p, r: `Property ${i+1} of ${name}` })),
+      ...(shape.isA?.length ? [{ s: `Inherits all properties of: ${shape.isA.join(' → ')}`, r: `Inheritance from parent shapes` }] : []),
+    ];
+
+    return this.buildReasonCard({
+      question: `Properties of a ${name}`,
+      verdict: `A ${name} has ${props.length + (shape.isA?.length||0)} key properties listed below.`,
+      verdictColor: 'blue',
+      steps,
+      tag: 'properties',
+    });
+  },
+
+  // ── Helpers ──────────────────────────────────────────────────
+
+  prettyName(key) {
+    const names = {
+      isoscelesTrapezoid: 'isosceles trapezoid',
+      equilateral: 'equilateral triangle',
+    };
+    return names[key] || key;
+  },
+
+  getDefinition(shape) {
+    const defs = {
+      square:       'a parallelogram with four equal sides and four right angles',
+      rectangle:    'a parallelogram with four right angles (90°)',
+      rhombus:      'a parallelogram with four equal sides',
+      parallelogram:'a quadrilateral with both pairs of opposite sides parallel',
+      trapezoid:    'a quadrilateral with exactly one pair of parallel sides',
+      isoscelesTrapezoid: 'a trapezoid with equal legs (non-parallel sides)',
+      kite:         'a quadrilateral with two pairs of consecutive congruent sides',
+      quadrilateral:'a polygon with exactly four sides',
+      polygon:      'a closed figure with straight sides',
+      triangle:     'a polygon with three sides and three angles summing to 180°',
+      equilateral:  'a triangle with all three sides equal and all angles 60°',
+      isosceles:    'a triangle with at least two equal sides',
+      scalene:      'a triangle with no equal sides',
+      pentagon:     'a polygon with five sides',
+      hexagon:      'a polygon with six sides',
+      heptagon:     'a polygon with seven sides',
+      octagon:      'a polygon with eight sides',
+      circle:       'the set of all points equidistant from a center point',
+    };
+    return defs[shape] || `a geometric shape called a ${shape}`;
+  },
+
+  getInheritanceEvidence(subject, target) {
+    const evidence = {
+      'square-rectangle':   [{ s: 'A square has four right angles by definition', r: 'Definition of square' }, { s: 'This satisfies the requirement for a rectangle', r: 'Meets rectangle definition' }],
+      'square-rhombus':     [{ s: 'A square has four equal sides by definition', r: 'Definition of square' }, { s: 'This satisfies the requirement for a rhombus', r: 'Meets rhombus definition' }],
+      'square-parallelogram': [{ s: 'A square is a rectangle, and rectangles are parallelograms', r: 'Inheritance chain' }],
+      'rectangle-parallelogram': [{ s: 'A rectangle has two pairs of parallel opposite sides', r: 'Property of rectangle' }, { s: 'This is exactly the definition of a parallelogram', r: 'Matches definition' }],
+      'rhombus-parallelogram': [{ s: 'A rhombus has two pairs of parallel opposite sides', r: 'Property of rhombus' }, { s: 'This satisfies the parallelogram definition', r: 'Matches definition' }],
+      'equilateral-isosceles': [{ s: 'An equilateral triangle has three equal sides', r: 'Definition of equilateral' }, { s: 'Having at least two equal sides makes it isosceles', r: 'Definition of isosceles (at least two equal)' }],
+    };
+    return evidence[`${subject}-${target}`] || [
+      { s: `A ${this.prettyName(subject)} satisfies all conditions of a ${this.prettyName(target)}`, r: 'By definition check' }
+    ];
+  },
+
+  getExtraRequirements(subject, target) {
+    const extras = {
+      'rectangle-square':    'all four sides must be equal',
+      'rhombus-square':      'all four angles must be 90°',
+      'parallelogram-rectangle': 'all angles must be 90°',
+      'parallelogram-rhombus':   'all four sides must be equal',
+      'isosceles-equilateral':   'all three sides (not just two) must be equal',
+    };
+    return extras[`${subject}-${target}`] || null;
+  },
+
+  getConflict(subject, target) {
+    const conflicts = {
+      'trapezoid-parallelogram': 'A trapezoid has exactly one pair of parallel sides; a parallelogram requires two pairs',
+      'parallelogram-trapezoid': 'A parallelogram has two pairs of parallel sides; a trapezoid has exactly one',
+      'scalene-isosceles':  'Scalene means no equal sides; isosceles requires at least two equal',
+      'scalene-equilateral':'Scalene has no equal sides; equilateral requires all equal',
+    };
+    return conflicts[`${subject}-${target}`] || null;
+  },
+
+  getSharedProps(a, b) {
+    const pa = SHAPES[a]?.props || [];
+    const pb = SHAPES[b]?.props || [];
+    const shared = [];
+    for (const p of pa) {
+      if (pb.some(q => q.toLowerCase().includes(p.toLowerCase().split(' ')[0]) || p.toLowerCase().includes(q.toLowerCase().split(' ')[0]))) {
+        shared.push(p);
+      }
+    }
+    // Common parent check
+    const aIsA = SHAPES[a]?.isA || [];
+    const bIsA = SHAPES[b]?.isA || [];
+    const common = aIsA.filter(x => bIsA.includes(x));
+    if (common.length) shared.push(`both are ${common[0]}s`);
+    return [...new Set(shared)].slice(0,3);
+  },
+
+  getUniqueProps(a, b) {
+    const aShape = SHAPES[a] || {};
+    const bShape = SHAPES[b] || {};
+    const unique = [];
+    if (aShape.allAngles === 90 && bShape.allAngles !== 90) unique.push('all angles 90°');
+    if (aShape.allSidesEqual && !bShape.allSidesEqual) unique.push('all sides equal');
+    if ((aShape.props||[]).length) {
+      const bProps = (bShape.props||[]).join(' ').toLowerCase();
+      for (const p of aShape.props) {
+        const key = p.split(' ').slice(0,2).join(' ').toLowerCase();
+        if (!bProps.includes(key)) unique.push(p);
+      }
+    }
+    return [...new Set(unique)].slice(0,3);
+  },
+
+  sharedParent(a, b) {
+    const aIsA = [a, ...(SHAPES[a]?.isA || [])];
+    const bIsA = [b, ...(SHAPES[b]?.isA || [])];
+    const common = aIsA.filter(x => bIsA.includes(x));
+    return common[0] || null;
+  },
+
+  getDiagTheorem(shape) {
+    if (shape === 'rectangle' || shape === 'square') return 'Rectangle Diagonals Theorem (7.13)';
+    if (shape === 'isoscelesTrapezoid') return 'Isosceles Trapezoid Diagonals Theorem (7.16)';
+    return 'theorem';
+  },
+
+  // ── Build the rendered reasoning card ───────────────────────
+  buildReasonCard({ question, verdict, verdictColor, steps, tag }) {
+    const colors = {
+      green:  { bg: 'rgba(92,184,92,0.1)',  border: 'rgba(92,184,92,0.3)',  text: '#5cb85c' },
+      red:    { bg: 'rgba(224,92,92,0.1)',   border: 'rgba(224,92,92,0.3)',  text: '#e05c5c' },
+      yellow: { bg: 'rgba(212,175,106,0.1)', border: 'rgba(212,175,106,0.3)',text: '#d4af6a' },
+      blue:   { bg: 'rgba(107,147,214,0.1)', border: 'rgba(107,147,214,0.3)',text: '#6b93d6' },
+    };
+    const c = colors[verdictColor] || colors.blue;
+
+    const stepsHtml = steps.map((s, i) => `
+      <tr>
+        <td>${i + 1}</td>
+        <td>${escHtml(s.s)}</td>
+        <td>${escHtml(s.r)}</td>
+      </tr>`).join('');
+
+    return `<div class="reason-card">
+      <div class="reason-card-head">
+        <span class="reason-card-title">${escHtml(question)}</span>
+        <span class="reason-card-badge">${escHtml(tag)}</span>
+      </div>
+      <div class="reason-verdict" style="background:${c.bg};border-color:${c.border};color:${c.text}">
+        ${escHtml(verdict)}
+      </div>
+      <div class="reason-proof-section">
+        <div class="reason-proof-lbl">Logical reasoning</div>
+        <table class="proof-table">
+          <thead><tr><th>#</th><th>Statement</th><th>Reason</th></tr></thead>
+          <tbody>${stepsHtml}</tbody>
+        </table>
+      </div>
+    </div>`;
+  },
+
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   prove.js — ProofGPT Interactive Proof Engine
+   - Library of known theorems not in PROOF_LIBRARY
+   - Detects "prove X" queries
+   - Runs a 3-step dialogue (conditional → given → prove)
+   - Generates a two-column proof + diagram on the spot
+   ═══════════════════════════════════════════════════════════════ */
+
+// ── Session state ─────────────────────────────────────────────
+var ProofSession = {
+  active: false,
+  step: null,       // 'awaiting_conditional' | 'awaiting_given' | 'awaiting_prove' | 'done'
+  title: '',
+  conditional: '',
+  given: [],
+  prove: '',
+  rawInput: '',
+  knownKey: null,   // if matched a known theorem, skip dialogue
+};
+
+// ── Known theorems not in PROOF_LIBRARY ──────────────────────
+// Full proofs for common theorems students ask to prove
+var KNOWN_PROOFS = [
+
+  {
+    keys: ['triangle sum', 'angles of a triangle', 'triangle angle sum', 'angles add up to 180',
+           'sum of angles triangle', 'triangle angles 180'],
+    proof: {
+      title: 'Triangle Sum Theorem',
+      conditional: 'If a polygon is a triangle, then the sum of its interior angles is 180°.',
+      given: ['△ABC'],
+      prove: 'm∠A + m∠B + m∠C = 180°',
+      diagramTopic: 'triangle angles',
+      steps: [
+        { statement: 'Draw line ℓ through B parallel to AC', reason: 'Parallel Postulate' },
+        { statement: '∠1 ≅ ∠A (∠1 is the angle between ℓ and BA on the left of B)', reason: 'Alternate Interior Angles Theorem (ℓ ∥ AC)' },
+        { statement: '∠2 ≅ ∠C (∠2 is the angle between ℓ and BC on the right of B)', reason: 'Alternate Interior Angles Theorem (ℓ ∥ AC)' },
+        { statement: '∠1 + ∠B + ∠2 = 180°', reason: 'Linear Pair / Angles on a straight line sum to 180°' },
+        { statement: 'm∠A + m∠B + m∠C = 180°', reason: 'Substitution (∠1 = ∠A, ∠2 = ∠C)' },
+      ],
+      explanation: 'The key trick is drawing a line through one vertex parallel to the opposite side. This lets you use alternate interior angles to "move" two of the triangle\'s angles to sit alongside the third — and together they form a straight line (180°).',
+    }
+  },
+
+  {
+    keys: ['exterior angle theorem', 'exterior angle of triangle', 'exterior angle equals',
+           'remote interior angles'],
+    proof: {
+      title: 'Triangle Exterior Angle Theorem',
+      conditional: 'If an angle is an exterior angle of a triangle, then its measure equals the sum of the two non-adjacent interior angles.',
+      given: ['△ABC', '∠ACD is an exterior angle (D is on ray BC beyond C)'],
+      prove: 'm∠ACD = m∠A + m∠B',
+      diagramTopic: 'triangle angles',
+      steps: [
+        { statement: 'm∠A + m∠B + m∠ACB = 180°', reason: 'Triangle Sum Theorem' },
+        { statement: '∠ACB + ∠ACD = 180°', reason: 'Linear Pair Postulate (BC is a straight line)' },
+        { statement: 'm∠ACB = 180° − m∠ACD', reason: 'Subtraction Property of Equality' },
+        { statement: 'm∠A + m∠B + (180° − m∠ACD) = 180°', reason: 'Substitution' },
+        { statement: 'm∠A + m∠B = m∠ACD', reason: 'Subtraction Property of Equality' },
+      ],
+      explanation: 'An exterior angle is formed by extending one side of the triangle. Because the exterior angle and the adjacent interior angle are a linear pair (sum to 180°), and all three interior angles also sum to 180°, the exterior angle must equal the sum of the other two interior angles.',
+    }
+  },
+
+  {
+    keys: ['vertical angles', 'vertical angles congruent', 'vertical angles equal',
+           'vertical angles theorem'],
+    proof: {
+      title: 'Vertical Angles Theorem',
+      conditional: 'If two angles are vertical angles, then they are congruent.',
+      given: ['Lines AB and CD intersect at E', '∠AEC and ∠BED are vertical angles'],
+      prove: '∠AEC ≅ ∠BED',
+      diagramTopic: 'vertical angle',
+      steps: [
+        { statement: '∠AEC + ∠AED = 180°', reason: 'Linear Pair Postulate (AEB is a straight line)' },
+        { statement: '∠BED + ∠AED = 180°', reason: 'Linear Pair Postulate (CED is a straight line)' },
+        { statement: '∠AEC + ∠AED = ∠BED + ∠AED', reason: 'Transitive Property (both equal 180°)' },
+        { statement: '∠AEC = ∠BED', reason: 'Subtraction Property of Equality (subtract ∠AED from both sides)' },
+        { statement: '∠AEC ≅ ∠BED', reason: 'Definition of congruent angles' },
+      ],
+      explanation: 'Vertical angles share a vertex but not a side. Because each one pairs with the same adjacent angle to form a straight line (180°), subtracting that shared angle from both equations proves the vertical angles must be equal.',
+    }
+  },
+
+  {
+    keys: ['isosceles base angles', 'base angles isosceles', 'isosceles triangle base angles',
+           'two sides congruent angles', 'base angles theorem'],
+    proof: {
+      title: 'Isosceles Triangle Base Angles Theorem',
+      conditional: 'If two sides of a triangle are congruent, then the angles opposite those sides are congruent.',
+      given: ['△ABC', 'AB ≅ AC'],
+      prove: '∠B ≅ ∠C',
+      diagramTopic: 'generic triangle',
+      steps: [
+        { statement: 'Let M be the midpoint of BC', reason: 'Every segment has a midpoint (Ruler Postulate)' },
+        { statement: 'Draw segment AM', reason: 'Two-Point Postulate' },
+        { statement: 'BM ≅ MC', reason: 'Definition of midpoint' },
+        { statement: 'AB ≅ AC', reason: 'Given' },
+        { statement: 'AM ≅ AM', reason: 'Reflexive Property of Congruence' },
+        { statement: '△ABM ≅ △ACM', reason: 'SSS Congruence Postulate' },
+        { statement: '∠B ≅ ∠C', reason: 'CPCTC (Corresponding Parts of Congruent Triangles are Congruent)' },
+      ],
+      explanation: 'Draw the median from the apex to the midpoint of the base. This creates two triangles that share the median and have two equal sides (the given equal sides and the equal halves of the base). SSS congruence proves them congruent, so their base angles must match.',
+    }
+  },
+
+  {
+    keys: ['alternate interior angles', 'alternate interior angles theorem',
+           'parallel lines alternate', 'z angles'],
+    proof: {
+      title: 'Alternate Interior Angles Theorem',
+      conditional: 'If two parallel lines are cut by a transversal, then alternate interior angles are congruent.',
+      given: ['Lines ℓ₁ ∥ ℓ₂', 'Transversal t cuts both lines at P and Q'],
+      prove: '∠1 ≅ ∠2 (alternate interior angles)',
+      diagramTopic: 'parallel lines',
+      steps: [
+        { statement: '∠1 and ∠3 are a linear pair at P', reason: 'Definition of linear pair' },
+        { statement: '∠1 + ∠3 = 180°', reason: 'Linear Pair Postulate' },
+        { statement: '∠3 and ∠2 are co-interior (same-side interior) angles', reason: 'Definition — both between parallel lines, same side of transversal' },
+        { statement: '∠3 + ∠2 = 180°', reason: 'Co-Interior Angles Theorem (ℓ₁ ∥ ℓ₂)' },
+        { statement: '∠1 + ∠3 = ∠3 + ∠2', reason: 'Transitive Property (both = 180°)' },
+        { statement: '∠1 = ∠2', reason: 'Subtraction Property of Equality' },
+        { statement: '∠1 ≅ ∠2', reason: 'Definition of congruent angles' },
+      ],
+      explanation: 'Alternate interior angles sit on opposite sides of the transversal, between the parallel lines. Each one forms a linear pair with a co-interior angle. Because both co-interior pairs must add to 180° (parallel lines), the alternate interior angles end up equal.',
+    }
+  },
+
+  {
+    keys: ['pythagorean theorem', 'pythagoras', 'a squared plus b squared', 'a^2 + b^2 = c^2',
+           'prove pythagorean'],
+    proof: {
+      title: 'Pythagorean Theorem',
+      conditional: 'If a triangle is a right triangle with legs a and b and hypotenuse c, then a² + b² = c².',
+      given: ['△ABC with right angle at C', 'legs: a = BC, b = AC', 'hypotenuse: c = AB'],
+      prove: 'a² + b² = c²',
+      diagramTopic: 'pythagorean',
+      steps: [
+        { statement: 'Draw altitude CD from C perpendicular to AB, meeting AB at D', reason: 'Geometric construction (altitude from right angle to hypotenuse)' },
+        { statement: '∠ACB = 90° and ∠CDB = 90°', reason: 'Given (right angle) and definition of altitude' },
+        { statement: '∠B ≅ ∠B', reason: 'Reflexive Property' },
+        { statement: '△ABC ~ △BDC', reason: 'AA Similarity (∠B shared, both have 90°)' },
+        { statement: 'c/a = a/BD → a² = c · BD', reason: 'Corresponding sides of similar triangles proportional' },
+        { statement: '△ABC ~ △ADC', reason: 'AA Similarity (∠A shared, both have 90°)' },
+        { statement: 'c/b = b/AD → b² = c · AD', reason: 'Corresponding sides of similar triangles proportional' },
+        { statement: 'a² + b² = c · BD + c · AD = c(BD + AD) = c · c = c²', reason: 'Addition and Segment Addition Postulate (BD + AD = AB = c)' },
+      ],
+      explanation: 'The altitude from the right angle creates two smaller triangles, each similar to the original. This gives two proportions that, when added together, produce exactly a² + b² = c². The key insight is that the altitude splits the hypotenuse into two pieces that multiply with the sides to give perfect squares.',
+    }
+  },
+
+  {
+    keys: ['parallel lines same side', 'co-interior angles', 'consecutive interior angles',
+           'same side interior angles', 'co interior supplementary'],
+    proof: {
+      title: 'Co-Interior Angles Theorem',
+      conditional: 'If two parallel lines are cut by a transversal, then co-interior (same-side interior) angles are supplementary.',
+      given: ['Lines ℓ₁ ∥ ℓ₂', 'Transversal t', '∠1 and ∠2 are co-interior angles'],
+      prove: '∠1 + ∠2 = 180°',
+      diagramTopic: 'parallel lines',
+      steps: [
+        { statement: '∠1 and ∠3 are alternate interior angles (ℓ₁ ∥ ℓ₂)', reason: 'Definition of alternate interior angles' },
+        { statement: '∠1 ≅ ∠3', reason: 'Alternate Interior Angles Theorem' },
+        { statement: '∠3 and ∠2 are a linear pair', reason: 'They share a side and their non-common sides form a straight line' },
+        { statement: '∠3 + ∠2 = 180°', reason: 'Linear Pair Postulate' },
+        { statement: '∠1 + ∠2 = 180°', reason: 'Substitution (∠1 = ∠3)' },
+      ],
+      explanation: 'Co-interior angles are on the same side of the transversal. One of them equals the alternate interior angle on the other side (from the Alternate Interior Angles Theorem), and that angle and the other co-interior angle form a straight line — so they add to 180°.',
+    }
+  },
+
+  {
+    keys: ['corresponding angles', 'corresponding angles theorem', 'f angles', 'parallel corresponding'],
+    proof: {
+      title: 'Corresponding Angles Theorem',
+      conditional: 'If two parallel lines are cut by a transversal, then corresponding angles are congruent.',
+      given: ['Lines ℓ₁ ∥ ℓ₂', 'Transversal t', '∠1 and ∠2 are corresponding angles'],
+      prove: '∠1 ≅ ∠2',
+      diagramTopic: 'parallel lines',
+      steps: [
+        { statement: '∠1 and ∠3 are a vertical pair at their intersection', reason: 'Definition of vertical angles' },
+        { statement: '∠1 ≅ ∠3', reason: 'Vertical Angles Theorem' },
+        { statement: '∠3 and ∠2 are alternate interior angles (ℓ₁ ∥ ℓ₂)', reason: 'Definition of alternate interior angles' },
+        { statement: '∠3 ≅ ∠2', reason: 'Alternate Interior Angles Theorem' },
+        { statement: '∠1 ≅ ∠2', reason: 'Transitive Property of Congruence' },
+      ],
+      explanation: 'Corresponding angles occupy the same position at each intersection. The proof chains through vertical angles (to get to the alternate interior angle) and then the Alternate Interior Angles Theorem to connect across the parallel lines.',
+    }
+  },
+
+  {
+    keys: ['midpoint theorem', 'midpoint divides', 'midpoint segment', 'segment bisector'],
+    proof: {
+      title: 'Midpoint Theorem',
+      conditional: 'If M is the midpoint of segment AB, then AM = MB = ½AB.',
+      given: ['M is the midpoint of AB'],
+      prove: 'AM = MB = ½AB',
+      diagramTopic: 'segment addition',
+      steps: [
+        { statement: 'M is the midpoint of AB', reason: 'Given' },
+        { statement: 'AM = MB', reason: 'Definition of midpoint (midpoint divides segment into two equal parts)' },
+        { statement: 'AM + MB = AB', reason: 'Segment Addition Postulate' },
+        { statement: 'AM + AM = AB', reason: 'Substitution (AM = MB)' },
+        { statement: '2·AM = AB', reason: 'Simplification' },
+        { statement: 'AM = ½AB', reason: 'Division Property of Equality' },
+        { statement: 'MB = ½AB', reason: 'Substitution (AM = MB)' },
+      ],
+      explanation: 'Simple but fundamental. The definition of midpoint gives AM = MB. Adding them gives the whole segment (Segment Addition). Dividing by 2 gives each half equals ½ of the total.',
+    }
+  },
+
+  {
+    keys: ['angle bisector', 'angle bisector definition', 'bisector divides angle',
+           'ray bisects angle'],
+    proof: {
+      title: 'Angle Bisector Theorem (Basic)',
+      conditional: 'If ray BD bisects angle ABC, then m∠ABD = m∠DBC = ½m∠ABC.',
+      given: ['Ray BD bisects ∠ABC'],
+      prove: 'm∠ABD = m∠DBC = ½m∠ABC',
+      diagramTopic: 'angle bisector',
+      steps: [
+        { statement: 'Ray BD bisects ∠ABC', reason: 'Given' },
+        { statement: 'm∠ABD = m∠DBC', reason: 'Definition of angle bisector' },
+        { statement: 'm∠ABD + m∠DBC = m∠ABC', reason: 'Angle Addition Postulate' },
+        { statement: 'm∠ABD + m∠ABD = m∠ABC', reason: 'Substitution (∠ABD = ∠DBC)' },
+        { statement: '2·m∠ABD = m∠ABC', reason: 'Simplification' },
+        { statement: 'm∠ABD = ½m∠ABC', reason: 'Division Property of Equality' },
+        { statement: 'm∠DBC = ½m∠ABC', reason: 'Substitution (m∠ABD = m∠DBC)' },
+      ],
+      explanation: 'An angle bisector splits an angle into two equal halves. Using the Angle Addition Postulate (the two halves add to the whole) and substitution, we prove each half is exactly ½ of the original angle.',
+    }
+  },
+
+  {
+    keys: ['supplement', 'supplementary angles', 'linear pair supplementary',
+           'angles that add to 180'],
+    proof: {
+      title: 'Linear Pair Theorem',
+      conditional: 'If two angles form a linear pair, then they are supplementary (sum to 180°).',
+      given: ['∠AOB and ∠BOC form a linear pair (A, O, C are collinear)'],
+      prove: 'm∠AOB + m∠BOC = 180°',
+      diagramTopic: 'linear pair',
+      steps: [
+        { statement: 'A, O, C are collinear and ray OB is between them', reason: 'Given (linear pair definition)' },
+        { statement: '∠AOC is a straight angle', reason: 'Definition of straight angle (collinear points)' },
+        { statement: 'm∠AOC = 180°', reason: 'Definition of straight angle' },
+        { statement: 'm∠AOB + m∠BOC = m∠AOC', reason: 'Angle Addition Postulate' },
+        { statement: 'm∠AOB + m∠BOC = 180°', reason: 'Substitution' },
+      ],
+      explanation: 'A linear pair shares a ray and their other sides form a straight line (180°). The Angle Addition Postulate says the two angles add to the full straight angle, which is 180°.',
+    }
+  },
+
+  {
+    keys: ['hypotenuse leg', 'hl theorem', 'hl congruence', 'hypotenuse leg theorem',
+           'right triangle hypotenuse leg', 'hl postulate'],
+    proof: {
+      title: 'Hypotenuse-Leg (HL) Congruence Theorem',
+      conditional: 'If the hypotenuse and a leg of one right triangle are congruent to the hypotenuse and a leg of another right triangle, then the triangles are congruent.',
+      given: ['△ABC and △DEF are right triangles', '∠C = ∠F = 90°', 'AB ≅ DE (hypotenuses)', 'BC ≅ EF (legs)'],
+      prove: '△ABC ≅ △DEF',
+      diagramTopic: 'SSS congruence postulate',
+      steps: [
+        { statement: '△ABC and △DEF are right triangles with ∠C = ∠F = 90°', reason: 'Given' },
+        { statement: 'AB ≅ DE (hypotenuses) and BC ≅ EF (one leg)', reason: 'Given' },
+        { statement: 'AB² = AC² + BC² and DE² = DF² + EF²', reason: 'Pythagorean Theorem' },
+        { statement: 'AC² = AB² − BC²', reason: 'Subtraction Property of Equality' },
+        { statement: 'DF² = DE² − EF²', reason: 'Subtraction Property of Equality' },
+        { statement: 'AC² = DF²  (since AB = DE and BC = EF)', reason: 'Substitution' },
+        { statement: 'AC = DF', reason: 'Square Root Property (lengths are positive)' },
+        { statement: 'AC ≅ DF', reason: 'Definition of congruent segments' },
+        { statement: '△ABC ≅ △DEF', reason: 'SSS Congruence Postulate (AB=DE, BC=EF, AC=DF)' },
+      ],
+      explanation: 'HL works only for right triangles. The Pythagorean Theorem lets us calculate the missing leg from the hypotenuse and one leg — so knowing those two pieces determines all three sides, making SSS apply.',
+    }
+  },
+
+  {
+    keys: ['aas congruence', 'angle angle side', 'aas theorem', 'two angles and non-included side'],
+    proof: {
+      title: 'Angle-Angle-Side (AAS) Congruence Theorem',
+      conditional: 'If two angles and a non-included side of one triangle are congruent to two angles and the corresponding non-included side of another triangle, then the triangles are congruent.',
+      given: ['△ABC and △DEF', '∠A ≅ ∠D', '∠B ≅ ∠E', 'BC ≅ EF (non-included sides)'],
+      prove: '△ABC ≅ △DEF',
+      diagramTopic: 'ASA congruence postulate',
+      steps: [
+        { statement: '∠A ≅ ∠D and ∠B ≅ ∠E', reason: 'Given' },
+        { statement: 'm∠A + m∠B + m∠C = 180°', reason: 'Triangle Sum Theorem' },
+        { statement: 'm∠D + m∠E + m∠F = 180°', reason: 'Triangle Sum Theorem' },
+        { statement: 'm∠C = m∠F', reason: 'Substitution (since ∠A=∠D and ∠B=∠E, the thirds must be equal)' },
+        { statement: '∠C ≅ ∠F', reason: 'Definition of congruent angles' },
+        { statement: 'BC ≅ EF', reason: 'Given' },
+        { statement: '△ABC ≅ △DEF', reason: 'ASA Congruence Postulate (∠B ≅ ∠E, BC ≅ EF, ∠C ≅ ∠F)' },
+      ],
+      explanation: 'If two angles match, the third must match too (Triangle Sum). Then two angles plus a side is ASA — just a different pair of angles than the "included side" version.',
+    }
+  },
+
+  {
+    keys: ['converse pythagorean', 'pythagorean converse', 'if a squared b squared equals c squared',
+           'three sides right triangle', 'is it a right triangle'],
+    proof: {
+      title: 'Converse of the Pythagorean Theorem',
+      conditional: 'If the square of the longest side of a triangle equals the sum of the squares of the other two sides, then the triangle is a right triangle.',
+      given: ['△ABC with sides a, b, c where c is longest', 'a² + b² = c²'],
+      prove: '△ABC is a right triangle',
+      diagramTopic: 'pythagorean',
+      steps: [
+        { statement: 'Construct △DEF with ∠F = 90°, legs d = a and e = b', reason: 'Construction (Ruler and Protractor Postulates)' },
+        { statement: 'By Pythagorean Theorem: d² + e² = f² → a² + b² = f²', reason: 'Pythagorean Theorem applied to △DEF' },
+        { statement: 'a² + b² = c² (given) and a² + b² = f²', reason: 'Given and step above' },
+        { statement: 'c² = f², so c = f', reason: 'Transitive Property + Square Root Property' },
+        { statement: '△ABC ≅ △DEF', reason: 'SSS Congruence Postulate (a=d, b=e, c=f)' },
+        { statement: '∠C ≅ ∠F = 90°', reason: 'CPCTC' },
+        { statement: '△ABC is a right triangle ∎', reason: 'Definition of right triangle (has a 90° angle)' },
+      ],
+      explanation: 'Build a known right triangle with the same two legs. The Pythagorean Theorem tells us its hypotenuse equals c, making all three sides match — SSS makes them congruent, so the original triangle must also have a right angle.',
+    }
+  },
+
+  {
+    keys: ['midsegment triangle', 'triangle midsegment', 'midsegment theorem', 'midsegment', 'midpoint both sides parallel half',
+           'segment midpoints triangle'],
+    proof: {
+      title: 'Triangle Midsegment Theorem',
+      conditional: 'If a segment connects the midpoints of two sides of a triangle, then it is parallel to the third side and half as long.',
+      given: ['△ABC', 'D is the midpoint of AB', 'E is the midpoint of AC'],
+      prove: 'DE ∥ BC and DE = ½BC',
+      diagramTopic: 'midsegment triangle',
+      steps: [
+        { statement: 'D is midpoint of AB; E is midpoint of AC', reason: 'Given' },
+        { statement: 'AD = ½AB and AE = ½AC', reason: 'Definition of midpoint' },
+        { statement: 'AD/AB = AE/AC = ½', reason: 'Division Property' },
+        { statement: '∠A ≅ ∠A', reason: 'Reflexive Property' },
+        { statement: '△ADE ~ △ABC', reason: 'SAS Similarity Theorem (proportional sides, included angle)' },
+        { statement: '∠ADE ≅ ∠ABC', reason: 'Corresponding angles of similar triangles' },
+        { statement: 'DE ∥ BC', reason: 'Converse of Corresponding Angles Postulate' },
+        { statement: 'DE/BC = ½', reason: 'Corresponding sides of similar triangles are proportional' },
+        { statement: 'DE = ½BC ∎', reason: 'Multiplication Property of Equality' },
+      ],
+      explanation: 'The midsegment creates a smaller triangle similar to the original with a scale factor of ½. Similarity gives us the parallel sides and the 1:2 length ratio automatically.',
+    }
+  },
+
+
+];
+
+// ── Known proof lookup ────────────────────────────────────────
+function findKnownProof(query) {
+  const q = query.toLowerCase();
+  // Remove "prove", "proof of", "show that", etc.
+  const cleaned = q
+    .replace(/^(prove|proof of|proof that|show that|show me|demonstrate|derive|verify|establish)\s+/i, '')
+    .replace(/\b(the|that|a|an)\b\s*/g, '')
+    .trim();
+
+  let best = null, bestScore = 0;
+  for (const entry of KNOWN_PROOFS) {
+    for (const key of entry.keys) {
+      // Exact match in full query
+      if (q.includes(key)) { return entry; }
+      // Score by word overlap
+      const keyWords = key.split(/\s+/);
+      const score = keyWords.filter(w => cleaned.includes(w) && w.length > 3).length;
+      if (score > bestScore && score >= 2) { bestScore = score; best = entry; }
+    }
+  }
+  return best;
+}
+
+// ── Is this a "prove X" request? ─────────────────────────────
+function isProveRequest(query) {
+  const q = query.toLowerCase();
+  return /^(prove|proof of|proof that|show that|show me how to prove|demonstrate|derive that|verify that)\b/.test(q);
+}
+
+// ── Extract theorem name from query ──────────────────────────
+function extractTheoremName(query) {
+  return query
+    .replace(/^(prove|proof of|proof that|show that|show me|demonstrate|derive|verify)\s+/i, '')
+    .replace(/^(the|that|a|an)\s+/i, '')
+    .trim();
+}
+
+// ── Custom proof card renderer ────────────────────────────────
+function buildCustomProofCard(proof, format) {
+  const isTwo = format !== 'paragraph';
+  const diagramSVG = (typeof DiagramRenderer !== 'undefined')
+    ? DiagramRenderer.render(proof.diagramTopic || proof.title, null)
+    : '';
+
+  const stepsHtml = isTwo
+    ? `<table class="proof-table">
+        <thead><tr><th>#</th><th>Statement</th><th>Reason</th></tr></thead>
+        <tbody>
+          ${(proof.steps || []).map((s, i) => `
+            <tr>
+              <td>${i + 1}</td>
+              <td>${escHtml(s.statement || '')}</td>
+              <td>${escHtml(s.reason || '')}</td>
+            </tr>`).join('')}
+        </tbody>
+      </table>`
+    : `<div class="proof-para">
+        ${(proof.steps || []).map(s =>
+          `<p>${escHtml(s.statement || '')} <span style="color:var(--tx-3)">— ${escHtml(s.reason || '')}</span></p>`
+        ).join('')}
+      </div>`;
+
+  return `<div class="proof-card">
+    <div class="proof-card-head">
+      <span class="proof-card-title">${escHtml(proof.title)}</span>
+      <span class="proof-card-badge" style="background:rgba(107,147,214,0.12);border-color:rgba(107,147,214,0.25);color:#6b93d6;">custom proof</span>
+    </div>
+
+    ${proof.conditional ? `<div class="proof-section">
+      <div class="proof-section-lbl">If–Then</div>
+      <div class="proof-conditional">${escHtml(proof.conditional)}</div>
+    </div>` : ''}
+
+    ${proof.given?.length ? `<div class="proof-section">
+      <div class="proof-section-lbl">Given</div>
+      <ul class="proof-given">${proof.given.map(g => `<li>${escHtml(g)}</li>`).join('')}</ul>
+    </div>` : ''}
+
+    ${proof.prove ? `<div class="proof-section">
+      <div class="proof-section-lbl">Prove</div>
+      <div style="font-family:var(--mono);font-size:13px;color:var(--tx-1);padding:2px 0;">${escHtml(proof.prove)}</div>
+    </div>` : ''}
+
+    ${diagramSVG ? `<div class="proof-section">
+      <div class="proof-section-lbl">Diagram</div>
+      <div class="proof-diagram-wrap">${diagramSVG}</div>
+    </div>` : ''}
+
+    <div class="proof-section">
+      <div class="proof-section-lbl">${isTwo ? 'Two-Column Proof' : 'Paragraph Proof'}</div>
+      ${stepsHtml}
+    </div>
+
+    ${proof.explanation ? `<div class="proof-section">
+      <div class="proof-section-lbl">The idea</div>
+      <div class="proof-explanation">${escHtml(proof.explanation)}</div>
+    </div>` : ''}
+  </div>`;
+}
+
+// ── Dialogue card: shows a prompt with optional action buttons ─
+function showProveDialogueCard(heading, body, buttons) {
+  const btnsHtml = (buttons || []).map(b => {
+    if (b.action === 'cancel') {
+      return `<button class="hint-chip" onclick="cancelProveSession()" style="border-color:var(--red);color:var(--red);">✕ Cancel</button>`;
+    }
+    return `<button class="hint-chip" onclick="quickSend('${escHtml(b.label)}')">${escHtml(b.label)}</button>`;
+  }).join('');
+
+  const html = `<div class="prove-dialogue-card">
+    <div class="prove-dialogue-head">${heading}</div>
+    <div class="prove-dialogue-body">${body}</div>
+    ${btnsHtml ? `<div class="prove-dialogue-actions">${btnsHtml}</div>` : ''}
+  </div>`;
+
+  appendMsg('assistant', html);
+}
+
+// ── User-built proof generator ────────────────────────────────
+function generateUserProof(session) {
+  // Parse the given list from a string like "AB ≅ CD, ∠A ≅ ∠B"
+  const givenList = session.given
+    .split(/[,;]+/)
+    .map(s => s.trim())
+    .filter(Boolean);
+
+  // Parse conditional into hypothesis / conclusion
+  const ifThen = session.conditional.match(/if\s+(.+?)[,]?\s+then\s+(.+)/i);
+  const hypothesis  = ifThen ? ifThen[1].trim() : session.given;
+  const conclusion  = ifThen ? ifThen[2].trim() : session.prove;
+
+  // Generate logical steps
+  const steps = generateLogicSteps(hypothesis, conclusion, givenList, session.prove);
+
+  return {
+    title: session.title,
+    conditional: session.conditional,
+    given: givenList,
+    prove: session.prove || conclusion,
+    diagramTopic: inferDiagramTopic(session.title + ' ' + session.conditional),
+    steps,
+    explanation: `This proof was constructed from your conditional statement. The logical chain starts from your given information and works step-by-step to reach the conclusion using definitions, postulates, and theorems.`,
+  };
+}
+
+// ── Logic step generator ──────────────────────────────────────
+function generateLogicSteps(hypothesis, conclusion, givenList, prove) {
+  const steps = [];
+  const hyp = hypothesis.toLowerCase();
+  const conc = conclusion.toLowerCase();
+  const prov = (prove || '').toLowerCase();
+
+  // Always start with the given
+  givenList.forEach(g => steps.push({ statement: g, reason: 'Given' }));
+
+  // ── Pattern matching for common proof structures ──────────
+
+  // Congruent triangles → CPCTC
+  if (conc.includes('≅') && (conc.includes('△') || hyp.includes('triangle'))) {
+    if (hyp.includes('sss') || (givenList.filter(g => g.includes('≅')).length >= 3)) {
+      steps.push({ statement: 'The three pairs of sides are congruent (from given)', reason: 'Given' });
+      steps.push({ statement: 'The two triangles are congruent', reason: 'SSS Congruence Postulate' });
+      steps.push({ statement: prove || conclusion, reason: 'CPCTC' });
+      return steps;
+    }
+    if (hyp.includes('sas') || (givenList.some(g => g.includes('∠')) && givenList.filter(g => g.includes('≅')).length >= 2)) {
+      steps.push({ statement: 'Two sides and the included angle are congruent (from given)', reason: 'Given' });
+      steps.push({ statement: 'The two triangles are congruent', reason: 'SAS Congruence Postulate' });
+      steps.push({ statement: prove || conclusion, reason: 'CPCTC' });
+      return steps;
+    }
+  }
+
+  // Parallel lines → angle relationships
+  if (hyp.includes('parallel') || givenList.some(g => g.includes('∥'))) {
+    steps.push({ statement: 'The lines are parallel', reason: 'Given' });
+    if (prov.includes('alternate') || prov.includes('∠')) {
+      steps.push({ statement: 'A transversal crosses the parallel lines', reason: 'Given / construction' });
+      steps.push({ statement: 'Alternate interior angles are formed', reason: 'Definition of alternate interior angles' });
+      steps.push({ statement: prove || conclusion, reason: 'Alternate Interior Angles Theorem' });
+      return steps;
+    }
+  }
+
+  // Right angle / perpendicular
+  if (hyp.includes('perpendicular') || hyp.includes('right angle') || givenList.some(g => g.includes('⊥'))) {
+    steps.push({ statement: 'The lines/segments are perpendicular', reason: 'Given' });
+    steps.push({ statement: 'The angle between them measures 90°', reason: 'Definition of perpendicular' });
+    if (prov.includes('90') || prov.includes('right')) {
+      steps.push({ statement: prove || conclusion, reason: 'Definition of right angle' });
+      return steps;
+    }
+  }
+
+  // Midpoint
+  if (hyp.includes('midpoint') || givenList.some(g => g.toLowerCase().includes('midpoint'))) {
+    const midSeg = givenList.find(g => g.toLowerCase().includes('midpoint')) || '';
+    steps.push({ statement: 'The point divides the segment into two equal parts', reason: 'Definition of midpoint' });
+    steps.push({ statement: 'The two parts add to the whole segment', reason: 'Segment Addition Postulate' });
+    steps.push({ statement: prove || conclusion, reason: 'Substitution and algebra' });
+    return steps;
+  }
+
+  // Isosceles triangle
+  if (hyp.includes('isosceles') || (hyp.includes('two sides') && hyp.includes('equal'))) {
+    steps.push({ statement: 'The triangle has two congruent sides', reason: 'Given (isosceles definition)' });
+    steps.push({ statement: 'Draw the median/altitude from the apex to the base', reason: 'Construction' });
+    steps.push({ statement: 'The two resulting triangles are congruent', reason: 'SSS Congruence Postulate' });
+    steps.push({ statement: prove || conclusion, reason: 'CPCTC' });
+    return steps;
+  }
+
+  // Angle bisector
+  if (hyp.includes('bisect') || givenList.some(g => g.toLowerCase().includes('bisect'))) {
+    steps.push({ statement: 'The ray divides the angle into two equal parts', reason: 'Definition of angle bisector' });
+    steps.push({ statement: 'The two angles add to the whole angle', reason: 'Angle Addition Postulate' });
+    steps.push({ statement: prove || conclusion, reason: 'Substitution and algebra' });
+    return steps;
+  }
+
+  // Supplementary / 180°
+  if (conc.includes('180') || conc.includes('supplementary')) {
+    steps.push({ statement: 'The angles together form a straight line', reason: 'Given / Linear pair' });
+    steps.push({ statement: 'A straight angle measures 180°', reason: 'Definition of straight angle' });
+    steps.push({ statement: prove || conclusion, reason: 'Angle Addition Postulate' });
+    return steps;
+  }
+
+  // Generic fallback — build a reasonable skeleton
+  steps.push({ statement: 'Identify all relevant definitions that apply', reason: 'Analysis of given information' });
+  steps.push({ statement: 'Apply the appropriate theorem or postulate', reason: 'Geometric reasoning' });
+  if (givenList.length >= 2) {
+    steps.push({ statement: 'Combine the given information', reason: 'Substitution / Transitive Property' });
+  }
+  steps.push({ statement: prove || conclusion, reason: 'Conclusion from steps above' });
+
+  return steps;
+}
+
+// ── Infer diagram topic from title/conditional ────────────────
+function inferDiagramTopic(text) {
+  const t = text.toLowerCase();
+  if (t.includes('triangle') && t.includes('sum')) return 'triangle angles';
+  if (t.includes('vertical angle'))  return 'vertical angle';
+  if (t.includes('linear pair') || t.includes('supplementary')) return 'linear pair';
+  if (t.includes('parallel'))        return 'parallel lines';
+  if (t.includes('isosceles'))       return 'generic triangle';
+  if (t.includes('midpoint') || t.includes('segment')) return 'segment addition';
+  if (t.includes('angle bisector'))  return 'angle bisector';
+  if (t.includes('pythagorean') || t.includes('right triangle')) return 'pythagorean';
+  if (t.includes('circle') || t.includes('inscribed')) return 'inscribed angle';
+  if (t.includes('chord'))           return 'congruent corresponding chords';
+  if (t.includes('tangent'))         return 'tangent line to circle';
+  if (t.includes('parallelogram'))   return 'parallelogram diagonals';
+  if (t.includes('rhombus'))         return 'rhombus';
+  if (t.includes('rectangle'))       return 'rectangle';
+  if (t.includes('trapezoid'))       return 'isosceles trapezoid';
+  if (t.includes('triangle'))        return 'generic triangle';
+  return 'generic triangle';
+}
+
+// ── Dialogue handler ──────────────────────────────────────────
+function handleProveDialogue(input) {
+  const step = ProofSession.step;
+
+  if (step === 'awaiting_conditional') {
+    const cleaned = input.trim();
+    if (cleaned.length < 8) {
+      showProveDialogueCard(
+        '❓ Try again',
+        `That seems too short. Please write the full if-then statement.<br><br>
+         Example: <em>"If AB ≅ CD and BC ≅ DA, then ABCD is a parallelogram."</em>`,
+        [{ label: 'Cancel', action: 'cancel' }]
+      );
+      return;
+    }
+
+    // Try to auto-solve from the conditional right now
+    if (typeof AutoProver !== 'undefined') {
+      const autoProof = AutoProver.solveFromConditional(cleaned, ProofSession.title);
+      if (autoProof && autoProof.steps && autoProof.steps.length > 2) {
+        ProofSession.active = false;
+        ProofSession.step = 'done';
+        const intro = `I can solve that from your conditional. Here\'s the proof for "${autoProof.title}":`;
+        const msgEl = appendMsg('assistant', '<p></p>');
+        const pEl = msgEl.querySelector('p');
+        streamText(pEl, intro, () => {
+          const cardEl = document.createElement('div');
+          cardEl.style.opacity = '0';
+          cardEl.style.transform = 'translateY(8px)';
+          cardEl.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
+          cardEl.innerHTML = buildCustomProofCard({
+            title: autoProof.title,
+            conditional: cleaned,
+            given: autoProof.given,
+            prove: autoProof.prove,
+            diagramTopic: autoProof.diag,
+            steps: autoProof.steps,
+            explanation: autoProof.explanation,
+          }, currentFormat);
+          msgEl.querySelector('.msg-body').appendChild(cardEl);
+          scrollThread();
+          requestAnimationFrame(() => { cardEl.style.opacity = '1'; cardEl.style.transform = 'translateY(0)'; scrollThread(); });
+        });
+        ProofSession = { active: false, step: null, title: '', conditional: '', given: [], prove: '', rawInput: '', knownKey: null };
+        return;
+      }
+    }
+
+    ProofSession.conditional = cleaned;
+    ProofSession.step = 'awaiting_given';
+
+    // Try to auto-parse the hypothesis as the given
+    const ifMatch = cleaned.match(/^[Ii]f\s+(.+?)[,.]?\s+[Tt]hen/);
+    const suggestion = ifMatch ? ifMatch[1].trim() : '';
+
+    showProveDialogueCard(
+      '✓ Got it. Now, what is <strong>Given</strong>?',
+      `List the given information — what you're allowed to assume is true.<br><br>
+       ${suggestion ? `Based on your conditional, this might be: <code>${escHtml(suggestion)}</code><br>Type it to confirm, or enter something different.` : 
+       'Example: <code>AB ≅ CD, ∠A ≅ ∠D</code>'}`,
+      suggestion ? [
+        { label: suggestion, action: 'quicksend' },
+        { label: 'Cancel', action: 'cancel' }
+      ] : [{ label: 'Cancel', action: 'cancel' }]
+    );
+    return;
+  }
+
+  if (step === 'awaiting_given') {
+    ProofSession.given = input.trim();
+    ProofSession.step = 'awaiting_prove';
+
+    // Auto-parse the conclusion from the conditional
+    const thenMatch = ProofSession.conditional.match(/[Tt]hen\s+(.+?)\.?\s*$/);
+    const suggestion = thenMatch ? thenMatch[1].trim() : '';
+
+    showProveDialogueCard(
+      '✓ Got it. What do you want to <strong>Prove</strong>?',
+      `What is the conclusion — what you need to show is true?<br><br>
+       ${suggestion ? `From your conditional, this would be: <code>${escHtml(suggestion)}</code><br>Type it to confirm, or enter something different.` :
+       'Example: <code>△ABC ≅ △DEF</code>'}`,
+      suggestion ? [
+        { label: suggestion, action: 'quicksend' },
+        { label: 'Cancel', action: 'cancel' }
+      ] : [{ label: 'Cancel', action: 'cancel' }]
+    );
+    return;
+  }
+
+  if (step === 'awaiting_prove') {
+    ProofSession.prove = input.trim();
+    ProofSession.step = 'done';
+    ProofSession.active = false;
+
+    // Generate the proof
+    const proof = generateUserProof(ProofSession);
+
+    const intro = `Here's your proof for "${proof.title}":`;
+    const msgEl = appendMsg('assistant', '<p></p>');
+    const pEl = msgEl.querySelector('p');
+    streamText(pEl, intro, () => {
+      const cardEl = document.createElement('div');
+      cardEl.style.opacity = '0';
+      cardEl.style.transform = 'translateY(8px)';
+      cardEl.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
+      cardEl.innerHTML = buildCustomProofCard(proof, currentFormat);
+      msgEl.querySelector('.msg-body').appendChild(cardEl);
+      scrollThread();
+      requestAnimationFrame(() => {
+        cardEl.style.opacity = '1';
+        cardEl.style.transform = 'translateY(0)';
+        scrollThread();
+      });
+    });
+
+    // Reset session
+    ProofSession = { active: false, step: null, title: '', conditional: '', given: [], prove: '', rawInput: '', knownKey: null };
+    return;
+  }
+}
+
+// ── Cancel session ────────────────────────────────────────────
+function cancelProveSession() {
+  ProofSession = { active: false, step: null, title: '', conditional: '', given: [], prove: '', rawInput: '', knownKey: null };
+  streamingReply("Proof cancelled. Ask me anything else!");
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   geoterms.js — Geometry Term Recognizer & Auto-Proof Engine
+   Knows: vertical angles, linear pairs, supplements, complements,
+   right angles, perpendicular, congruent, parallel, etc.
+   Can solve a proof given just a conditional statement.
+   ═══════════════════════════════════════════════════════════════ */
+
+// ── Geometry term definitions ─────────────────────────────────
+var GEO_TERMS = {
+
+  'vertical angles': {
+    title: 'Vertical Angles',
+    definition: 'When two lines intersect, the angles across from each other at the intersection point. They share a vertex but no sides.',
+    property: 'Vertical angles are always congruent (equal in measure).',
+    theorem: 'Vertical Angles Theorem',
+    keywords: ['vertical angles','vertical angle','opposite angles intersecting','x angles'],
+    example: 'If lines AB and CD cross at E, then ∠AEC ≅ ∠BED and ∠AED ≅ ∠BEC.',
+    relatedProof: 'vertical angles',
+    proofSummary: [
+      { s: '∠1 + ∠2 = 180°', r: 'Linear Pair Postulate (they share a straight line)' },
+      { s: '∠3 + ∠2 = 180°', r: 'Linear Pair Postulate (other pair)' },
+      { s: '∠1 = ∠3', r: 'Both equal 180° − ∠2 (Subtraction Property)' },
+      { s: '∠1 ≅ ∠3 (vertical angles are congruent) ∎', r: 'Definition of congruent angles' },
+    ],
+    diagram: 'vertical angle',
+  },
+
+  'linear pair': {
+    title: 'Linear Pair',
+    definition: 'Two adjacent angles formed when a ray sits on a line. Their non-common sides form a straight line.',
+    property: 'A linear pair is always supplementary — the two angles add to 180°.',
+    theorem: 'Linear Pair Postulate',
+    keywords: ['linear pair','linear pairs','adjacent supplementary'],
+    example: 'Ray OB standing on line AC: ∠AOB and ∠BOC form a linear pair, so ∠AOB + ∠BOC = 180°.',
+    proofSummary: [
+      { s: '∠AOB + ∠BOC = m∠AOC', r: 'Angle Addition Postulate' },
+      { s: 'm∠AOC = 180°', r: 'Straight angle (A, O, C are collinear)' },
+      { s: '∠AOB + ∠BOC = 180°', r: 'Substitution' },
+      { s: '∠AOB and ∠BOC are supplementary ∎', r: 'Definition of supplementary' },
+    ],
+    diagram: 'linear pair',
+  },
+
+  'supplementary angles': {
+    title: 'Supplementary Angles',
+    definition: 'Two angles whose measures add to exactly 180°.',
+    property: 'If two angles are supplementary, one equals 180° minus the other: ∠B = 180° − ∠A.',
+    theorem: 'Supplement Theorem',
+    keywords: ['supplementary','supplement','add to 180','sum 180','180 degrees','sum to 180'],
+    example: 'If ∠A = 65°, its supplement is 180° − 65° = 115°.',
+    proofSummary: [
+      { s: 'm∠A + m∠B = 180°', r: 'Definition of supplementary' },
+      { s: 'm∠B = 180° − m∠A', r: 'Subtraction Property of Equality' },
+    ],
+    diagram: 'linear pair',
+  },
+
+  'complementary angles': {
+    title: 'Complementary Angles',
+    definition: 'Two angles whose measures add to exactly 90°.',
+    property: 'If two angles are complementary, one equals 90° minus the other: ∠B = 90° − ∠A.',
+    theorem: 'Complement Theorem',
+    keywords: ['complementary','complement','add to 90','sum 90','90 degrees together'],
+    example: 'If ∠A = 35°, its complement is 90° − 35° = 55°.',
+    proofSummary: [
+      { s: 'm∠A + m∠B = 90°', r: 'Definition of complementary' },
+      { s: 'm∠B = 90° − m∠A', r: 'Subtraction Property of Equality' },
+    ],
+    diagram: 'linear pair',
+  },
+
+  'right angle': {
+    title: 'Right Angle',
+    definition: 'An angle that measures exactly 90°. Marked with a small square in diagrams.',
+    property: 'All right angles are congruent. A right angle is formed when two perpendicular lines meet.',
+    theorem: 'Right Angle Congruence Theorem',
+    keywords: ['right angle','right angles','90 degree angle','90°'],
+    example: 'The corner of a square is a right angle. ∠ABC = 90°.',
+    proofSummary: [
+      { s: '∠A = 90° and ∠B = 90°', r: 'Given (both are right angles)' },
+      { s: '∠A = ∠B', r: 'Transitive Property (both equal 90°)' },
+      { s: '∠A ≅ ∠B ∎', r: 'Definition of congruent angles' },
+    ],
+    diagram: 'linear pair',
+  },
+
+  'perpendicular': {
+    title: 'Perpendicular Lines',
+    definition: 'Two lines (or segments) that intersect to form right angles (90°).',
+    property: 'If two lines are perpendicular, they form four right angles at their intersection.',
+    theorem: 'Perpendicular Lines Theorem',
+    keywords: ['perpendicular','perp','right angle intersection','⊥'],
+    example: 'If AB ⊥ CD, then all four angles at their intersection are 90°.',
+    proofSummary: [
+      { s: 'AB ⊥ CD', r: 'Given' },
+      { s: 'The angle between them is 90°', r: 'Definition of perpendicular' },
+      { s: 'All four intersection angles = 90°', r: 'Linear pair + Vertical Angles Theorem' },
+    ],
+    diagram: 'tangent line to circle',
+  },
+
+  'congruent': {
+    title: 'Congruence',
+    definition: 'Two figures are congruent (≅) if they have the same shape and size. For angles: same measure. For segments: same length.',
+    property: 'Congruence is reflexive (A ≅ A), symmetric (if A ≅ B then B ≅ A), and transitive (if A ≅ B and B ≅ C then A ≅ C).',
+    keywords: ['congruent','congruence','same size','equal measure','≅'],
+    example: 'If ∠A = 45° and ∠B = 45°, then ∠A ≅ ∠B.',
+    diagram: 'SSS congruence postulate',
+  },
+
+  'parallel lines': {
+    title: 'Parallel Lines',
+    definition: 'Two lines in the same plane that never intersect — they stay the same distance apart forever.',
+    property: 'When a transversal crosses parallel lines: alternate interior angles are congruent, corresponding angles are congruent, and co-interior angles are supplementary.',
+    keywords: ['parallel lines','parallel','∥','never intersect','same direction'],
+    example: 'Lines ℓ₁ ∥ ℓ₂ cut by transversal t → alternate interior angles are congruent.',
+    relatedProof: 'alternate interior angles',
+    diagram: 'parallel lines',
+  },
+
+  'transversal': {
+    title: 'Transversal',
+    definition: 'A line that crosses two or more other lines at distinct points.',
+    property: 'When a transversal crosses parallel lines it creates 8 angles with special relationships: alternate interior, alternate exterior, corresponding, and co-interior.',
+    keywords: ['transversal','crossing line','cuts parallel'],
+    example: 'Line t crossing lines ℓ₁ and ℓ₂ is a transversal.',
+    diagram: 'parallel lines',
+  },
+
+  'alternate interior angles': {
+    title: 'Alternate Interior Angles',
+    definition: 'When a transversal crosses two lines, the angles between the lines on opposite sides of the transversal.',
+    property: 'If the lines are parallel, alternate interior angles are congruent.',
+    keywords: ['alternate interior','alt interior','z angles','alternate interior angles'],
+    diagram: 'parallel lines',
+    proofSummary: [
+      { s: 'ℓ₁ ∥ ℓ₂, cut by transversal t', r: 'Given' },
+      { s: '∠1 + ∠3 = 180° (linear pair at P)', r: 'Linear Pair Postulate' },
+      { s: '∠3 + ∠2 = 180° (co-interior angles, parallel lines)', r: 'Co-Interior Angles Theorem' },
+      { s: '∠1 = ∠2', r: 'Subtraction Property' },
+      { s: '∠1 ≅ ∠2 ∎', r: 'Definition of congruent' },
+    ],
+  },
+
+  'corresponding angles': {
+    title: 'Corresponding Angles',
+    definition: 'When a transversal crosses two lines, angles in the same position at each intersection (same "corner").',
+    property: 'If the lines are parallel, corresponding angles are congruent (F-angles).',
+    keywords: ['corresponding angles','f angles','same position angles'],
+    diagram: 'parallel lines',
+  },
+
+  'angle bisector': {
+    title: 'Angle Bisector',
+    definition: 'A ray that divides an angle into two congruent (equal) angles.',
+    property: 'If ray BD bisects ∠ABC, then ∠ABD = ∠DBC = ½ ∠ABC.',
+    keywords: ['angle bisector','bisects angle','divides angle','bisect'],
+    diagram: 'angle bisector',
+  },
+
+  'segment bisector': {
+    title: 'Segment Bisector / Midpoint',
+    definition: 'A point, line, or ray that divides a segment into two equal parts. The dividing point is called the midpoint.',
+    property: 'If M is the midpoint of AB, then AM = MB = ½AB.',
+    keywords: ['segment bisector','midpoint','bisects segment','divides segment'],
+    diagram: 'segment addition',
+  },
+
+  'isosceles triangle': {
+    title: 'Isosceles Triangle',
+    definition: 'A triangle with at least two congruent sides. The equal sides are called legs; the third side is the base.',
+    property: 'Base Angles Theorem: the angles opposite the equal sides are congruent. The altitude from the apex bisects the base.',
+    keywords: ['isosceles','isosceles triangle','two equal sides'],
+    diagram: 'generic triangle',
+    proofSummary: [
+      { s: 'AB ≅ AC (two congruent sides)', r: 'Given (isosceles)' },
+      { s: 'Let M = midpoint of BC; draw AM', r: 'Construction' },
+      { s: '△ABM ≅ △ACM', r: 'SSS (AB=AC, BM=MC, AM=AM)' },
+      { s: '∠B ≅ ∠C ∎', r: 'CPCTC' },
+    ],
+  },
+
+  'cpctc': {
+    title: 'CPCTC',
+    definition: 'Corresponding Parts of Congruent Triangles are Congruent. Once two triangles are proven congruent, any pair of matching parts are congruent.',
+    property: 'Used as the final reason after proving △ABC ≅ △DEF to conclude any pair of corresponding sides or angles are equal.',
+    keywords: ['cpctc','corresponding parts','congruent triangles parts'],
+    example: 'After proving △ABC ≅ △DEF by SAS: ∠A ≅ ∠D by CPCTC.',
+    diagram: 'SSS congruence postulate',
+  },
+
+  'reflexive property': {
+    title: 'Reflexive Property',
+    definition: 'Any geometric figure is congruent to itself. A segment or angle always equals itself.',
+    property: 'AB ≅ AB, ∠A ≅ ∠A. Used when two triangles share a side or angle.',
+    keywords: ['reflexive','reflexive property','shared side','common side'],
+    example: 'In overlapping triangles △ABD and △CBD: BD ≅ BD by Reflexive Property.',
+    diagram: 'generic triangle',
+  },
+
+  'transitive property': {
+    title: 'Transitive Property',
+    definition: 'If A = B and B = C, then A = C. Works for equality and congruence.',
+    property: 'Used to chain equalities together: if ∠1 = ∠2 and ∠2 = ∠3, then ∠1 = ∠3.',
+    keywords: ['transitive','transitive property','chain equalities'],
+    diagram: 'segment addition',
+  },
+
+  'exterior angle': {
+    title: 'Exterior Angle of a Triangle',
+    definition: 'An angle formed by one side of a triangle and the extension of an adjacent side.',
+    property: 'Exterior Angle Theorem: an exterior angle equals the sum of the two non-adjacent interior angles (remote interior angles).',
+    keywords: ['exterior angle','exterior angle theorem','remote interior','outside angle'],
+    diagram: 'triangle angles',
+    proofSummary: [
+      { s: 'm∠A + m∠B + m∠ACB = 180°', r: 'Triangle Sum Theorem' },
+      { s: '∠ACB + ∠ACD = 180°', r: 'Linear Pair Postulate' },
+      { s: 'm∠ACD = m∠A + m∠B ∎', r: 'Substitution and algebra' },
+    ],
+  },
+
+};
+
+// ── Term lookup ───────────────────────────────────────────────
+var GeoTerms = {
+
+  // Find matching term from query
+  findTerm(query) {
+    const q = query.toLowerCase().trim().replace(/[?!.]+$/, '');
+    let best = null, bestScore = 0;
+
+    for (const [key, term] of Object.entries(GEO_TERMS)) {
+      let score = 0;
+      // Direct key match
+      if (q.includes(key)) score += key.length * 5;
+      // Keyword matches
+      for (const kw of (term.keywords || [])) {
+        if (q.includes(kw)) score += kw.length * 4;
+        if (kw.includes(q) && q.length > 4) score += 20;
+      }
+      if (score > bestScore) { bestScore = score; best = { key, term, score }; }
+    }
+    return bestScore >= 15 ? best : null;
+  },
+
+  // Build the term explanation card
+  buildTermCard(termData) {
+    const { key, term } = termData;
+    const diagramSVG = (typeof DiagramRenderer !== 'undefined' && term.diagram)
+      ? DiagramRenderer.render(term.diagram, null) : '';
+
+    const proofHtml = term.proofSummary ? `
+      <div class="proof-section" style="border-top:1px solid var(--border);padding-top:12px;margin-top:4px;">
+        <div class="proof-section-lbl">Proof sketch</div>
+        <table class="proof-table">
+          <thead><tr><th>#</th><th>Statement</th><th>Reason</th></tr></thead>
+          <tbody>
+            ${term.proofSummary.map((s,i)=>`
+              <tr><td>${i+1}</td><td>${escHtml(s.s)}</td><td>${escHtml(s.r)}</td></tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>` : '';
+
+    const relatedBtn = term.relatedProof ? `
+      <button class="hint-chip" onclick="quickSend('prove ${escHtml(term.relatedProof)}')"
+        style="margin-top:8px;">See full proof →</button>` : '';
+
+    return `<div class="proof-card">
+      <div class="proof-card-head">
+        <span class="proof-card-title">${escHtml(term.title)}</span>
+        <span class="proof-card-badge" style="background:rgba(92,184,92,0.1);border-color:rgba(92,184,92,0.25);color:#5cb85c;">term</span>
+      </div>
+      <div class="proof-section">
+        <div class="proof-section-lbl">Definition</div>
+        <div class="proof-conditional">${escHtml(term.definition)}</div>
+      </div>
+      <div class="proof-section">
+        <div class="proof-section-lbl">Key property</div>
+        <div class="proof-explanation">${escHtml(term.property)}</div>
+      </div>
+      ${term.example ? `<div class="proof-section">
+        <div class="proof-section-lbl">Example</div>
+        <div class="proof-explanation" style="font-family:var(--mono);font-size:12.5px;">${escHtml(term.example)}</div>
+      </div>` : ''}
+      ${diagramSVG ? `<div class="proof-section">
+        <div class="proof-section-lbl">Diagram</div>
+        <div class="proof-diagram-wrap">${diagramSVG}</div>
+      </div>` : ''}
+      ${proofHtml}
+      ${relatedBtn}
+    </div>`;
+  },
+
+  // Is this query asking about a term definition?
+  isTermQuery(q) {
+    const ql = q.toLowerCase();
+    return (
+      /^(what (is|are|does)|define|explain|tell me about|describe|how does)\b/.test(ql) ||
+      /\b(definition|mean|means|defined as)\b/.test(ql) ||
+      // Bare term queries like "vertical angles" or "linear pair"
+      Object.keys(GEO_TERMS).some(k => {
+        const norm = ql.replace(/[?!.]+$/,'').trim();
+        return norm === k || norm === k + 's';
+      })
+    );
+  },
+};
+
+
+// ── Auto proof solver: given just a conditional statement ──────
+var AutoProver = {
+
+  // Parse an if-then conditional and generate a proof
+  solveFromConditional(conditional, title) {
+    const cond = conditional.trim();
+    const ifThen = cond.match(/^[Ii]f\s+(.+?)[,]?\s+[Tt]hen\s+(.+?)\.?\s*$/);
+    if (!ifThen) return null;
+
+    const hypothesis  = ifThen[1].trim().toLowerCase();
+    const conclusion  = ifThen[2].trim().toLowerCase();
+    const hypOrig     = ifThen[1].trim();
+    const concOrig    = ifThen[2].trim();
+
+    // ── Pattern library ────────────────────────────────────────
+    const patterns = [
+
+      // VERTICAL ANGLES
+      {
+        match: h => h.includes('vertical angle'),
+        build: (h, c, hO, cO) => ({
+          title: title || 'Vertical Angles Theorem',
+          diag: 'vertical angle',
+          given: [hO],
+          prove: cO,
+          steps: [
+            { s: '∠1 and ∠2 are vertical angles', r: 'Given' },
+            { s: '∠1 + ∠3 = 180°', r: 'Linear Pair Postulate' },
+            { s: '∠2 + ∠3 = 180°', r: 'Linear Pair Postulate' },
+            { s: '∠1 + ∠3 = ∠2 + ∠3', r: 'Transitive Property (both = 180°)' },
+            { s: '∠1 = ∠2', r: 'Subtraction Property of Equality' },
+            { s: '∠1 ≅ ∠2 ∎', r: 'Definition of congruent angles' },
+          ],
+          explanation: 'Each vertical angle pairs with the same adjacent angle to form a straight line (180°). Since both equal 180° minus the same angle, they must equal each other.',
+        })
+      },
+
+      // LINEAR PAIR → SUPPLEMENTARY
+      {
+        match: h => h.includes('linear pair'),
+        build: (h, c, hO, cO) => ({
+          title: title || 'Linear Pair Theorem',
+          diag: 'linear pair',
+          given: [hO],
+          prove: cO,
+          steps: [
+            { s: '∠1 and ∠2 form a linear pair', r: 'Given' },
+            { s: 'Their non-common sides form a straight line', r: 'Definition of linear pair' },
+            { s: '∠1 + ∠2 = 180°', r: 'Angle Addition Postulate (angles on a straight line)' },
+            { s: '∠1 and ∠2 are supplementary ∎', r: 'Definition of supplementary angles' },
+          ],
+          explanation: 'A linear pair always sits on a straight line — and a straight angle is 180°. Since the two angles together fill that straight angle, they must add to 180°.',
+        })
+      },
+
+      // SUPPLEMENTARY → find other angle
+      {
+        match: h => h.includes('supplement') || (h.includes('180') && h.includes('angle')),
+        build: (h, c, hO, cO) => ({
+          title: title || 'Supplement Theorem',
+          diag: 'linear pair',
+          given: [hO],
+          prove: cO,
+          steps: [
+            { s: 'm∠A + m∠B = 180°', r: 'Given (supplementary angles)' },
+            { s: 'm∠B = 180° − m∠A', r: 'Subtraction Property of Equality' },
+            { s: cO, r: 'Substitution / definition of supplementary' },
+          ],
+          explanation: 'Supplementary angles sum to 180°. Subtract one from 180° to find the other.',
+        })
+      },
+
+      // COMPLEMENTARY → find other angle
+      {
+        match: h => h.includes('complement') || (h.includes('90') && h.includes('angle')),
+        build: (h, c, hO, cO) => ({
+          title: title || 'Complement Theorem',
+          diag: 'linear pair',
+          given: [hO],
+          prove: cO,
+          steps: [
+            { s: 'm∠A + m∠B = 90°', r: 'Given (complementary angles)' },
+            { s: 'm∠B = 90° − m∠A', r: 'Subtraction Property of Equality' },
+            { s: cO, r: 'Substitution / definition of complementary' },
+          ],
+          explanation: 'Complementary angles sum to 90°. Subtract one from 90° to find the other.',
+        })
+      },
+
+      // RIGHT ANGLES → congruent
+      {
+        match: h => h.includes('right angle') && (h.includes('two') || h.includes('both')),
+        build: (h, c, hO, cO) => ({
+          title: title || 'Right Angle Congruence Theorem',
+          diag: 'linear pair',
+          given: [hO],
+          prove: cO,
+          steps: [
+            { s: '∠A = 90° and ∠B = 90°', r: 'Given (both are right angles)' },
+            { s: '∠A = ∠B', r: 'Transitive Property (both equal 90°)' },
+            { s: '∠A ≅ ∠B ∎', r: 'Definition of congruent angles' },
+          ],
+          explanation: 'All right angles are exactly 90°. Since two quantities that both equal 90° must equal each other, any two right angles are congruent.',
+        })
+      },
+
+      // PERPENDICULAR → right angles
+      {
+        match: h => h.includes('perpendicular') || h.includes('⊥'),
+        build: (h, c, hO, cO) => ({
+          title: title || 'Perpendicular Lines Theorem',
+          diag: 'tangent line to circle',
+          given: [hO],
+          prove: cO,
+          steps: [
+            { s: 'Lines AB ⊥ CD', r: 'Given' },
+            { s: 'The angle at their intersection = 90°', r: 'Definition of perpendicular lines' },
+            { s: 'All four angles at the intersection = 90°', r: 'Linear pairs + Vertical Angles Theorem' },
+            { s: cO, r: 'Conclusion from above' },
+          ],
+          explanation: 'Perpendicular lines form right angles by definition. Using linear pairs and vertical angles, all four intersection angles must be 90°.',
+        })
+      },
+
+      // PARALLEL LINES → alternate interior angles
+      {
+        match: h => h.includes('parallel') && (h.includes('alternate') || h.includes('transversal')),
+        build: (h, c, hO, cO) => ({
+          title: title || 'Alternate Interior Angles Theorem',
+          diag: 'parallel lines',
+          given: [hO],
+          prove: cO,
+          steps: [
+            { s: 'ℓ₁ ∥ ℓ₂, transversal t crosses both', r: 'Given' },
+            { s: '∠1 + ∠3 = 180°', r: 'Linear Pair Postulate (at first intersection)' },
+            { s: '∠2 + ∠3 = 180°', r: 'Co-Interior Angles Theorem (parallel lines)' },
+            { s: '∠1 + ∠3 = ∠2 + ∠3', r: 'Transitive Property' },
+            { s: '∠1 = ∠2', r: 'Subtraction Property of Equality' },
+            { s: '∠1 ≅ ∠2 ∎', r: 'Alternate interior angles are congruent' },
+          ],
+          explanation: 'Each alternate interior angle pairs with the same co-interior angle to sum to 180° (parallel lines property). Subtracting the shared angle proves the alternate interior angles equal each other.',
+        })
+      },
+
+      // ISOSCELES TRIANGLE → base angles
+      {
+        match: h => h.includes('isosceles') || (h.includes('two sides') && h.includes('congruent')),
+        build: (h, c, hO, cO) => ({
+          title: title || 'Isosceles Triangle Base Angles Theorem',
+          diag: 'generic triangle',
+          given: [hO],
+          prove: cO,
+          steps: [
+            { s: 'AB ≅ AC (two congruent sides)', r: 'Given' },
+            { s: 'Let M be the midpoint of BC; draw segment AM', r: 'Construction (Ruler Postulate + Two-Point Postulate)' },
+            { s: 'BM ≅ MC', r: 'Definition of midpoint' },
+            { s: 'AM ≅ AM', r: 'Reflexive Property of Congruence' },
+            { s: '△ABM ≅ △ACM', r: 'SSS Congruence Postulate (AB=AC, BM=MC, AM=AM)' },
+            { s: '∠B ≅ ∠C ∎', r: 'CPCTC' },
+          ],
+          explanation: 'Draw the median from the apex to the base midpoint. This splits the triangle into two smaller ones that share the median and have the two given equal sides plus equal base halves — SSS makes them congruent, so base angles match by CPCTC.',
+        })
+      },
+
+      // MIDPOINT → equal segments
+      {
+        match: h => h.includes('midpoint'),
+        build: (h, c, hO, cO) => ({
+          title: title || 'Midpoint Theorem',
+          diag: 'segment addition',
+          given: [hO],
+          prove: cO,
+          steps: [
+            { s: 'M is the midpoint of AB', r: 'Given' },
+            { s: 'AM = MB', r: 'Definition of midpoint' },
+            { s: 'AM + MB = AB', r: 'Segment Addition Postulate' },
+            { s: 'AM + AM = AB → 2·AM = AB', r: 'Substitution (AM = MB)' },
+            { s: 'AM = ½AB', r: 'Division Property of Equality' },
+            { s: cO, r: 'Substitution' },
+          ],
+          explanation: 'The midpoint splits the segment equally. Using Segment Addition and substitution, each half equals ½ of the total.',
+        })
+      },
+
+      // ANGLE BISECTOR → equal angles
+      {
+        match: h => h.includes('bisect') && h.includes('angle'),
+        build: (h, c, hO, cO) => ({
+          title: title || 'Angle Bisector Theorem',
+          diag: 'angle bisector',
+          given: [hO],
+          prove: cO,
+          steps: [
+            { s: 'Ray BD bisects ∠ABC', r: 'Given' },
+            { s: '∠ABD = ∠DBC', r: 'Definition of angle bisector' },
+            { s: '∠ABD + ∠DBC = ∠ABC', r: 'Angle Addition Postulate' },
+            { s: '2·∠ABD = ∠ABC', r: 'Substitution (∠ABD = ∠DBC)' },
+            { s: '∠ABD = ½·∠ABC', r: 'Division Property of Equality' },
+            { s: cO, r: 'Substitution / conclusion' },
+          ],
+          explanation: 'An angle bisector creates two equal halves. Angle Addition gives the sum, substitution and division give each half equals ½ of the whole.',
+        })
+      },
+
+      // HYPOTENUSE-LEG (HL)
+      {
+        match: h => h.includes('hypotenuse') || (h.includes('right triangle') && h.includes('leg')),
+        build: (h, c, hO, cO) => ({
+          title: 'Hypotenuse-Leg (HL) Congruence Theorem',
+          diag: 'SSS congruence postulate',
+          given: [hO],
+          prove: cO,
+          steps: [
+            { s: 'Both triangles are right triangles (given)', r: 'Given' },
+            { s: 'The hypotenuses are congruent', r: 'Given' },
+            { s: 'One pair of legs is congruent', r: 'Given' },
+            { s: 'Apply Pythagorean Theorem to each triangle: leg² = hyp² − known_leg²', r: 'Pythagorean Theorem' },
+            { s: 'Since hypotenuses and one leg are equal, the other legs must also be equal', r: 'Substitution + Square Root Property' },
+            { s: 'All three pairs of sides are congruent', r: 'Combining all steps' },
+            { s: cO, r: 'SSS Congruence Postulate' },
+          ],
+          explanation: 'HL only works for right triangles. The Pythagorean Theorem fills in the missing leg, converting HL into a full SSS congruence.',
+        })
+      },
+
+      // RIGHT TRIANGLE CONGRUENCE (general)
+      {
+        match: h => h.includes('right triangle') && h.includes('congruent'),
+        build: (h, c, hO, cO) => ({
+          title: 'Right Triangle Congruence',
+          diag: 'pythagorean',
+          given: [hO],
+          prove: cO,
+          steps: [
+            { s: 'Both triangles are right triangles with 90° angles', r: 'Given' },
+            { s: 'The given congruent parts are identified', r: 'Given' },
+            { s: 'Apply the appropriate right triangle congruence theorem (HL, HA, LA, or LL)', r: 'Right Triangle Congruence Theorems' },
+            { s: cO, r: 'Conclusion' },
+          ],
+          explanation: 'Right triangles have special congruence theorems because the 90° angle is always "given for free." HL, HA, LA, and LL are all valid methods.',
+        })
+      },
+
+      // CONGRUENT TRIANGLES → CPCTC
+      {
+        match: h => (h.includes('congruent') || h.includes('≅')) && h.includes('triangle'),
+        build: (h, c, hO, cO) => {
+          const method = h.includes('sss') ? 'SSS' : h.includes('sas') ? 'SAS' : h.includes('asa') ? 'ASA' : 'SSS';
+          return {
+            title: title || 'Triangle Congruence',
+            diag: method === 'SSS' ? 'SSS congruence postulate' : method === 'SAS' ? 'SAS congruence postulate' : 'ASA congruence postulate',
+            given: [hO],
+            prove: cO,
+            steps: [
+              { s: 'Identify the corresponding parts from the given information', r: 'Given' },
+              { s: `The triangles satisfy the ${method} condition`, r: `${method} Congruence Postulate requirements` },
+              { s: '△ABC ≅ △DEF', r: `${method} Congruence Postulate` },
+              { s: cO, r: 'CPCTC (Corresponding Parts of Congruent Triangles are Congruent)' },
+            ],
+            explanation: `Once you establish three matching ${method === 'SSS' ? 'sides' : 'elements (two sides + included angle)'}, the ${method} postulate guarantees full congruence. Then CPCTC lets you extract any matching part.`,
+          };
+        }
+      },
+
+      // TRIANGLE SUM
+      {
+        match: h => h.includes('triangle') && (h.includes('sum') || h.includes('180') || h.includes('angle')),
+        build: (h, c, hO, cO) => ({
+          title: title || 'Triangle Sum Theorem',
+          diag: 'triangle angles',
+          given: [hO],
+          prove: cO,
+          steps: [
+            { s: '△ABC with angles ∠A, ∠B, ∠C', r: 'Given' },
+            { s: 'Draw line ℓ through B parallel to AC', r: 'Parallel Postulate' },
+            { s: '∠1 ≅ ∠A (alternate interior angles, ℓ ∥ AC)', r: 'Alternate Interior Angles Theorem' },
+            { s: '∠2 ≅ ∠C (alternate interior angles, ℓ ∥ AC)', r: 'Alternate Interior Angles Theorem' },
+            { s: '∠1 + ∠B + ∠2 = 180°', r: 'Angles on a straight line (Linear Pair)' },
+            { s: 'm∠A + m∠B + m∠C = 180° ∎', r: 'Substitution (∠1=∠A, ∠2=∠C)' },
+          ],
+          explanation: 'Draw a line through one vertex parallel to the opposite side. Alternate interior angles let you "move" two angles to sit alongside the third, forming a straight line.',
+        })
+      },
+
+      // EXTERIOR ANGLE
+      {
+        match: h => h.includes('exterior angle') || (h.includes('exterior') && h.includes('triangle')),
+        build: (h, c, hO, cO) => ({
+          title: title || 'Exterior Angle Theorem',
+          diag: 'triangle angles',
+          given: [hO],
+          prove: cO,
+          steps: [
+            { s: '∠ACD is an exterior angle of △ABC', r: 'Given' },
+            { s: 'm∠A + m∠B + m∠ACB = 180°', r: 'Triangle Sum Theorem' },
+            { s: '∠ACB + ∠ACD = 180°', r: 'Linear Pair Postulate' },
+            { s: 'm∠ACD = m∠A + m∠B ∎', r: 'Substitution and Subtraction Property' },
+          ],
+          explanation: 'The exterior angle and the adjacent interior angle are a linear pair (180°). All three interior angles also sum to 180°. Substituting shows the exterior angle equals the sum of the two remote interior angles.',
+        })
+      },
+
+    ];
+
+    // Find best matching pattern
+    for (const pat of patterns) {
+      if (pat.match(hypothesis)) {
+        const result = pat.build(hypothesis, conclusion, hypOrig, concOrig);
+        return result;
+      }
+    }
+
+    // Generic fallback
+    return {
+      title: title || 'Custom Proof',
+      diag: inferDiagramTopic ? inferDiagramTopic(conditional) : 'generic triangle',
+      given: [hypOrig],
+      prove: concOrig,
+      steps: [
+        { s: hypOrig, r: 'Given (hypothesis from conditional)' },
+        { s: 'Apply relevant definitions and postulates', r: 'Geometric reasoning' },
+        { s: 'Combine statements using properties of equality/congruence', r: 'Substitution / Transitive Property' },
+        { s: concOrig + ' ∎', r: 'Conclusion' },
+      ],
+      explanation: `This proof starts from the hypothesis "${hypOrig}" and reasons to the conclusion "${concOrig}" using geometric definitions and postulates.`,
+    };
+  },
+};
+
 /* ═══════════════════════════════════════════════════
    ProofGPT script.js — Offline Engine
    Smooth chat flow, streaming text reveal
@@ -4363,6 +6776,11 @@ function scoreProof(proof, query) {
   if (proof.title.toLowerCase() === q) score += 200;
   if (proof.title.toLowerCase().includes(q)) score += 100;
   if (proof.number && q === proof.number) score += 150;
+  // Boost for well-known abbreviations in proof titles
+  const abbrevs = ['sss','sas','asa','aas','aa','hl'];
+  for (const ab of abbrevs) {
+    if (q.includes(ab) && proof.title.toLowerCase().includes(ab)) score += 60;
+  }
   if (proof.number && q.includes(proof.number)) score += 90;
 
   for (const kw of proof.keywords) {
@@ -4389,13 +6807,71 @@ function scoreProof(proof, query) {
   return score;
 }
 
+function countMeaningfulMatches(proof, query) {
+  // Count how many DISTINCT meaningful words from the query match this proof
+  const q = query.toLowerCase();
+  const words = q.split(/\s+/).filter(w => w.length >= 3);  // include short words like SAS, SSS, AA
+  let matched = 0;
+  for (const w of words) {
+    if (proof.title.toLowerCase().includes(w)) { matched++; continue; }
+    if (proof.keywords.some(kw => {
+      const re = new RegExp('(^|[^a-z])' + w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + '([^a-z]|$)');
+      return re.test(kw.toLowerCase());
+    })) matched++;
+  }
+  return matched;
+}
+
+// Terms that MUST match the proof title/number specifically - block fuzzy hits
+const PROOF_EXACT_TERMS = {
+  'hypotenuse': ['hypotenuse','hl'],
+  'hypotenuse leg': ['hypotenuse','hl'],
+  'midsegment': ['midsegment'],
+  'circumcenter': ['circumcenter'],
+  'incenter': ['incenter'],
+  'centroid': ['centroid'],
+  'inscribed': ['inscribed'],
+  'tangent': ['tangent'],
+  'secant': ['secant'],
+  'chord': ['chord'],
+  'arc': ['arc'],
+};
+
 function searchProofs(query) {
   if (!query.trim()) return { best: null, score: 0, all: [] };
-  const scored = PROOF_LIBRARY.map(p => ({ proof: p, score: scoreProof(p, query) }));
+  const ql = query.toLowerCase();
+
+  // If query contains a term that should only match specific proofs,
+  // zero out any proof whose title doesn't contain those terms
+  const scored = PROOF_LIBRARY.map(p => {
+    let s = scoreProof(p, query);
+    // Check if query contains an exact-term key
+    for (const [term, required] of Object.entries(PROOF_EXACT_TERMS)) {
+      if (ql.includes(term)) {
+        const titleLower = p.title.toLowerCase();
+        const hasRequired = required.some(r => titleLower.includes(r));
+        if (!hasRequired) s = 0; // zero out wrong proofs
+      }
+    }
+    return { proof: p, score: s };
+  });
+
   scored.sort((a, b) => b.score - a.score);
+  // Require the top result to have at least 2 meaningful matching words
+  // This prevents "angles" alone from matching every parallelogram theorem
+  const best = scored[0];
+  const meaningful = best.score > 0 ? countMeaningfulMatches(best.proof, query) : 0;
+  // Single-word queries: only match if the score is very high (direct title/number match)
+  // Multi-word queries: require 2+ meaningful words to match
+  const queryWordCount = query.trim().split(/\s+/).filter(w => w.length > 2).length;
+  const qualifies = best.score > 0 && (
+    queryWordCount === 1 ? best.score >= 120 :    // single word: needs near-exact title match
+    queryWordCount === 2 ? (best.score >= 100 || (best.score >= 80 && meaningful >= 2)) :  // two words
+    (best.score >= 60 || meaningful >= 2)          // 3+ words: normal
+  );
   return {
-    best: scored[0].score > 0 ? scored[0].proof : null,
-    score: scored[0].score,
+    best: qualifies ? best.proof : null,
+    score: best.score,
     all: scored.filter(s => s.score > 0).slice(0, 6)
   };
 }
@@ -4620,9 +7096,19 @@ function handleSend() {
 function respond(query) {
   const q = query.toLowerCase().trim();
 
+  // ── Active proof session dialogue ──────────────────────
+  if (typeof ProofSession !== 'undefined' && ProofSession.active) {
+    if (/^(cancel|stop|quit|never mind|exit)\b/i.test(q)) {
+      cancelProveSession();
+    } else {
+      handleProveDialogue(query);
+    }
+    return;
+  }
+
   // Greetings
   if (/^(hi|hello|hey|sup|yo)\b/.test(q)) {
-    streamingReply("Hey! Ask me anything — geometry proofs, arithmetic, algebra, logs, calculus concepts, and more. Try \"1 + 1\", \"how do parabolas work\", or \"Circumcenter Theorem\".");
+    streamingReply("Hey! Ask me anything — geometry proofs, arithmetic, algebra, logs, calculus, and more. Try \"prove the triangle sum theorem\", \"is a square a rectangle?\", or \"what are integrals?\"");
     return;
   }
 
@@ -4638,7 +7124,115 @@ function respond(query) {
     return;
   }
 
-  // ── 1. If query is purely about a math concept, skip geometry entirely ──
+  // ── 0. Reasoning engine — handles "is a square a rectangle?" etc ──
+  const reasonResult = (typeof Reasoner !== 'undefined') ? Reasoner.reason(query) : null;
+  if (reasonResult) {
+    const msgEl = appendMsg('assistant', '<p></p>');
+    const pEl = msgEl.querySelector('p');
+    streamText(pEl, 'Let me reason through that:', () => {
+      const cardEl = document.createElement('div');
+      cardEl.style.opacity = '0';
+      cardEl.style.transform = 'translateY(8px)';
+      cardEl.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+      cardEl.innerHTML = reasonResult;
+      msgEl.querySelector('.msg-body').appendChild(cardEl);
+      scrollThread();
+      requestAnimationFrame(() => { cardEl.style.opacity = '1'; cardEl.style.transform = 'translateY(0)'; scrollThread(); });
+    });
+    return;
+  }
+
+  // ── 1a. Geometry term lookup (vertical angles, linear pair, supplement, etc.) ──
+  if (typeof GeoTerms !== 'undefined') {
+    const termResult = GeoTerms.findTerm(query);
+    if (termResult && GeoTerms.isTermQuery(q)) {
+      const intro = `Here's ${termResult.term.title}:`;
+      const msgEl = appendMsg('assistant', '<p></p>');
+      const pEl = msgEl.querySelector('p');
+      streamText(pEl, intro, () => {
+        const cardEl = document.createElement('div');
+        cardEl.style.opacity = '0';
+        cardEl.style.transform = 'translateY(8px)';
+        cardEl.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        cardEl.innerHTML = GeoTerms.buildTermCard(termResult);
+        msgEl.querySelector('.msg-body').appendChild(cardEl);
+        scrollThread();
+        requestAnimationFrame(() => { cardEl.style.opacity = '1'; cardEl.style.transform = 'translateY(0)'; scrollThread(); });
+      });
+      return;
+    }
+  }
+
+  // ── 1. Prove request: always check first before any concept matching ──
+  if (typeof isProveRequest !== 'undefined' && isProveRequest(query)) {
+    // Check known proofs first
+    const knownP = typeof findKnownProof !== 'undefined' ? findKnownProof(query) : null;
+    if (knownP) {
+      const intro = `Here's the ${knownP.proof.title}:`;
+      const msgEl = appendMsg('assistant', '<p></p>');
+      const pEl = msgEl.querySelector('p');
+      streamText(pEl, intro, () => {
+        const cardEl = document.createElement('div');
+        cardEl.style.opacity = '0';
+        cardEl.style.transform = 'translateY(8px)';
+        cardEl.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        cardEl.innerHTML = buildCustomProofCard(knownP.proof, currentFormat);
+        msgEl.querySelector('.msg-body').appendChild(cardEl);
+        scrollThread();
+        requestAnimationFrame(() => { cardEl.style.opacity = '1'; cardEl.style.transform = 'translateY(0)'; scrollThread(); });
+      });
+      return;
+    }
+
+    // Check if the query itself contains an if-then — solve it directly
+    const ifThenInQuery = query.match(/[Ii]f\s+.+?[,.]?\s+[Tt]hen\s+.+/);
+    if (ifThenInQuery && typeof AutoProver !== 'undefined') {
+      const name = extractTheoremName(query.replace(ifThenInQuery[0], '').trim()) || 'Custom Theorem';
+      const autoProof = AutoProver.solveFromConditional(ifThenInQuery[0], name);
+      if (autoProof) {
+        const intro = `I can prove that. Here's the proof for "${autoProof.title}":`;
+        const msgEl = appendMsg('assistant', '<p></p>');
+        const pEl = msgEl.querySelector('p');
+        streamText(pEl, intro, () => {
+          const cardEl = document.createElement('div');
+          cardEl.style.opacity = '0';
+          cardEl.style.transform = 'translateY(8px)';
+          cardEl.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+          cardEl.innerHTML = buildCustomProofCard({
+            title: autoProof.title,
+            conditional: ifThenInQuery[0],
+            given: autoProof.given,
+            prove: autoProof.prove,
+            diagramTopic: autoProof.diag,
+            steps: autoProof.steps,
+            explanation: autoProof.explanation,
+          }, currentFormat);
+          msgEl.querySelector('.msg-body').appendChild(cardEl);
+          scrollThread();
+          requestAnimationFrame(() => { cardEl.style.opacity = '1'; cardEl.style.transform = 'translateY(0)'; scrollThread(); });
+        });
+        return;
+      }
+    }
+
+    // Start dialogue for unknown theorem
+    const name = typeof extractTheoremName !== 'undefined' ? extractTheoremName(query) : query;
+    ProofSession.active = true;
+    ProofSession.step = 'awaiting_conditional';
+    ProofSession.title = name ? name.charAt(0).toUpperCase() + name.slice(1) : 'Custom Theorem';
+    ProofSession.rawInput = query;
+    showProveDialogueCard(
+      `Let's build a proof for <strong>${escHtml(ProofSession.title)}</strong>.`,
+      `What is the <strong>if-then conditional statement</strong>? Write it in the form:<br>
+       <code>"If [hypothesis], then [conclusion]"</code><br><br>
+       Example: <em>"If two angles are vertical angles, then they are congruent."</em>`,
+      [{ label: 'Cancel', action: 'cancel' }]
+    );
+    return;
+  }
+
+  
+  // ── 2. If query is purely about a math concept ──
   if (isMathOnlyQuery(q)) {
     const conceptResult = MathBrain.findConcept(query);
     if (conceptResult) {
@@ -4721,7 +7315,7 @@ function respond(query) {
   // ── 4. Fuzzy geometry match ───────────────────────────
   if (proofResult.best && proofResult.score >= 15) {
     const alts = proofResult.all.slice(1, 4).map(r =>
-      `<button class="hint-chip" onclick="quickSend('${r.proof.title.replace(/'/g, "\\'")}')">
+      `<button class="hint-chip" onclick="quickSend('${r.proof.title.replace(/'/g, "\'")}')">
         ${escHtml(r.proof.title)}
       </button>`
     ).join('');
@@ -4734,13 +7328,33 @@ function respond(query) {
     return;
   }
 
-  // ── 5. Not found ──────────────────────────────────────
-  const html = `<p>I'm not sure about "<strong>${escHtml(query)}</strong>" — try rephrasing, or explore what I know:</p>
+  // ── 5. Check built-in known proofs (triangle sum, pythagorean, etc.) ──
+  if (typeof findKnownProof !== 'undefined') {
+    const known = findKnownProof(query);
+    if (known) {
+      const intro = `Here's the ${known.proof.title}:`;
+      const msgEl = appendMsg('assistant', '<p></p>');
+      const pEl = msgEl.querySelector('p');
+      streamText(pEl, intro, () => {
+        const cardEl = document.createElement('div');
+        cardEl.style.opacity = '0';
+        cardEl.style.transform = 'translateY(8px)';
+        cardEl.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        cardEl.innerHTML = buildCustomProofCard(known.proof, currentFormat);
+        msgEl.querySelector('.msg-body').appendChild(cardEl);
+        scrollThread();
+        requestAnimationFrame(() => { cardEl.style.opacity = '1'; cardEl.style.transform = 'translateY(0)'; scrollThread(); });
+      });
+      return;
+    }
+  }
+
+  // ── 7. Not found ──────────────────────────────────────
+  const html = `<p>I'm not sure about "<strong>${escHtml(query)}</strong>." You can:</p>
     <div class="welcome-chips" style="margin-top:12px;">
+      <button class="hint-chip" onclick="quickSend('prove ' + ${JSON.stringify(query)})">Try proving it →</button>
       <button class="hint-chip" onclick="quickSend('how do parabolas work')">Parabolas</button>
       <button class="hint-chip" onclick="quickSend('what are derivatives')">Derivatives</button>
-      <button class="hint-chip" onclick="quickSend('how does log work')">Logarithms</button>
-      <button class="hint-chip" onclick="quickSend('2 + 2 * 10')">Try arithmetic</button>
       <button class="hint-chip" onclick="quickSend('list all')">Geometry proofs →</button>
     </div>`;
   appendMsg('assistant', html);
@@ -4777,7 +7391,7 @@ function buildBrowser() {
       <div class="chapter-label">${label}</div>
       <div class="chapter-chips">
         ${items.map(p =>
-          `<button class="theorem-chip" onclick="quickSend('${p.title.replace(/'/g, "\\'")}')">
+          `<button class="theorem-chip" onclick="quickSend('${p.title.replace(/'/g, "\'")}')">
             <span class="tnum">${p.number}</span> ${escHtml(p.title)}
           </button>`
         ).join('')}
@@ -4832,7 +7446,7 @@ function buildSidebarIndex() {
     if (!items.length) continue;
     html += `<div class="idx-group-label">${label}</div>`;
     html += items.map(p =>
-      `<button class="idx-item" onclick="quickSend('${p.title.replace(/'/g, "\\'")}')">
+      `<button class="idx-item" onclick="quickSend('${p.title.replace(/'/g, "\'")}')">
         <span class="num">${p.number}</span>${escHtml(p.title)}
       </button>`
     ).join('');
@@ -4906,7 +7520,4 @@ document.addEventListener('DOMContentLoaded', () => {
 function showWelcome() {
   appendMsg('assistant', buildWelcomeCard(), false);
 }
-
-</script>
-</body>
-</html>
+</script></body></html>

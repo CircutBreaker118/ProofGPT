@@ -2948,6 +2948,23 @@ const DiagramRenderer = {
     else if(t.includes('vertical angle')) svg=this.dVertAngles();
     else if(t.includes('linear pair')) svg=this.dLinearPair();
     else if(t.includes('three parallel')||t.includes('side splitter')) svg=this.dThreeParallel();
+    else if(t.includes('reflection')&&t.includes('parallel')) svg=this.dReflParallel();
+    else if(t.includes('reflection')&&t.includes('intersect')) svg=this.dReflIntersect();
+    else if(t.includes('unit9-pythagorean-squares')) svg=this.dUnit9PythSq();
+    else if(t.includes('unit9-pythagorean-converse')) svg=this.dUnit9PythConverse();
+    else if(t.includes('unit9-inequality-acute')) svg=this.dUnit9IneqAcute();
+    else if(t.includes('unit9-inequality-obtuse')) svg=this.dUnit9IneqObtuse();
+    else if(t.includes('unit9-45-45-90')) svg=this.dUnit94545();
+    else if(t.includes('unit9-30-60-90')) svg=this.dUnit93060();
+    else if(t.includes('unit9-geometric-mean-altitude')) svg=this.dUnit9GmAlt();
+    else if(t.includes('unit9-geometric-mean-leg')) svg=this.dUnit9GmLeg();
+    else if(t.includes('unit9-law-of-sines')) svg=this.dUnit9LawSin();
+    else if(t.includes('unit9-law-of-cosines')) svg=this.dUnit9LawCos();
+    else if(t.includes('altitude hypotenuse')||t.includes('right altitude hypotenuse')||t.includes('geometric mean right')) svg=this.dRightAltHyp();
+    else if(t.includes('45-45')||t.includes('454590')||t.includes('isosceles right triangle')) svg=this.d454590();
+    else if(t.includes('30-60')||t.includes('306090')) svg=this.d306090();
+    else if(t.includes('pythagorean inequality')||t.includes('acute obtuse triangle square')) svg=this.dPythIneq();
+    else if(t.includes('law of sines')||t.includes('law of cosines')||t.includes('sine rule')||t.includes('cosine rule')) svg=this.dLawTrig();
     else if(t.includes('parallel')||t.includes('alternate')) svg=this.dParallelLines();
     else if(t.includes('sss congruence')||t.includes('sss post')) svg=this.dSSS();
     else if(t.includes('sas congruence')||t.includes('sas post')) svg=this.dSAS();
@@ -3770,6 +3787,329 @@ const DiagramRenderer = {
     return this.wrap(W,H,s);
   },
 
+  dRightAltHyp(){
+    const W=300,H=248,C=this.C;
+    const A=[42,210],B=[258,210],Cv=[150,62],D=[150,210];
+    let s='';
+    s+=this.poly([A,B,Cv],C.fill,C.stroke);
+    s+=this.seg(Cv[0],Cv[1],D[0],D[1],C.blue,1.6,'4,3');
+    s+=`<rect x="${Cv[0]-14}" y="${Cv[1]}" width="14" height="14" fill="none" stroke="${C.blue}" stroke-width="1.4" opacity="0.85"/>`;
+    s+=this.dot(D[0],D[1],C.blue,3)+this.lbl(D[0]+12,D[1]+14,'D',{color:C.blue,size:12});
+    s+=this.lbl((A[0]+D[0])/2,(A[1]+D[1])/2+16,'p',{color:C.muted,size:13,italic:true});
+    s+=this.lbl((D[0]+B[0])/2,(D[1]+B[1])/2+16,'q',{color:C.muted,size:13,italic:true});
+    s+=this.lbl((Cv[0]+D[0])/2+14,(Cv[1]+D[1])/2,'h',{color:C.blue,size:13,italic:true});
+    s+=this.dot(A[0],A[1])+this.lbl(A[0]-14,A[1]+4,'A');
+    s+=this.dot(B[0],B[1])+this.lbl(B[0]+14,B[1]+4,'B');
+    s+=this.dot(Cv[0],Cv[1])+this.lbl(Cv[0],Cv[1]-12,'C');
+    s+=this.cap(W,H,'Altitude CD = h to hypotenuse; AD = p, DB = q');
+    return this.wrap(W,H,s);
+  },
+
+  d454590(){
+    const W=260,H=230,C=this.C;
+    const A=[48,202],B=[208,202],Cv=[48,62];
+    let s='';
+    s+=this.poly([A,B,Cv],C.fill,C.stroke);
+    s+=`<rect x="${A[0]}" y="${A[1]-14}" width="14" height="14" fill="none" stroke="${C.blue}" stroke-width="1.5" opacity="0.9"/>`;
+    s+=this.ticks(A[0],A[1],Cv[0],Cv[1],1,C.stroke);
+    s+=this.ticks(A[0],A[1],B[0],B[1],1,C.stroke);
+    s+=this.arc(B[0],B[1],Math.atan2(Cv[1]-B[1],Cv[0]-B[0]),Math.atan2(A[1]-B[1],A[0]-B[0]),26,1,C.green);
+    s+=this.arc(Cv[0],Cv[1],Math.atan2(B[1]-Cv[1],B[0]-Cv[0]),Math.atan2(A[1]-Cv[1],A[0]-Cv[0]),22,1,C.green);
+    s+=this.lbl(B[0]-38,B[1]-28,'45°',{color:C.green,size:11});
+    s+=this.lbl(Cv[0]+8,Cv[1]+38,'45°',{color:C.green,size:11});
+    s+=this.dot(A[0],A[1])+this.lbl(A[0]-14,A[1]+4,'A');
+    s+=this.dot(B[0],B[1])+this.lbl(B[0]+12,B[1]+4,'B');
+    s+=this.dot(Cv[0],Cv[1])+this.lbl(Cv[0]-14,Cv[1]+4,'C');
+    s+=this.lbl((A[0]+B[0])/2,(A[1]+B[1])/2+16,'s',{color:C.blue,size:14,italic:true});
+    s+=this.lbl((A[0]+Cv[0])/2-16,(A[1]+Cv[1])/2,'s',{color:C.blue,size:14,italic:true});
+    s+=this.lbl((B[0]+Cv[0])/2+18,(B[1]+Cv[1])/2,'s√2',{color:C.stroke,size:13,italic:true});
+    s+=this.cap(W,H,'Isosceles right △: legs s, hypotenuse s√2');
+    return this.wrap(W,H,s);
+  },
+
+  d306090(){
+    const W=300,H=240,C=this.C;
+    const A=[52,210],B=[252,210],Cv=[52,78];
+    let s='';
+    s+=this.poly([A,B,Cv],C.fill,C.stroke);
+    s+=`<rect x="${A[0]}" y="${A[1]-14}" width="14" height="14" fill="none" stroke="${C.blue}" stroke-width="1.5" opacity="0.9"/>`;
+    s+=this.arc(B[0],B[1],Math.atan2(Cv[1]-B[1],Cv[0]-B[0]),Math.atan2(A[1]-B[1],A[0]-B[0]),32,1,C.green);
+    s+=this.arc(Cv[0],Cv[1],Math.atan2(B[1]-Cv[1],B[0]-Cv[0]),Math.atan2(A[1]-Cv[1],A[0]-Cv[0]),20,1,C.stroke);
+    s+=this.lbl(B[0]-44,B[1]-32,'30°',{color:C.green,size:11});
+    s+=this.lbl(Cv[0]+6,Cv[1]+42,'60°',{color:C.stroke,size:11});
+    s+=this.lbl(A[0]-22,(A[1]+Cv[1])/2,'x',{color:C.blue,size:14,italic:true});
+    s+=this.lbl((A[0]+B[0])/2,A[1]+16,'x√3',{color:C.green,size:13,italic:true});
+    s+=this.lbl((B[0]+Cv[0])/2+16,(B[1]+Cv[1])/2,'2x',{color:C.stroke,size:14,italic:true});
+    s+=this.dot(A[0],A[1])+this.lbl(A[0]-14,A[1]+4,'A');
+    s+=this.dot(B[0],B[1])+this.lbl(B[0]+14,B[1]+4,'B');
+    s+=this.dot(Cv[0],Cv[1])+this.lbl(Cv[0]-14,Cv[1]+4,'C');
+    s+=this.cap(W,H,'30°-60°-90°: short leg x, long leg x√3, hypotenuse 2x');
+    return this.wrap(W,H,s);
+  },
+
+  dPythIneq(){
+    const W=312,H=248,C=this.C;
+    const A=[48,208],B=[258,208],Cv=[118,58];
+    let s='';
+    s+=this.poly([A,B,Cv],C.fill,C.stroke);
+    s+=this.arc(Cv[0],Cv[1],Math.atan2(A[1]-Cv[1],A[0]-Cv[0]),Math.atan2(B[1]-Cv[1],B[0]-Cv[0]),36,1,C.blue);
+    s+=this.lbl(Cv[0]+8,Cv[1]+48,'∠C',{color:C.blue,size:12});
+    s+=this.lbl((B[0]+Cv[0])/2+20,(B[1]+Cv[1])/2,'c',{color:C.stroke,size:14,italic:true});
+    s+=this.lbl((A[0]+Cv[0])/2-18,(A[1]+Cv[1])/2,'b',{color:C.green,size:14,italic:true});
+    s+=this.lbl((A[0]+B[0])/2,(A[1]+B[1])/2+16,'a',{color:C.blue,size:14,italic:true});
+    s+=this.dot(A[0],A[1])+this.lbl(A[0]-14,A[1]+4,'A');
+    s+=this.dot(B[0],B[1])+this.lbl(B[0]+14,B[1]+4,'B');
+    s+=this.dot(Cv[0],Cv[1])+this.lbl(Cv[0],Cv[1]-12,'C');
+    s+=this.cap(W,H,'Compare c² with a² + b² to classify ∠C (acute / obtuse / right)');
+    return this.wrap(W,H,s);
+  },
+
+  dLawTrig(){
+    const W=300,H=232,C=this.C;
+    const A=[52,200],B=[248,200],Cv=[138,58];
+    let s='';
+    s+=this.poly([A,B,Cv],C.fill,C.stroke);
+    s+=this.lbl((A[0]+B[0])/2,(A[1]+B[1])/2+16,'c',{color:C.stroke,size:14,italic:true});
+    s+=this.lbl((A[0]+Cv[0])/2-20,(A[1]+Cv[1])/2,'b',{color:C.green,size:14,italic:true});
+    s+=this.lbl((B[0]+Cv[0])/2+22,(B[1]+Cv[1])/2,'a',{color:C.blue,size:14,italic:true});
+    s+=this.dot(A[0],A[1])+this.lbl(A[0]-14,A[1]+4,'A');
+    s+=this.dot(B[0],B[1])+this.lbl(B[0]+14,B[1]+4,'B');
+    s+=this.dot(Cv[0],Cv[1])+this.lbl(Cv[0],Cv[1]-12,'C');
+    s+=this.cap(W,H,'Sides a, b, c opposite ∠A, ∠B, ∠C — Law of Sines / Cosines');
+    return this.wrap(W,H,s);
+  },
+
+  dUnit9PythSq(){
+    const W=302,H=252,C=this.C;
+    const A=[40,212],B=[262,212],Cv=[151,44];
+    let s='';
+    s+=this.poly([A,B,Cv],C.fill,C.stroke);
+    s+=`<rect x="${Cv[0]-14}" y="${Cv[1]}" width="14" height="14" fill="none" stroke="${C.blue}" stroke-width="1.55"/>`;
+    const sq=20;
+    s+=`<rect x="${A[0]}" y="${A[1]-sq}" width="${sq}" height="${sq}" fill="rgba(91,184,91,0.12)" stroke="${C.green}" stroke-width="1.3"/>`;
+    s+=`<rect x="${A[0]-sq}" y="${A[1]-sq}" width="${sq}" height="${sq}" fill="rgba(107,147,214,0.12)" stroke="${C.blue}" stroke-width="1.3"/>`;
+    s+=this.lbl((B[0]+Cv[0])/2+6,(B[1]+Cv[1])/2-36,'c²',{color:C.stroke,size:11});
+    s+=this.lbl((A[0]+B[0])/2,A[1]+18,'c',{color:C.stroke,size:15,italic:true});
+    s+=this.lbl((A[0]+Cv[0])/2-24,(A[1]+Cv[1])/2,'b',{color:C.green,size:15,italic:true});
+    s+=this.lbl((B[0]+Cv[0])/2+22,(B[1]+Cv[1])/2,'a',{color:C.blue,size:15,italic:true});
+    s+=this.lbl(A[0]-32,A[1]-58,'b²',{color:C.blue,size:11});
+    s+=this.lbl(A[0]+8,A[1]+32,'a²',{color:C.green,size:11});
+    s+=this.dot(A[0],A[1])+this.lbl(A[0]-14,A[1]+4,'A');
+    s+=this.dot(B[0],B[1])+this.lbl(B[0]+14,B[1]+4,'B');
+    s+=this.dot(Cv[0],Cv[1])+this.lbl(Cv[0],Cv[1]-12,'C');
+    s+=this.cap(W,H,'∠C = 90° — squares on legs (a², b²) relate to hypotenuse (c²)');
+    return this.wrap(W,H,s);
+  },
+
+  dUnit9PythConverse(){
+    const W=300,H=248,C=this.C;
+    const A=[48,210],B=[252,210],Cv=[148,58];
+    let s='';
+    s+=this.poly([A,B,Cv],'rgba(212,175,106,0.06)',C.stroke,1.8);
+    s+=this.arc(Cv[0],Cv[1],Math.atan2(A[1]-Cv[1],A[0]-Cv[0]),Math.atan2(B[1]-Cv[1],B[0]-Cv[0]),34,1,C.muted);
+    s+=this.lbl(Cv[0]+6,Cv[1]+52,'?',{color:'#e8a035',size:20,bold:true});
+    s+=this.lbl((A[0]+B[0])/2,(A[1]+B[1])/2+18,'c',{size:14,italic:true});
+    s+=this.lbl((A[0]+Cv[0])/2-20,(A[1]+Cv[1])/2,'b',{size:14,italic:true});
+    s+=this.lbl((B[0]+Cv[0])/2+20,(B[1]+Cv[1])/2,'a',{size:14,italic:true});
+    s+=this.lbl(W/2,22,'Given: c² = a² + b²  →  show ∠C = 90°',{size:10,color:C.muted});
+    s+=this.dot(A[0],A[1])+this.lbl(A[0]-14,A[1]+4,'A');
+    s+=this.dot(B[0],B[1])+this.lbl(B[0]+14,B[1]+4,'B');
+    s+=this.dot(Cv[0],Cv[1])+this.lbl(Cv[0],Cv[1]-12,'C');
+    s+=this.cap(W,H,'Converse: side lengths first — right angle is what we prove');
+    return this.wrap(W,H,s);
+  },
+
+  dUnit9IneqAcute(){
+    const W=300,H=248,C=this.C;
+    const A=[52,208],B=[248,208],Cv=[152,72];
+    let s='';
+    s+=this.poly([A,B,Cv],'rgba(91,184,91,0.08)',C.stroke,1.8);
+    s+=this.arc(Cv[0],Cv[1],Math.atan2(A[1]-Cv[1],A[0]-Cv[0]),Math.atan2(B[1]-Cv[1],B[0]-Cv[0]),40,1,C.green);
+    s+=this.lbl(Cv[0]+10,Cv[1]+58,'acute ∠C',{color:C.green,size:11});
+    s+=this.lbl((B[0]+Cv[0])/2+18,(B[1]+Cv[1])/2,'c',{size:14,italic:true});
+    s+=this.lbl((A[0]+Cv[0])/2-18,(A[1]+Cv[1])/2,'b',{size:14,italic:true});
+    s+=this.lbl((A[0]+B[0])/2,(A[1]+B[1])/2+16,'a',{size:14,italic:true});
+    s+=this.dot(A[0],A[1])+this.lbl(A[0]-14,A[1]+4,'A');
+    s+=this.dot(B[0],B[1])+this.lbl(B[0]+14,B[1]+4,'B');
+    s+=this.dot(Cv[0],Cv[1])+this.lbl(Cv[0],Cv[1]-12,'C');
+    s+=this.cap(W,H,'c² < a² + b² ⟹ cos C > 0 ⟹ acute at C');
+    return this.wrap(W,H,s);
+  },
+
+  dUnit9IneqObtuse(){
+    const W=300,H=252,C=this.C;
+    const A=[118,208],B=[268,208],Cv=[28,118];
+    let s='';
+    s+=this.poly([A,B,Cv],'rgba(224,92,92,0.07)',C.stroke,1.8);
+    s+=this.arc(Cv[0],Cv[1],Math.atan2(B[1]-Cv[1],B[0]-Cv[0]),Math.atan2(A[1]-Cv[1],A[0]-Cv[0]),36,1,C.red);
+    s+=this.lbl(Cv[0]+48,Cv[1]+88,'obtuse ∠C',{color:C.red,size:11});
+    s+=this.lbl((B[0]+Cv[0])/2+12,(B[1]+Cv[1])/2,'c',{size:14,italic:true});
+    s+=this.lbl((A[0]+Cv[0])/2-8,(A[1]+Cv[1])/2,'b',{size:14,italic:true});
+    s+=this.lbl((A[0]+B[0])/2,(A[1]+B[1])/2+16,'a',{size:14,italic:true});
+    s+=this.dot(A[0],A[1])+this.lbl(A[0]-14,A[1]+4,'A');
+    s+=this.dot(B[0],B[1])+this.lbl(B[0]+14,B[1]+4,'B');
+    s+=this.dot(Cv[0],Cv[1])+this.lbl(Cv[0]-8,Cv[1]-12,'C');
+    s+=this.cap(W,H,'c² > a² + b² ⟹ cos C < 0 ⟹ obtuse at C');
+    return this.wrap(W,H,s);
+  },
+
+  dUnit94545(){
+    const W=288,H=248,C=this.C;
+    const A=[56,210],B=[232,210],Cv=[144,54];
+    let s='';
+    s+=this.poly([A,B,Cv],'rgba(107,147,214,0.08)',C.stroke,2);
+    s+=this.raSquare(Cv[0],Cv[1],A[0]-Cv[0],A[1]-Cv[1],B[0]-Cv[0],B[1]-Cv[1],11);
+    s+=this.ticks(A[0],A[1],Cv[0],Cv[1],1,C.stroke);
+    s+=this.ticks(B[0],B[1],Cv[0],Cv[1],1,C.stroke);
+    s+=this.arc(A[0],A[1],Math.atan2(Cv[1]-A[1],Cv[0]-A[0]),Math.atan2(B[1]-A[1],B[0]-A[0]),26,1,C.green);
+    s+=this.arc(B[0],B[1],Math.atan2(A[1]-B[1],A[0]-B[0]),Math.atan2(Cv[1]-B[1],Cv[0]-B[0]),26,1,C.green);
+    s+=this.lbl(A[0]+38,A[1]-48,'45°',{color:C.green,size:11});
+    s+=this.lbl(B[0]-52,B[1]-48,'45°',{color:C.green,size:11});
+    s+=this.lbl((A[0]+Cv[0])/2-20,(A[1]+Cv[1])/2,'s',{size:15,italic:true,color:C.blue});
+    s+=this.lbl((B[0]+Cv[0])/2+18,(B[1]+Cv[1])/2,'s',{size:15,italic:true,color:C.blue});
+    s+=this.lbl((A[0]+B[0])/2,(A[1]+B[1])/2+20,'s√2',{size:14,italic:true});
+    s+=this.dot(A[0],A[1])+this.lbl(A[0]-14,A[1]+4,'A');
+    s+=this.dot(B[0],B[1])+this.lbl(B[0]+14,B[1]+4,'B');
+    s+=this.dot(Cv[0],Cv[1])+this.lbl(Cv[0],Cv[1]-12,'C');
+    s+=this.cap(W,H,'45-45-90: right angle at C, legs congruent');
+    return this.wrap(W,H,s);
+  },
+
+  dUnit93060(){
+    const W=296,H=250,C=this.C;
+    const A=[64,212],B=[272,212],Cv=[64,54];
+    let s='';
+    s+=this.poly([A,B,Cv],'rgba(212,175,106,0.07)',C.stroke,2);
+    s+=`<rect x="${A[0]}" y="${A[1]-14}" width="14" height="14" fill="none" stroke="${C.blue}" stroke-width="1.5"/>`;
+    s+=this.arc(B[0],B[1],Math.atan2(Cv[1]-B[1],Cv[0]-B[0]),Math.atan2(A[1]-B[1],A[0]-B[0]),34,1,C.green);
+    s+=this.arc(Cv[0],Cv[1],Math.atan2(B[1]-Cv[1],B[0]-Cv[0]),Math.atan2(A[1]-Cv[1],A[0]-Cv[0]),22,1,C.stroke);
+    s+=this.lbl(B[0]-50,B[1]-36,'30°',{color:C.green,size:11});
+    s+=this.lbl(Cv[0]+14,Cv[1]+44,'60°',{color:C.stroke,size:11});
+    s+=this.lbl(A[0]-26,(A[1]+Cv[1])/2,'x',{size:15,italic:true,color:C.blue});
+    s+=this.lbl((A[0]+B[0])/2,A[1]+18,'x√3',{size:13,italic:true,color:C.green});
+    s+=this.lbl((B[0]+Cv[0])/2+14,(B[1]+Cv[1])/2,'2x',{size:14,italic:true});
+    s+=this.dot(A[0],A[1])+this.lbl(A[0]-14,A[1]+4,'A');
+    s+=this.dot(B[0],B[1])+this.lbl(B[0]+14,B[1]+4,'B');
+    s+=this.dot(Cv[0],Cv[1])+this.lbl(Cv[0]-14,Cv[1]+4,'C');
+    s+=this.cap(W,H,'30-60-90: right angle at A — short leg x, long x√3, hyp. 2x');
+    return this.wrap(W,H,s);
+  },
+
+  dUnit9GmAlt(){
+    const W=300,H=250,C=this.C;
+    const A=[40,212],B=[260,212],Cv=[150,58],D=[150,212];
+    let s='';
+    s+=`<polygon points="${A[0]},${A[1]} ${D[0]},${D[1]} ${Cv[0]},${Cv[1]}" fill="rgba(107,147,214,0.14)" stroke="none"/>`;
+    s+=`<polygon points="${D[0]},${D[1]} ${B[0]},${B[1]} ${Cv[0]},${Cv[1]}" fill="rgba(91,184,91,0.12)" stroke="none"/>`;
+    s+=this.poly([A,B,Cv],C.fill,C.stroke);
+    s+=this.seg(Cv[0],Cv[1],D[0],D[1],C.blue,2,'4,2');
+    s+=`<rect x="${Cv[0]-14}" y="${Cv[1]}" width="14" height="14" fill="none" stroke="${C.blue}" stroke-width="1.4"/>`;
+    s+=this.dot(D[0],D[1],C.blue,3)+this.lbl(D[0]+12,D[1]+14,'D',{color:C.blue});
+    s+=this.lbl((A[0]+D[0])/2,(D[1])+28,'p',{size:13,italic:true,color:C.blue});
+    s+=this.lbl((D[0]+B[0])/2,(D[1])+28,'q',{size:13,italic:true,color:C.green});
+    s+=this.lbl((Cv[0]+D[0])/2+16,(Cv[1]+D[1])/2,'h',{size:13,italic:true});
+    s+=this.dot(A[0],A[1])+this.lbl(A[0]-14,A[1]+4,'A');
+    s+=this.dot(B[0],B[1])+this.lbl(B[0]+14,B[1]+4,'B');
+    s+=this.dot(Cv[0],Cv[1])+this.lbl(Cv[0],Cv[1]-12,'C');
+    s+=this.cap(W,H,'Altitude h — geometric mean: h² = pq on hypotenuse');
+    return this.wrap(W,H,s);
+  },
+
+  dUnit9GmLeg(){
+    const W=300,H=250,C=this.C;
+    const A=[40,212],B=[260,212],Cv=[150,58],D=[150,212];
+    let s='';
+    s+=this.poly([A,B,Cv],C.fill,C.stroke);
+    s+=this.seg(Cv[0],Cv[1],D[0],D[1],C.muted,1.2,'4,4');
+    s+=`<rect x="${Cv[0]-14}" y="${Cv[1]}" width="14" height="14" fill="none" stroke="${C.blue}" stroke-width="1.4"/>`;
+    s+=this.seg(A[0],A[1],Cv[0],Cv[1],C.green,3.2);
+    s+=this.seg(B[0],B[1],Cv[0],Cv[1],C.green,3.2);
+    s+=this.dot(D[0],D[1],C.muted,2.5)+this.lbl(D[0]+10,D[1]+14,'D',{size:11,color:C.muted});
+    s+=this.lbl((A[0]+D[0])/2,(A[1]+D[1])/2+22,'p',{size:12,italic:true});
+    s+=this.lbl((A[0]+Cv[0])/2-22,(A[1]+Cv[1])/2,'leg b',{color:C.green,size:11});
+    s+=this.lbl((B[0]+Cv[0])/2+24,(B[1]+Cv[1])/2,'leg a',{color:C.green,size:11});
+    s+=this.lbl((A[0]+B[0])/2,(A[1]+B[1])/2+18,'c',{size:14,italic:true});
+    s+=this.dot(A[0],A[1])+this.lbl(A[0]-14,A[1]+4,'A');
+    s+=this.dot(B[0],B[1])+this.lbl(B[0]+14,B[1]+4,'B');
+    s+=this.dot(Cv[0],Cv[1])+this.lbl(Cv[0],Cv[1]-12,'C');
+    s+=this.cap(W,H,'Legs as means: b² = c·p,  a² = c·q (altitude dashed)');
+    return this.wrap(W,H,s);
+  },
+
+  dUnit9LawSin(){
+    const W=310,H=258,C=this.C;
+    const cx=155,cy=138, R=92;
+    const A=[52,218],B=[258,218],Cv=[156,52];
+    let s='';
+    s+=`<circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="${C.arc}" stroke-width="1.4" stroke-dasharray="6,5" opacity="0.85"/>`;
+    s+=this.poly([A,B,Cv],C.fill,C.stroke,2);
+    s+=this.arc(A[0],A[1],Math.atan2(B[1]-A[1],B[0]-A[0]),Math.atan2(Cv[1]-A[1],Cv[0]-A[0]),24,1,C.blue);
+    s+=this.arc(B[0],B[1],Math.atan2(Cv[1]-B[1],Cv[0]-B[0]),Math.atan2(A[1]-B[1],A[0]-B[0]),22,1,C.green);
+    s+=this.arc(Cv[0],Cv[1],Math.atan2(A[1]-Cv[1],A[0]-Cv[0]),Math.atan2(B[1]-Cv[1],B[0]-Cv[0]),20,1,C.stroke);
+    s+=this.lbl(156,238,'a/sin A = b/sin B = c/sin C',{size:10,color:C.muted});
+    s+=this.dot(A[0],A[1])+this.lbl(A[0]-14,A[1]+4,'A');
+    s+=this.dot(B[0],B[1])+this.lbl(B[0]+14,B[1]+4,'B');
+    s+=this.dot(Cv[0],Cv[1])+this.lbl(Cv[0],Cv[1]-12,'C');
+    s+=this.cap(W,H,'Law of Sines — circumcircle (2R) links sides and opposite angles');
+    return this.wrap(W,H,s);
+  },
+
+  dUnit9LawCos(){
+    const W=300,H=252,C=this.C;
+    const A=[48,212],B=[252,212],Cv=[118,62];
+    let s='';
+    s+=this.poly([A,B,Cv],C.fill,C.stroke,1.8);
+    const hx=(A[0]+B[0])/2-20, hy=A[1];
+    s+=this.seg(Cv[0],Cv[1],hx,hy,C.muted,1.4,'5,4');
+    s+=`<rect x="${hx}" y="${hy-10}" width="10" height="10" fill="none" stroke="${C.muted}" stroke-width="1.1" opacity="0.7"/>`;
+    s+=this.arc(Cv[0],Cv[1],Math.atan2(B[1]-Cv[1],B[0]-Cv[0]),Math.atan2(A[1]-Cv[1],A[0]-Cv[0]),44,2,C.blue);
+    s+=this.lbl(Cv[0]-8,Cv[1]+78,'included ∠C',{color:C.blue,size:11});
+    s+=this.lbl((A[0]+B[0])/2,(A[1]+B[1])/2+18,'c',{size:14,italic:true});
+    s+=this.lbl((A[0]+Cv[0])/2-20,(A[1]+Cv[1])/2,'b',{size:14,italic:true});
+    s+=this.lbl((B[0]+Cv[0])/2+18,(B[1]+Cv[1])/2,'a',{size:14,italic:true});
+    s+=this.lbl(20,28,'c² = a² + b² − 2ab·cos C',{size:10,color:C.muted});
+    s+=this.dot(A[0],A[1])+this.lbl(A[0]-14,A[1]+4,'A');
+    s+=this.dot(B[0],B[1])+this.lbl(B[0]+14,B[1]+4,'B');
+    s+=this.dot(Cv[0],Cv[1])+this.lbl(Cv[0],Cv[1]-12,'C');
+    s+=this.cap(W,H,'Law of Cosines — focus on included angle C and projection to AB');
+    return this.wrap(W,H,s);
+  },
+
+  dReflParallel(){
+    const W=320,H=200,C=this.C;
+    const y1=52,y2=148;
+    let s='';
+    s+=this.seg(28,y1,292,y1,C.stroke,1.6);
+    s+=this.seg(28,y2,292,y2,C.stroke,1.6);
+    s+=this.lbl(296,y1+4,'ℓ₁',{anchor:'end',size:11});
+    s+=this.lbl(296,y2+4,'ℓ₂',{anchor:'end',size:11});
+    const Px=120,Py=100;
+    s+=this.dot(Px,Py,C.blue,4);
+    s+=this.lbl(Px-6,Py-14,'P',{color:C.blue});
+    s+=this.lbl(160,24,'ℓ₁ ∥ ℓ₂',{size:11,color:C.muted});
+    s+=this.seg(Px,Py,Px,y1,C.muted,1,'3,4');
+    s+=this.lbl(Px+8,(Py+y1)/2,'d',{size:11,color:C.muted,italic:true});
+    s+=this.cap(W,H,'Two reflections (across ℓ₁, then ℓ₂) compose to a translation');
+    return this.wrap(W,H,s);
+  },
+
+  dReflIntersect(){
+    const W=280,H=240,C=this.C;
+    const O=[140,150];
+    const L1a=[40,40],L1b=[240,240];
+    const L2a=[40,220],L2b=[220,40];
+    let s='';
+    s+=this.seg(L1a[0],L1a[1],L1b[0],L1b[1],C.stroke,1.6);
+    s+=this.seg(L2a[0],L2a[1],L2b[0],L2b[1],C.stroke,1.6);
+    s+=this.arc(O[0],O[1],Math.atan2(L1a[1]-O[1],L1a[0]-O[0]),Math.atan2(L2a[1]-O[1],L2a[0]-O[0]),38,1,C.blue);
+    s+=this.lbl(O[0]+48,O[1]-58,'θ',{color:C.blue,size:13,italic:true});
+    s+=this.dot(O[0],O[1],C.stroke,4)+this.lbl(O[0]+10,O[1]+14,'O');
+    s+=this.lbl(L1b[0]-8,L1b[1]-8,'m',{size:11,color:C.muted});
+    s+=this.lbl(L2b[0]+4,L2b[1]-8,'n',{size:11,color:C.muted});
+    s+=this.cap(W,H,'Reflect across m then n (through O, angle θ): rotation by 2θ about O');
+    return this.wrap(W,H,s);
+  },
+
   dTriAngle(){
     const W=298,H=228,C=this.C;
     const A=[48,202],B=[248,202],Cv=[158,54];
@@ -4108,12 +4448,14 @@ const MATH_CONCEPTS = [
   // ── TRIGONOMETRY ─────────────────────────────────────────────────
   {
     id: 'trig-basics',
-    keywords: ['trig', 'trigonometry', 'sin', 'cos', 'tan', 'sine', 'cosine', 'tangent', 'soh cah toa', 'right triangle trig'],
+    keywords: ['trig', 'trigonometry', 'sin', 'cos', 'tan', 'sine', 'cosine', 'tangent', 'soh cah toa', 'right triangle trig', '30-60-90', '306090', '45-45-90', '454590', 'special right triangle', 'special right triangles'],
     title: 'Trigonometry Basics',
     tags: ['trig'],
     explain() { return `
       <p>Trig functions relate angles in a right triangle to side ratios. Remember <strong>SOH-CAH-TOA</strong>:</p>
       <div class="math-grid">
+        <div class="math-rule"><span class="math-lbl">30-60-90 △</span> In a 30°-60°-90° right triangle, if the short leg (opposite 30°) is <code>x</code>, then the long leg is <code>x√3</code> and the hypotenuse is <code>2x</code>.</div>
+        <div class="math-rule"><span class="math-lbl">45-45-90 △</span> In an isosceles right triangle, if each leg is <code>s</code>, the hypotenuse is <code>s√2</code>.</div>
         <div class="math-rule"><span class="math-lbl">sin θ</span> <strong>O</strong>pposite / <strong>H</strong>ypotenuse</div>
         <div class="math-rule"><span class="math-lbl">cos θ</span> <strong>A</strong>djacent / <strong>H</strong>ypotenuse</div>
         <div class="math-rule"><span class="math-lbl">tan θ</span> <strong>O</strong>pposite / <strong>A</strong>djacent = sin/cos</div>
@@ -5458,21 +5800,22 @@ var KNOWN_PROOFS = [
            'prove pythagorean'],
     proof: {
       title: 'Pythagorean Theorem',
-      conditional: 'If a triangle is a right triangle with legs a and b and hypotenuse c, then a² + b² = c².',
-      given: ['△ABC with right angle at C', 'legs: a = BC, b = AC', 'hypotenuse: c = AB'],
-      prove: 'a² + b² = c²',
-      diagramTopic: 'pythagorean',
+      conditional: 'If a triangle is a right triangle, then the square of the hypotenuse equals the sum of the squares of the legs.',
+      given: ['△ABC with ∠C = 90°', 'legs BC = a, AC = b', 'hypotenuse AB = c'],
+      prove: 'c² = a² + b²',
+      diagramTopic: 'unit9-pythagorean-squares',
       steps: [
-        { statement: 'Draw altitude CD from C perpendicular to AB, meeting AB at D', reason: 'Geometric construction (altitude from right angle to hypotenuse)' },
-        { statement: '∠ACB = 90° and ∠CDB = 90°', reason: 'Given (right angle) and definition of altitude' },
+        { statement: 'Draw altitude CD from C perpendicular to AB, with D on AB', reason: 'Construction (altitude from right angle to hypotenuse)' },
+        { statement: '∠ACB = 90° and ∠CDB = 90°', reason: 'Given and definition of altitude' },
         { statement: '∠B ≅ ∠B', reason: 'Reflexive Property' },
-        { statement: '△ABC ~ △BDC', reason: 'AA Similarity (∠B shared, both have 90°)' },
-        { statement: 'c/a = a/BD → a² = c · BD', reason: 'Corresponding sides of similar triangles proportional' },
-        { statement: '△ABC ~ △ADC', reason: 'AA Similarity (∠A shared, both have 90°)' },
-        { statement: 'c/b = b/AD → b² = c · AD', reason: 'Corresponding sides of similar triangles proportional' },
-        { statement: 'a² + b² = c · BD + c · AD = c(BD + AD) = c · c = c²', reason: 'Addition and Segment Addition Postulate (BD + AD = AB = c)' },
+        { statement: '△ABC ~ △CBD', reason: 'AA Similarity Postulate (shared ∠B; both triangles have a right angle)' },
+        { statement: 'AB/BC = BC/BD, so c/a = a/BD and a² = c · BD', reason: 'Corresponding sides of similar triangles are proportional' },
+        { statement: '△ABC ~ △ACD', reason: 'AA Similarity Postulate (shared ∠A; both triangles have a right angle)' },
+        { statement: 'AB/AC = AC/AD, so c/b = b/AD and b² = c · AD', reason: 'Corresponding sides of similar triangles are proportional' },
+        { statement: 'a² + b² = c·BD + c·AD = c(BD + AD) = c · AB = c²', reason: 'Addition Property of Equality; Segment Addition Postulate (BD + AD = AB)' },
       ],
-      explanation: 'The altitude from the right angle creates two smaller triangles, each similar to the original. This gives two proportions that, when added together, produce exactly a² + b² = c². The key insight is that the altitude splits the hypotenuse into two pieces that multiply with the sides to give perfect squares.',
+      explanation: 'Similarity proof (Euclid-style via altitude to the hypotenuse). Dependencies: AA Similarity, Segment Addition. The altitude splits the hypotenuse into segments whose products recover the squares of the legs.',
+      paragraph: 'Drop the altitude from the right angle vertex C to the hypotenuse AB at D. Triangles △ABC, △CBD, and △ACD are all similar by AA because each contains the original acute angle at A or B together with a right angle. From △ABC ~ △CBD we get c/a = a/BD, so a² = c·BD; from △ABC ~ △ACD we get c/b = b/AD, so b² = c·AD. Adding these equations and using BD + AD = AB = c yields a² + b² = c².',
     }
   },
 
@@ -5628,20 +5971,239 @@ var KNOWN_PROOFS = [
            'three sides right triangle', 'is it a right triangle'],
     proof: {
       title: 'Converse of the Pythagorean Theorem',
-      conditional: 'If the square of the longest side of a triangle equals the sum of the squares of the other two sides, then the triangle is a right triangle.',
-      given: ['△ABC with sides a, b, c where c is longest', 'a² + b² = c²'],
-      prove: '△ABC is a right triangle',
-      diagramTopic: 'pythagorean',
+      conditional: 'If the square of one side of a triangle equals the sum of the squares of the other two sides, then the triangle is a right triangle.',
+      given: ['△ABC with side lengths a = BC, b = AC, c = AB', 'c² = a² + b² (so c is the longest side)'],
+      prove: '∠C is a right angle (△ABC is a right triangle)',
+      diagramTopic: 'unit9-pythagorean-converse',
       steps: [
-        { statement: 'Construct △DEF with ∠F = 90°, legs d = a and e = b', reason: 'Construction (Ruler and Protractor Postulates)' },
-        { statement: 'By Pythagorean Theorem: d² + e² = f² → a² + b² = f²', reason: 'Pythagorean Theorem applied to △DEF' },
-        { statement: 'a² + b² = c² (given) and a² + b² = f²', reason: 'Given and step above' },
-        { statement: 'c² = f², so c = f', reason: 'Transitive Property + Square Root Property' },
-        { statement: '△ABC ≅ △DEF', reason: 'SSS Congruence Postulate (a=d, b=e, c=f)' },
-        { statement: '∠C ≅ ∠F = 90°', reason: 'CPCTC' },
-        { statement: '△ABC is a right triangle ∎', reason: 'Definition of right triangle (has a 90° angle)' },
+        { statement: 'Construct △DEF with ∠F = 90°, EF = a, and DF = b', reason: 'Ruler and Protractor Postulates' },
+        { statement: 'In △DEF, DE² = DF² + EF² = b² + a²', reason: 'Pythagorean Theorem (right angle at F)' },
+        { statement: 'DE² = c², so DE = c', reason: 'Given c² = a² + b² and the Square Root Property (lengths positive)' },
+        { statement: '△ABC ≅ △DEF', reason: 'SSS Congruence Postulate (BC = EF, AC = DF, AB = DE)' },
+        { statement: '∠C ≅ ∠F', reason: 'CPCTC' },
+        { statement: 'm∠C = 90°', reason: 'Substitution (m∠F = 90°)' },
+        { statement: '△ABC is a right triangle ∎', reason: 'Definition of right triangle' },
       ],
-      explanation: 'Build a known right triangle with the same two legs. The Pythagorean Theorem tells us its hypotenuse equals c, making all three sides match — SSS makes them congruent, so the original triangle must also have a right angle.',
+      explanation: 'Non-circular: the right triangle used in the construction is built from the Pythagorean Theorem as a tool on a fresh triangle with the same two legs; SSS then transfers the 90° angle to the original triangle. Dependency: Pythagorean Theorem (already proved).',
+      paragraph: 'Construct a right triangle △DEF with legs of lengths a and b meeting at a 90° angle at F. By the Pythagorean Theorem, its hypotenuse has length √(a² + b²), which equals c by hypothesis. Thus the three side lengths match those of △ABC, so the triangles are congruent by SSS. The angle opposite the side of length c is therefore congruent to the 90° angle in the construction, proving △ABC is a right triangle.',
+    }
+  },
+
+  {
+    keys: ['law of cosines', 'law of cosines theorem', 'cosine law', 'cosine rule', 'c squared equals a squared plus b squared', 'prove law of cosines'],
+    proof: {
+      title: 'Law of Cosines',
+      conditional: 'If a triangle has side lengths a, b, and c opposite angles A, B, and C respectively, then c² = a² + b² − 2ab cos C.',
+      given: ['△ABC with standard notation: BC = a, AC = b, AB = c'],
+      prove: 'c² = a² + b² − 2ab cos C',
+      diagramTopic: 'unit9-law-of-cosines',
+      steps: [
+        { statement: 'Draw altitude BH with H the foot of the perpendicular from B to line AC', reason: 'Construction' },
+        { statement: 'In right △ABH: AH = AB cos A = c cos A and BH = c sin A', reason: 'Right-triangle trigonometric ratios (cosine and sine definitions)' },
+        { statement: 'HC = |AC − AH| = |b − c cos A| (directed lengths along line AC cover acute and obtuse cases at A)', reason: 'Segment Addition on line AC' },
+        { statement: 'In right △BHC: a² = BH² + HC²', reason: 'Pythagorean Theorem' },
+        { statement: 'Substitute BH and HC: a² = c² sin² A + (b − c cos A)²', reason: 'Substitution' },
+        { statement: 'Expand and use sin² A + cos² A = 1 to obtain a² = b² + c² − 2bc cos A', reason: 'Algebraic identity' },
+        { statement: 'Relabel the same argument with the roles of vertices rotated so the angle at C is the included angle between sides of lengths a and b', reason: 'The triangle is unchanged; only notation permutes' },
+        { statement: 'Therefore c² = a² + b² − 2ab cos C ∎', reason: 'Corresponding formula at vertex C' },
+      ],
+      explanation: 'Classic altitude proof using the Pythagorean Theorem and cosine/sine of an angle in the two right triangles formed by an altitude. The algebra collapses to the Law of Cosines. For courses that treat acute and obtuse cases separately, split Step 4 by whether H lies between A and C.',
+      paragraph: 'Drop an altitude from vertex B to line AC. Express the two legs of the resulting right triangles using cosine and sine of angle A, then apply the Pythagorean Theorem along BC. Expanding and simplifying with sin² A + cos² A = 1 yields a² = b² + c² − 2bc cos A. Renaming vertices cyclically gives the stated form c² = a² + b² − 2ab cos C.',
+    }
+  },
+
+  {
+    keys: ['law of sines', 'law of sines theorem', 'sine law', 'sine rule', 'a over sine a', 'prove law of sines'],
+    proof: {
+      title: 'Law of Sines',
+      conditional: 'If a triangle has side lengths a, b, and c opposite angles A, B, and C respectively, then (a / sin A) = (b / sin B) = (c / sin C).',
+      given: ['△ABC with standard notation: BC = a, AC = b, AB = c', '△ABC has area K'],
+      prove: 'a / sin A = b / sin B = c / sin C',
+      diagramTopic: 'unit9-law-of-sines',
+      steps: [
+        { statement: 'Let h_c be the altitude length from B to line AC', reason: 'Definition of altitude' },
+        { statement: 'h_c = c sin A', reason: 'In the right triangle formed by AB and the altitude, sin A = opposite/hypotenuse = h_c / c' },
+        { statement: 'K = ½ · AC · h_c = ½ b c sin A', reason: 'Area formula for a triangle (½ base × height)' },
+        { statement: 'Similarly K = ½ a c sin B and K = ½ a b sin C', reason: 'Repeat with altitudes from A and C' },
+        { statement: '½ b c sin A = ½ a c sin B', reason: 'Transitive Property (both equal K)' },
+        { statement: 'Divide by ½ c (c ≠ 0): b sin A = a sin B', reason: 'Division Property of Equality' },
+        { statement: 'Therefore a / sin A = b / sin B', reason: 'Properties of proportions (sin A, sin B ≠ 0 for a nondegenerate triangle)' },
+        { statement: 'Similarly b / sin B = c / sin C', reason: 'Pair the other two area expressions' },
+        { statement: 'Hence a / sin A = b / sin B = c / sin C ∎', reason: 'Transitive Property of Equality' },
+      ],
+      explanation: 'Uses only the right-triangle definition of sine in an altitude diagram and the area formula K = ½(base)(height). Dependencies: triangle area, sine definition. This is the standard high-school derivation.',
+      paragraph: 'Compute the area K of △ABC three ways using each side as base and the corresponding altitude. Each altitude equals a side times the sine of the adjacent angle, giving K = ½ bc sin A = ½ ac sin B = ½ ab sin C. Equating the first two expressions and canceling common factors yields a / sin A = b / sin B; pairing the others finishes the chain.',
+    }
+  },
+
+  {
+    keys: ['pythagorean inequality acute', 'acute triangle c squared less', 'c squared less than a squared plus b squared'],
+    proof: {
+      title: 'Pythagorean Inequalities Theorem (Acute Case)',
+      conditional: 'If c is the length of the side opposite ∠C in △ABC and c² < a² + b², then △ABC is acute at C (m∠C < 90°).',
+      given: ['△ABC with BC = a, AC = b, AB = c', 'c² < a² + b²'],
+      prove: 'm∠C < 90° (∠C is acute)',
+      diagramTopic: 'unit9-inequality-acute',
+      steps: [
+        { statement: 'By the Law of Cosines: c² = a² + b² − 2ab cos C', reason: 'Law of Cosines' },
+        { statement: 'Substitute into c² < a² + b²: a² + b² − 2ab cos C < a² + b²', reason: 'Substitution' },
+        { statement: 'Subtract a² + b²: −2ab cos C < 0', reason: 'Subtraction Property of Inequality' },
+        { statement: 'Because a, b > 0 in a triangle, divide by −2ab (reversing inequality): cos C > 0', reason: 'Division Property of Inequality' },
+        { statement: '0° < m∠C < 180° in a triangle', reason: 'Angle measure in a triangle' },
+        { statement: 'Therefore m∠C < 90° ∎', reason: 'Cosine is positive on (0°, 90°) and nonpositive on [90°, 180°)' },
+      ],
+      explanation: 'Depends on the Law of Cosines (proved separately from this statement, so no circularity). Geometrically, side c is shorter than the hypotenuse of a right triangle built on legs a and b, so the opposite angle opens narrower than 90°.',
+      paragraph: 'Start from the Law of Cosines c² = a² + b² − 2ab cos C. If c² < a² + b², then −2ab cos C < 0, so cos C > 0 because a and b are positive. On the range of angles available in a triangle, a positive cosine means ∠C is acute.',
+    }
+  },
+
+  {
+    keys: ['pythagorean inequality obtuse', 'obtuse triangle c squared greater', 'c squared greater than a squared plus b squared'],
+    proof: {
+      title: 'Pythagorean Inequalities Theorem (Obtuse Case)',
+      conditional: 'If c is the length of the side opposite ∠C in △ABC and c² > a² + b², then △ABC is obtuse at C (m∠C > 90°).',
+      given: ['△ABC with BC = a, AC = b, AB = c', 'c² > a² + b²'],
+      prove: 'm∠C > 90° (∠C is obtuse)',
+      diagramTopic: 'unit9-inequality-obtuse',
+      steps: [
+        { statement: 'By the Law of Cosines: c² = a² + b² − 2ab cos C', reason: 'Law of Cosines' },
+        { statement: 'Substitute into c² > a² + b²: a² + b² − 2ab cos C > a² + b²', reason: 'Substitution' },
+        { statement: 'Subtract a² + b²: −2ab cos C > 0', reason: 'Subtraction Property of Inequality' },
+        { statement: 'Divide by −2ab (reversing inequality): cos C < 0', reason: 'Division Property of Inequality (a, b > 0)' },
+        { statement: 'Therefore m∠C > 90° ∎', reason: 'On (0°, 180°), cosine is negative exactly for obtuse angles' },
+      ],
+      explanation: 'Same Law-of-Cosines rearrangement as the acute case, with the inequality reversed. Dependency: Law of Cosines.',
+      paragraph: 'From c² = a² + b² − 2ab cos C, the assumption c² > a² + b² forces −2ab cos C > 0, hence cos C < 0. In a triangle, that means ∠C is obtuse.',
+    }
+  },
+
+  {
+    keys: ['30-60-90 right triangle theorem', '30-60-90 right triangle', '30-60-90', '30 60 90 triangle', 'short leg hypotenuse twice', 'long leg short leg root 3'],
+    proof: {
+      title: '30-60-90 Right Triangle Theorem',
+      conditional: 'If a triangle is a 30°-60°-90° triangle, then the hypotenuse equals twice the shorter leg and the longer leg equals the shorter leg times √3.',
+      given: ['△ABC with m∠A = 90°, m∠B = 30°, m∠C = 60°', 'shorter leg AC = x (opposite the 30° angle at B)'],
+      prove: 'hypotenuse BC = 2x and longer leg AB = x√3',
+      diagramTopic: 'unit9-30-60-90',
+      steps: [
+        { statement: 'Construct equilateral △DEF with side length 2x', reason: 'Construction of an equilateral triangle' },
+        { statement: 'Each interior angle of △DEF measures 60°', reason: 'Interior angles of an equilateral triangle are 60°' },
+        { statement: 'Draw the altitude from one vertex to the opposite side; it meets the side at its midpoint', reason: 'In an equilateral triangle, an altitude is also a median' },
+        { statement: 'The altitude splits △DEF into two congruent right triangles', reason: 'SSS or HL congruence on the two smaller triangles' },
+        { statement: 'Each smaller right triangle has angles 30°, 60°, 90°', reason: 'One angle is half of 60° at the base; the right angle is from the altitude' },
+        { statement: 'The short leg (half of a side) has length x', reason: 'Definition of midpoint' },
+        { statement: 'The hypotenuse of the smaller triangle is a side of △DEF, length 2x', reason: 'Correspondence of parts' },
+        { statement: 'By the Pythagorean Theorem, the altitude (long leg) is √((2x)² − x²) = x√3', reason: 'Pythagorean Theorem' },
+        { statement: 'Therefore any 30°-60°-90° triangle is similar to this one by AA, giving the stated side ratios ∎', reason: 'AA Similarity Postulate' },
+      ],
+      explanation: 'Builds the reference triangle from an equilateral triangle cut by an altitude, then scales by similarity. Dependencies: equilateral triangle facts, Pythagorean Theorem, AA Similarity.',
+      paragraph: 'Slice an equilateral triangle of side 2x by an altitude. You obtain two congruent right triangles with acute angles 30° and 60°, short leg x, hypotenuse 2x, and long leg √(4x² − x²) = x√3 by the Pythagorean Theorem. Every 30°-60°-90° triangle is similar to this model, so the ratios hold in general.',
+    }
+  },
+
+  {
+    keys: ['45-45-90 right triangle theorem', '45-45-90 right triangle', '45-45-90', 'isosceles right triangle', '45 45 90 triangle theorem', 'hypotenuse leg times root 2'],
+    proof: {
+      title: '45-45-90 Right Triangle Theorem',
+      conditional: 'If a right triangle is isosceles, then the hypotenuse equals a leg multiplied by √2.',
+      given: ['△ABC with ∠C = 90° and AC = BC = s (legs congruent)', 'hypotenuse AB = h'],
+      prove: 'h = s√2',
+      diagramTopic: 'unit9-45-45-90',
+      steps: [
+        { statement: 'AC = BC = s and ∠C = 90°', reason: 'Given' },
+        { statement: 'h² = s² + s²', reason: 'Pythagorean Theorem on △ABC' },
+        { statement: 'h² = 2s²', reason: 'Simplify' },
+        { statement: 'h = s√2 (h, s > 0) ∎', reason: 'Square Root Property' },
+      ],
+      explanation: 'Immediate corollary of the Pythagorean Theorem when the two legs are equal. Dependency: Pythagorean Theorem.',
+      paragraph: 'In an isosceles right triangle the legs are equal. Apply the Pythagorean Theorem with legs s and s to see the hypotenuse squared is 2s², then take positive square roots.',
+    }
+  },
+
+  {
+    keys: ['geometric mean altitude', 'altitude geometric mean hypotenuse', 'altitude rule right triangle', 'mean proportional altitude'],
+    proof: {
+      title: 'Geometric Mean (Altitude) Theorem',
+      conditional: 'If an altitude is drawn to the hypotenuse of a right triangle, then the length of the altitude is the geometric mean of the lengths of the two hypotenuse segments.',
+      given: ['△ABC with ∠C = 90°', 'D is the foot of the altitude from C to AB', 'AD = p, DB = q, CD = h'],
+      diagramTopic: 'unit9-geometric-mean-altitude',
+      steps: [
+        { statement: '∠CDA = ∠CDB = 90°', reason: 'Definition of altitude CD to AB' },
+        { statement: '∠ACD ≅ ∠B', reason: 'Each complements ∠A to 90° in the two smaller right triangles' },
+        { statement: '∠A ≅ ∠A', reason: 'Reflexive Property' },
+        { statement: '△ADC ~ △ACB', reason: 'AA Similarity Postulate' },
+        { statement: 'Likewise △CDB ~ △ACB', reason: 'AA Similarity Postulate (shared acute angle at B)' },
+        { statement: 'Therefore △ADC ~ △CDB', reason: 'Transitivity of similarity' },
+        { statement: 'AD/CD = CD/DB', reason: 'Corresponding sides of similar triangles are proportional' },
+        { statement: 'Cross-multiply: h² = pq ∎', reason: 'Properties of proportions' },
+      ],
+      explanation: 'The two smaller right triangles are similar to each other because both are similar to the original triangle. Matching corresponding sides across △ADC and △CDB yields the mean proportional. Dependencies: AA Similarity, complementary angles in a right triangle.',
+      paragraph: 'Altitude CD creates two smaller right triangles that are each similar to the original right triangle by AA, hence similar to each other. Comparing corresponding sides in △ADC and △CDB gives AD/CD = CD/DB, which is exactly the statement that h = √(pq).',
+    }
+  },
+
+  {
+    keys: ['geometric mean leg', 'leg rule right triangle', 'each leg geometric mean hypotenuse segment'],
+    proof: {
+      title: 'Geometric Mean (Leg) Theorem',
+      conditional: 'If a triangle is a right triangle with an altitude drawn to the hypotenuse, then each leg is the geometric mean between the hypotenuse and its adjacent hypotenuse segment.',
+      given: ['△ABC with ∠C = 90°', 'altitude CD to hypotenuse AB with D between A and B', 'AD = p, AB = c'],
+      diagramTopic: 'unit9-geometric-mean-leg',
+      steps: [
+        { statement: '∠CDA = 90° and ∠ACB = 90°', reason: 'Given' },
+        { statement: '∠A ≅ ∠A', reason: 'Reflexive Property' },
+        { statement: '△ADC ~ △ACB', reason: 'AA Similarity Postulate' },
+        { statement: 'AD/AC = AC/AB', reason: 'Corresponding sides of similar triangles are proportional' },
+        { statement: 'Cross-multiply: AC² = AB · AD = c · p', reason: 'Properties of proportions' },
+        { statement: 'Similarly △CDB ~ △ACB gives BC² = AB · DB ∎', reason: 'AA Similarity and proportions (symmetric argument)' },
+      ],
+      explanation: 'Each leg sits across from the angle matched in the similarity between the triangle containing that leg and the whole triangle. Dependencies: AA Similarity.',
+      paragraph: 'Compare △ADC to the whole △ACB: they share ∠A and both have a right angle, so they are similar. Matching hypotenuses and legs gives AC/AB = AD/AC, hence AC² equals the hypotenuse times the adjacent segment. Repeat at vertex B for the other leg.',
+    }
+  },
+
+  {
+    keys: ['reflection parallel lines', 'two parallel lines reflection', 'composition reflections parallel', 'reflections in parallel lines'],
+    proof: {
+      title: 'Reflections in Parallel Lines Theorem',
+      conditional: 'If a figure is reflected across two parallel lines, then the composition of the reflections is equivalent to a translation.',
+      given: ['Parallel lines ℓ₁ and ℓ₂', 'R₁ is reflection across ℓ₁', 'R₂ is reflection across ℓ₂', 'T = R₂ ∘ R₁'],
+      prove: 'T is a translation of the plane',
+      diagramTopic: 'reflection parallel lines composition',
+      steps: [
+        { statement: 'Choose points A on ℓ₁ and B on ℓ₂ with AB ⟂ ℓ₁', reason: 'Through a point on a line there exists a perpendicular to a parallel line (unique in the plane)' },
+        { statement: 'Let v be the vector AB (from ℓ₁ toward ℓ₂)', reason: 'Definition of vector between points' },
+        { statement: 'For any point P, R₁(P) is the unique point with midpoint on ℓ₁ and PP′ ⟂ ℓ₁, with PP′ = twice the signed distance from P to ℓ₁', reason: 'Definition of reflection across a line' },
+        { statement: 'Applying R₂ shifts the result by twice the signed distance from ℓ₂ along the same perpendicular direction', reason: 'Definition of reflection across ℓ₂' },
+        { statement: 'Because ℓ₁ ∥ ℓ₂, those perpendicular directions are parallel; the net displacement of P under T is independent of the perpendicular position of P', reason: 'Parallel lines have a constant separation along a common perpendicular' },
+        { statement: 'The net displacement equals 2v (twice the perpendicular segment joining the lines, oriented from ℓ₁ to ℓ₂)', reason: 'Stacking the two half-turns of signed distance along AB' },
+        { statement: 'Therefore T(P) = P + 2v for all P, which is a translation by vector 2v ∎', reason: 'Definition of translation' },
+      ],
+      explanation: 'Each reflection reverses one normal coordinate while fixing the coordinate along the line; two parallel mirrors therefore add a constant shift in the normal direction. This is the standard "glide-free" double reflection. For a full synthetic treatment, coordinates or vector language are often used in secondary courses.',
+      paragraph: 'Take a common perpendicular from ℓ₁ to ℓ₂. Each reflection flips the signed distance to its mirror across that perpendicular while fixing motion along lines parallel to the mirrors. After two flips across parallel mirrors, the signed distance changes by twice the distance between the lines, the same amount for every point. Hence the composition moves every point by one fixed vector, which is exactly a translation.',
+    }
+  },
+
+  {
+    keys: ['reflection intersecting lines', 'two lines intersect reflection', 'composition reflections rotation', 'reflections in intersecting lines'],
+    proof: {
+      title: 'Reflections in Intersecting Lines Theorem',
+      conditional: 'If a figure is reflected across two intersecting lines, then the composition of the reflections is equivalent to a rotation about the point of intersection.',
+      given: ['Lines m and n intersect at O', 'R_m and R_n are reflections across m and n', 'θ is the measure of one of the angles formed by m and n', 'T = R_n ∘ R_m'],
+      prove: 'T is a rotation about O by angle 2θ (sense depends on order of reflections)',
+      diagramTopic: 'reflection intersecting lines composition',
+      steps: [
+        { statement: 'Reflections fix every point on their mirror lines', reason: 'Definition of reflection' },
+        { statement: 'Therefore R_m(O) = O and R_n(O) = O, so T(O) = O', reason: 'O lies on both m and n' },
+        { statement: 'Each reflection is an isometry preserving distances', reason: 'Reflection across a line is an isometry' },
+        { statement: 'The composition T is an isometry fixing O', reason: 'Composition of isometries; O fixed' },
+        { statement: 'Each reflection reverses orientation; two reflections preserve orientation', reason: 'Orientation of the plane' },
+        { statement: 'An orientation-preserving isometry of the plane that fixes a point O is a rotation about O', reason: 'Classification of plane isometries (standard theorem)' },
+        { statement: 'For any point P ≠ O, ∠POT(P) equals twice the angle between m and n measured from m to n in the appropriate sense', reason: 'Angle-chasing with mirror images (reflecting across m then n turns OP by two copies of the angle between the mirrors)' },
+        { statement: 'Hence T is a rotation about O by 2θ ∎', reason: 'Definition of rotation' },
+      ],
+      explanation: 'This is the fundamental double-reflection fact used to connect symmetries and rotations. A fully rigorous angle-chasing proof tracks how each reflection sends a ray from O. Many texts treat the classification fact in Step 6 as previously established.',
+      paragraph: 'Both reflections fix the intersection point O, so their composition fixes O as well. Each reflection is an isometry, so the composition preserves distances. Two reflections restore orientation, so the composition is a rotation about O. Tracking a ray from O shows it turns through twice the angle between the two mirror lines.',
     }
   },
 
@@ -5675,18 +6237,27 @@ var KNOWN_PROOFS = [
 // ── Known proof lookup ────────────────────────────────────────
 function findKnownProof(query) {
   const q = query.toLowerCase();
-  // Remove "prove", "proof of", "show that", etc.
   const cleaned = q
     .replace(/^(prove|proof of|proof that|show that|show me|demonstrate|derive|verify|establish)\s+/i, '')
     .replace(/\b(the|that|a|an)\b\s*/g, '')
     .trim();
 
+  let bySubstr = null;
+  let bestLen = -1;
+  for (const entry of KNOWN_PROOFS) {
+    for (const key of entry.keys) {
+      const kl = key.toLowerCase();
+      if (q.includes(kl) && kl.length > bestLen) {
+        bestLen = kl.length;
+        bySubstr = entry;
+      }
+    }
+  }
+  if (bySubstr) return bySubstr;
+
   let best = null, bestScore = 0;
   for (const entry of KNOWN_PROOFS) {
     for (const key of entry.keys) {
-      // Exact match in full query
-      if (q.includes(key)) { return entry; }
-      // Score by word overlap
       const keyWords = key.split(/\s+/);
       const score = keyWords.filter(w => cleaned.includes(w) && w.length > 3).length;
       if (score > bestScore && score >= 2) { bestScore = score; best = entry; }
@@ -5697,14 +6268,16 @@ function findKnownProof(query) {
 
 // ── Is this a "prove X" request? ─────────────────────────────
 function isProveRequest(query) {
-  const q = query.toLowerCase();
-  return /^(prove|proof of|proof that|show that|show me how to prove|demonstrate|derive that|verify that)\b/.test(q);
+  const t = query.trim().toLowerCase();
+  return /^(prove|proof of|proof that|show that|show me how to prove|demonstrate|derive that|verify that)\b/.test(t)
+    || /^(how (do|to) (i |you )?prove|can you prove|walk me through (a |the )?proof of)\b/i.test(query.trim());
 }
 
 // ── Extract theorem name from query ──────────────────────────
 function extractTheoremName(query) {
   return query
     .replace(/^(prove|proof of|proof that|show that|show me|demonstrate|derive|verify)\s+/i, '')
+    .replace(/^(how (do|to) (i |you )?prove|can you prove|walk me through (a |the )?proof of)\s+/i, '')
     .replace(/^(the|that|a|an)\s+/i, '')
     .trim();
 }
@@ -5728,11 +6301,13 @@ function buildCustomProofCard(proof, format) {
             </tr>`).join('')}
         </tbody>
       </table>`
-    : `<div class="proof-para">
+    : (proof.paragraph
+        ? `<div class="proof-para">${proof.paragraph.split(/\n\n+/).map(p => `<p>${escHtml(p.trim())}</p>`).join('')}</div>`
+        : `<div class="proof-para">
         ${(proof.steps || []).map(s =>
           `<p>${escHtml(s.statement || '')} <span style="color:var(--tx-3)">— ${escHtml(s.reason || '')}</span></p>`
         ).join('')}
-      </div>`;
+      </div>`);
 
   return `<div class="proof-card">
     <div class="proof-card-head">
@@ -5917,6 +6492,13 @@ function inferDiagramTopic(text) {
   if (t.includes('triangle') && t.includes('sum')) return 'triangle angles';
   if (t.includes('vertical angle'))  return 'vertical angle';
   if (t.includes('linear pair') || t.includes('supplementary')) return 'linear pair';
+  if (t.includes('reflection') && t.includes('parallel')) return 'reflection parallel lines composition';
+  if (t.includes('reflection') && t.includes('intersect')) return 'reflection intersecting lines composition';
+  if (t.includes('law of cosines') || t.includes('law of sines') || t.includes('sine rule') || t.includes('cosine rule')) return 'law of cosines triangle';
+  if (t.includes('pythagorean') && t.includes('inequal')) return 'pythagorean inequality triangle';
+  if (t.includes('geometric mean') || (t.includes('altitude') && t.includes('hypotenuse'))) return 'right altitude hypotenuse';
+  if (t.includes('30') && t.includes('60') && t.includes('90')) return '30-60-90 triangle';
+  if ((t.includes('45') && t.includes('90')) || t.includes('isosceles right')) return '45-45-90 triangle';
   if (t.includes('parallel'))        return 'parallel lines';
   if (t.includes('isosceles'))       return 'generic triangle';
   if (t.includes('midpoint') || t.includes('segment')) return 'segment addition';
@@ -7095,8 +7677,8 @@ function respond(query) {
   }
 
   // Browse geometry
-  if (/\b(list|browse|show all|every theorem|all theorems|all postulates)\b/.test(q)) {
-    appendMsg('assistant', '<p>Here are all the theorems and postulates from your proof book:</p>' + buildBrowser());
+  if (/\b(list|browse|show all|every theorem|all theorems|all postulates|all proofs)\b/.test(q)) {
+    appendMsg('assistant', '<p>Here are all the theorems and postulates from your proof book, plus built-in proofs you can open from chat:</p>' + buildBrowser());
     return;
   }
 
@@ -7373,6 +7955,19 @@ function buildBrowser() {
         ).join('')}
       </div>
     </div>`;
+  }
+  if (typeof KNOWN_PROOFS !== 'undefined' && KNOWN_PROOFS.length) {
+    html += `<div class="chapter-group">
+      <div class="chapter-label">Built-in proofs (opens chat — use “prove …”)</div>
+      <div class="chapter-chips">`;
+    html += KNOWN_PROOFS.map(entry => {
+      const chipQuery = entry.chipQuery || ('prove ' + entry.keys[0]);
+      const href = 'index.html?q=' + encodeURIComponent(chipQuery);
+      return `<button class="theorem-chip" onclick="location.href=${JSON.stringify(href)}">
+        <span class="tnum">★</span> ${escHtml(entry.proof.title)}
+      </button>`;
+    }).join('');
+    html += `</div></div>`;
   }
   html += '</div>';
   return html;
